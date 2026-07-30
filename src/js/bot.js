@@ -43,7 +43,7 @@ const RICE_Bot = {
 			ARMAS: 0, DROGAS: 0, ACOSO: 0, VIOLENCIA: 0, VIOLENCIA_PAREJA: 0,
 			EMBARAZO: 0, ROBO: 0, DOCENTE: 0, ATRASO: 0, CELULAR: 0,
 			FALTA_SANCION: 0, DERECHOS: 0, SALUD: 0, CONDUCTO_REGULAR: 0,
-			SEGUIMIENTO: 0, AMBIGUO: 0, NEURODIVERSIDAD: 0,
+			SEGUIMIENTO: 0, AMBIGUO: 0, NEURODIVERSIDAD: 0, MALTRATO_ADULTO: 0,
 		};
 
 		// MEJORA 3: CRISIS VITAL — prioridad máxima absoluta
@@ -72,7 +72,15 @@ const RICE_Bot = {
 		if (/\b(robo|robar|robado|hurt|sustrac|mochila|pertenenc)\b/i.test(q)) scores.ROBO += 12;
 		if (/\b(violencia|pelea|rina|agred|golp|puno|patad|atac)\b/i.test(q)) scores.VIOLENCIA += 12;
 		if (/\b(embaraz|bebe|guagua|maternidad|paternidad|prenatal)\b/i.test(q)) scores.EMBARAZO += 12;
-		if (/\b(profesor|profesora|docente|profe)\b/i.test(q)) scores.DOCENTE += 6;
+		if (/\b(profesor|profesora|docente|profe|funcionario|inspector|inspectora|director|directora|asistente|auxiliar|adulto)\b/i.test(q)) scores.DOCENTE += 6;
+		// MALTRATO_ADULTO: prioridad alta cuando la mención a un adulto del liceo
+		// viene junto a una palabra de maltrato — antes esto solo activaba DOCENTE
+		// (respuesta genérica de "habla con tu profesor"), ignorando que podía
+		// tratarse de exactamente la persona que está maltratando (29-jul-2026).
+		if (/\b(profesor|profesora|docente|profe|funcionario|inspector|inspectora|director|directora|asistente|auxiliar|adulto)\b/i.test(q) &&
+			/\b(maltrat|trata\s*mal|me\s*trata|insult|humill|grit|golpe|abus|amenaz|acos|toc[oa]|discrimin)\b/i.test(q)) {
+			scores.MALTRATO_ADULTO += 22;
+		}
 		if (/\b(atraso|tarde|inasis|mandaron a la casa)\b/i.test(q)) scores.ATRASO += 12;
 		if (/\b(celu|celular|telefono|pantalla)\b/g.test(q)) scores.CELULAR += 12;
 		if (/\b(sancion|suspen|expul|anota|castig|apelar)\b/i.test(q)) scores.FALTA_SANCION += 12;
@@ -211,10 +219,10 @@ El <strong>Protocolo N° 14 del RICE 2026</strong> establece apoyos para estudia
 
 		// DROGAS
 		case 'DROGAS':
-			if (esFueraDeColegio) return `${bannerEmpatico}Fuera del liceo, las normas disciplinarias del RICE no aplican como castigos. Nuestro enfoque es 100% de salud y apoyo.<br><br>La <strong>Dupla Psicosocial</strong> puede orientarte en privado sobre cómo apoyar a tu amigo/a (SENDA Previene / CESFAM), con protección absoluta de tu identidad (Circular 482 y Ley 21.430). ${cita('Protocolo N° 5 — Apoyo de Salud y Prevención', '')}${btn}`;
-			if (es) return `${bannerEmpatico}El liceo <strong>no busca sancionar, sino apoyar la salud del estudiante (Protocolo N° 5)</strong>.<br><br>Si el hecho ocurre dentro del establecimiento, se tipifica como Falta Gravísima (Art. 17) y activa acompañamiento psicológico y citación a apoderados para un plan de apoyo integral (SENDA Previene / CESFAM). ${cita('Protocolo N° 5 y Art. 17', '')}${btn}`;
-			if (p.esTercero) return `${bannerEmpatico}Tu identidad queda <strong>100% protegida</strong> al avisar. El objetivo del liceo es brindar ayuda médica y psicológica, no castigar. ${cita('Protocolo N° 5', '')}${btn}`;
-			return `${bannerEmpatico}Tu salud y bienestar son lo primero. Tienes derecho a orientación privada con la Dupla Psicosocial sin ser juzgado/a. ${cita('Protocolo N° 5 — Apoyo Socioemocional', '')}${btn}`;
+			if (esFueraDeColegio) return `${bannerEmpatico}Fuera del liceo, las normas disciplinarias del RICE no aplican como castigos. Nuestro enfoque es 100% de salud y apoyo.<br><br>La <strong>Dupla Psicosocial</strong> puede orientarte en privado sobre cómo apoyar a tu amigo/a (SENDA Previene / CESFAM), con protección absoluta de tu identidad (Circular 482 y Ley 21.430). ${cita('Protocolo N° 6 — Apoyo de Salud y Prevención', '')}${btn}`;
+			if (es) return `${bannerEmpatico}El liceo <strong>no busca sancionar, sino apoyar la salud del estudiante (Protocolo N° 6)</strong>.<br><br>Si el hecho ocurre dentro del establecimiento, se tipifica como Falta Gravísima (Art. 17) y activa acompañamiento psicológico y citación a apoderados para un plan de apoyo integral (SENDA Previene / CESFAM). ${cita('Protocolo N° 6 y Art. 17', '')}${btn}`;
+			if (p.esTercero) return `${bannerEmpatico}Tu identidad queda <strong>100% protegida</strong> al avisar. El objetivo del liceo es brindar ayuda médica y psicológica, no castigar. ${cita('Protocolo N° 6', '')}${btn}`;
+			return `${bannerEmpatico}Tu salud y bienestar son lo primero. Tienes derecho a orientación privada con la Dupla Psicosocial sin ser juzgado/a. ${cita('Protocolo N° 6 — Apoyo Socioemocional', '')}${btn}`;
 
 		// AMBIGUO
 		case 'AMBIGUO':
@@ -228,23 +236,33 @@ El <strong>Protocolo N° 14 del RICE 2026</strong> establece apoyos para estudia
 
 		// ACOSO
 		case 'ACOSO':
-			if (es) return `👨‍👩‍👧‍👦 <strong>Hola, ${nombre}. Usted hizo lo correcto al buscar orientación — el liceo tiene la obligación de actuar.</strong><br><br>1. <strong>Solicitar entrevista urgente con el Profesor Jefe</strong> (pida fecha y hora).<br>2. Si no responde en 48 horas, <strong>escale a Convivencia Educativa</strong> — tienen el deber legal de activar el Protocolo N° 3.<br>3. <strong>Documente los hechos</strong>: fechas, situaciones, evidencias (capturas, testigos).<br><br>El liceo resguardará a su pupilo/a en aula y recreos sin exponerlo/a jamás. ${cita('Protocolo N° 3 de Acoso Escolar', '')}${btn}`;
-			if (p.esTercero) return `🤝 <strong>Hola, ${nombre}. Es muy valioso que te preocupes por tu compañero/a — tu nombre queda completamente protegido.</strong><br><br>Avisa a tu <strong>Profesor Jefe o a cualquier adulto de confianza</strong> o repórtalo aquí de forma anónima. El liceo activará medidas de protección de inmediato. ${cita('Protocolo N° 3 de Acoso Escolar', '')}${btn}`;
-			return `👋 <strong>Hola, ${nombre}. Esto no es tu culpa — nadie tiene derecho a molestarte ni hacerte sentir mal.</strong><br><br>Al reportarlo: tu Profesor Jefe y la Dupla Psicosocial actúan con total reserva, sin exponerte ni obligarte a enfrentar a quien te afecta. Se aplican acciones de resguardo en clases y recreos.<br><br><strong>¿Cuándo ocurrió? ¿Fue algo puntual o ha pasado más de una vez?</strong> ${cita('Protocolo N° 3', '')}${btn}`;
+			if (es) return `👨‍👩‍👧‍👦 <strong>Hola, ${nombre}. Usted hizo lo correcto al buscar orientación — el liceo tiene la obligación de actuar.</strong><br><br>1. <strong>Solicitar entrevista urgente con el Profesor Jefe</strong> (pida fecha y hora).<br>2. Si no responde en 48 horas, <strong>escale a Convivencia Educativa</strong> — tienen el deber legal de activar el Protocolo N° 1.<br>3. <strong>Documente los hechos</strong>: fechas, situaciones, evidencias (capturas, testigos).<br><br>El liceo resguardará a su pupilo/a en aula y recreos sin exponerlo/a jamás. ${cita('Protocolo N° 1 de Acoso Escolar', '')}${btn}`;
+			if (p.esTercero) return `🤝 <strong>Hola, ${nombre}. Es muy valioso que te preocupes por tu compañero/a — tu nombre queda completamente protegido.</strong><br><br>Avisa a tu <strong>Profesor Jefe o a cualquier adulto de confianza</strong> o repórtalo aquí de forma anónima. El liceo activará medidas de protección de inmediato. ${cita('Protocolo N° 1 de Acoso Escolar', '')}${btn}`;
+			return `👋 <strong>Hola, ${nombre}. Esto no es tu culpa — nadie tiene derecho a molestarte ni hacerte sentir mal.</strong><br><br>Al reportarlo: tu Profesor Jefe y la Dupla Psicosocial actúan con total reserva, sin exponerte ni obligarte a enfrentar a quien te afecta. Se aplican acciones de resguardo en clases y recreos.<br><br><strong>¿Cuándo ocurrió? ¿Fue algo puntual o ha pasado más de una vez?</strong> ${cita('Protocolo N° 1 de Acoso Escolar', '')}${btn}`;
 
 		// ROBO
 		case 'ROBO':
 			if (es) return `👨‍👩‍👧‍👦 <strong>Hola, ${nombre}.</strong><br><br>La sustracción de bienes se tipifica como <strong>Falta Grave (Art. 16) o Gravísima (Art. 17)</strong>. Inspectoría realiza un proceso de indagación reservado y exige devolución o reparación económica. ${cita('Art. 16 y 17', '')}${btn}`;
 			return `👋 <strong>Hola, ${nombre}.</strong><br><br>Informa de inmediato a tu <strong>Profesor Jefe o Inspectoría General</strong> para iniciar la búsqueda e indagación reservada. ${cita('Art. 16 — Faltas Graves', '')}${btn}`;
 
-		// DOCENTES
+		// DOCENTES (consulta genérica, sin señales de maltrato)
 		case 'DOCENTE':
 			if (es) return `👨‍👩‍👧‍👦 <strong>Hola, ${nombre}.</strong><br><br>Si el docente no ha respondido: 1. Solicite entrevista formal. 2. Si no hay respuesta en <strong>48 horas</strong>, escale a UTP o Inspectoría. 3. Convivencia Educativa puede canalizar su requerimiento. ${cita('Conducto Regular — Derechos del Apoderado', '')}${btn}`;
 			return `👋 <strong>Hola, ${nombre}.</strong><br><br>Acércate al finalizar la clase o habla con tu <strong>Profesor Jefe</strong> para que coordine. Si persiste, puedes acudir a <strong>UTP</strong>. ${cita('Conducto Regular — RICE 2026', '')}${btn}`;
 
+		// MALTRATO DE UN ADULTO DEL LICEO HACIA UN ESTUDIANTE (Protocolo N°3, RICE 2026)
+		// Agregado el 29-jul-2026: antes, mencionar a un profesor junto a una
+		// palabra de maltrato caía en el caso DOCENTE genérico de arriba
+		// ("habla con tu profesor jefe"), sin importar que la persona
+		// mencionada fuera justo quien maltrata.
+		case 'MALTRATO_ADULTO':
+			if (es) return `👨‍👩‍👧‍👦 <strong>Hola, ${nombre}. Gracias por contarlo — esto se toma en serio de inmediato.</strong><br><br>El <strong>Protocolo N°3 del RICE 2026</strong> exige que, ante cualquier sospecha de maltrato de un adulto hacia un estudiante, el liceo separe de inmediato a esa persona de todo contacto con su pupilo/a mientras se investiga — no es un castigo anticipado, es una medida de resguardo. 1. <strong>Informe el hecho directamente a Convivencia Educativa o a Dirección</strong> (no solo al Profesor Jefe, ya que podría ser la persona involucrada). 2. Si hay indicios de un delito, el liceo tiene la obligación legal de denunciar ante Carabineros o el Ministerio Público dentro de 24 horas. ${cita('Protocolo N° 3 — Vulneración de Derechos', '')}${btn}`;
+			if (p.esTercero) return `🤝 <strong>Hola, ${nombre}. Es muy valioso que avises — tu identidad queda protegida.</strong><br><br>Avisa directamente a <strong>Convivencia Educativa o Dirección</strong> (no solo al profesor involucrado). El liceo debe separar de inmediato a la persona adulta de todo contacto con el estudiante mientras investiga. ${cita('Protocolo N° 3 — Vulneración de Derechos', '')}${btn}`;
+			return `👋 <strong>Hola, ${nombre}. Esto no es tu culpa, y mereces que te escuchen.</strong><br><br>Ningún adulto tiene derecho a maltratarte, sin importar quién sea. <strong>Cuéntaselo directamente a Convivencia Educativa, a Dirección, o a la Dupla Psicosocial</strong> — no tienes que resolverlo solo/a hablando con esa misma persona. El liceo debe separar de inmediato a quien te está afectando mientras se investiga, y si corresponde, denunciarlo ante Carabineros dentro de 24 horas.<br><br><strong>¿Quieres contarme un poco más de lo que está pasando?</strong> ${cita('Protocolo N° 3', '')}${btn}`;
+
 		// ATRASO
 		case 'ATRASO':
-			return `${es ? '👨‍👩‍👧‍👦' : '👋'} <strong>Hola, ${nombre}. El derecho a la educación siempre está protegido.</strong><br><br>La <strong>Circular 482 del Mineduc</strong> es clara: el liceo <strong>nunca puede devolver a un estudiante a casa</strong> por atraso u otra causa menor. Los atrasos se abordan desde el acompañamiento, no desde el castigo.<br><br>${es ? '<em>¿Su pupilo/a fue enviado/a a casa? Puede formalizar queja ante la Superintendencia de Educación.</em>' : '<em>¿Te enviaron a casa? Eso es una infracción y puedes reportarlo.</em>'} ${cita('Protocolo N° 1 — Atrasos e Inasistencias', '')}${btn}`;
+			return `${es ? '👨‍👩‍👧‍👦' : '👋'} <strong>Hola, ${nombre}. El derecho a la educación siempre está protegido.</strong><br><br>La <strong>Circular 482 del Mineduc</strong> es clara: el liceo <strong>nunca puede devolver a un estudiante a casa</strong> por atraso u otra causa menor. Los atrasos se abordan desde el acompañamiento, no desde el castigo.<br><br>${es ? '<em>¿Su pupilo/a fue enviado/a a casa? Puede formalizar queja ante la Superintendencia de Educación.</em>' : '<em>¿Te enviaron a casa? Eso es una infracción y puedes reportarlo.</em>'} ${cita('Circular 482 Mineduc — Atrasos e Inasistencias', '')}${btn}`;
 
 		// CELULAR
 		case 'CELULAR':
@@ -265,11 +283,11 @@ El <strong>Protocolo N° 14 del RICE 2026</strong> establece apoyos para estudia
 💜 <strong>Hola, ${nombre}. Nadie tiene derecho a tratarte mal, a gritarte, ni a pegarte. La violencia nunca es normal ni es amor.</strong>
 </div>
 Estás en un espacio seguro. La <strong>Dupla Psicosocial</strong> te escucha en privado, sin juzgarte ni exponerte (Ley N° 21.430 y Circular 482). Tienes derecho a resguardo escolar y asesoría de la <strong>Ley N° 20.066</strong>.<br><br>
-💬 <em>¿Te gustaría que la Dupla Psicosocial te atienda hoy mismo?</em> ${cita('Protocolo N° 3 y Ley 21.430', '')}${btn}`;
+💬 <em>¿Te gustaría que la Dupla Psicosocial te atienda hoy mismo?</em> ${cita('Ley N° 21.430 y Ley N° 20.066', '')}${btn}`;
 
 		// EMBARAZO
 		case 'EMBARAZO':
-			return `${es ? '👨‍👩‍👧‍👦' : '👋'} <strong>Hola, ${nombre}.</strong><br><br>El <strong>Protocolo N° 8 del RICE 2026 y la Ley N° 20.370</strong> garantizan: derecho a continuar estudiando sin discriminación, flexibilidad académica y apoyo reservado con la Dupla Psicosocial. ${cita('Protocolo N° 8 — Embarazo y Maternidad/Paternidad', '')}${btn}`;
+			return `${es ? '👨‍👩‍👧‍👦' : '👋'} <strong>Hola, ${nombre}.</strong><br><br>El <strong>Protocolo N° 9 del RICE 2026 y la Ley N° 20.370</strong> garantizan: derecho a continuar estudiando sin discriminación, flexibilidad académica y apoyo reservado con la Dupla Psicosocial. ${cita('Protocolo N° 9 — Embarazo y Maternidad/Paternidad', '')}${btn}`;
 
 		// SALUD MENTAL
 		case 'SALUD':
