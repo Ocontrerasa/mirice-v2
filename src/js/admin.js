@@ -556,7 +556,7 @@ document.addEventListener('DOMContentLoaded', () => {
           <td style="padding-left: 16px; vertical-align: middle;">
             <div style="font-size: 0.8rem; font-weight: 700; color: #1e3a8a; text-transform: uppercase;">Liceo de Huara</div>
             <div style="font-size: 0.7rem; color: #4b5563;">Equipo de Convivencia Educativa • Circular 482</div>
-            <div style="font-size: 0.65rem; color: #9ca3af;">Huara, Región de Tarapacá</div>
+            <div style="font-size: 0.65rem; color: #475569;">Huara, Región de Tarapacá</div>
           </td>
           <td style="text-align: right; vertical-align: middle;">
             <span style="border: 2px solid #1e3a8a; padding: 6px 12px; font-weight: 700; font-size: 0.85rem; color: #1e3a8a; border-radius: 4px;">FOLIO ${caso.folio}</span>
@@ -578,7 +578,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="acta-data-item"><strong>Fecha/Hora Reporte:</strong> ${formatearFecha(caso.creado_en)}</div>
         <div class="acta-data-item"><strong>Prioridad:</strong> <span style="text-transform: capitalize; font-weight:bold;">${caso.prioridad}</span></div>
       </div>
-      <p style="font-size:0.72rem; color:#9ca3af; margin-top:4px;">
+      <p style="font-size:0.72rem; color:#475569; margin-top:4px;">
         El reporte identifica al reportante solo si la persona lo aceptó explícitamente al enviarlo. Si el nombre del estudiante involucrado no vino en el relato, corresponde a Convivencia Educativa completarlo tras la investigación, no a este sistema inferirlo.
       </p>
 
@@ -616,7 +616,7 @@ document.addEventListener('DOMContentLoaded', () => {
         </div>
       </div>
 
-      <div style="margin-top: 48px; border-top: 1px solid #e5e7eb; padding-top: 12px; font-size: 0.65rem; color: #9ca3af; text-align: center;">
+      <div style="margin-top: 48px; border-top: 1px solid #e5e7eb; padding-top: 12px; font-size: 0.65rem; color: #475569; text-align: center;">
         Ficha Oficial MiRice • Generado el ${new Date().toLocaleDateString()} a las ${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} • Enfoque de Convivencia Educativa Circular 482 Superintendencia.
       </div>
     `;

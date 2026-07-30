@@ -1996,7 +1996,15 @@ textarea:focus {
   font-weight: 700 !important;
 }
 
-/* ADAPTABILIDAD Y GARANTÍA DE CONTRASTE LEGIBLE (Modo Oscuro Adaptativo Protegido) */
+/* ADAPTABILIDAD Y GARANTÍA DE CONTRASTE LEGIBLE (Modo Oscuro Adaptativo Protegido)
+   DESACTIVADO el 30-jul-2026: este bloque cambiaba el fondo a oscuro en varios
+   contenedores, pero los casi 500 estilos de color escritos directo en
+   app.js/admin.js (no en este archivo) seguían usando tonos pensados para
+   fondo claro — el resultado era texto oscuro sobre fondo oscuro en partes
+   del sitio, ilegible. Se sigue el mismo criterio que ya se usaba para el
+   panel admin (ver "TEMA CLARO UNIVERSAL" más abajo): mientras no se audite
+   cada estilo inline uno por uno, es más seguro mantener el sitio
+   consistentemente claro que a medias oscuro y roto.
 @media (prefers-color-scheme: dark) {
   body {
     background: #0f172a !important;
@@ -2042,12 +2050,6 @@ textarea:focus {
     color: #ffffff !important;
   }
 
-  .chat-bubble.user-bubble, div.user-bubble {
-    background: #334155 !important;
-    color: #ffffff !important;
-  }
-}
-
   .chat-bubble.bot-bubble *, div.bot-bubble * {
     color: #ffffff !important;
   }
@@ -2061,6 +2063,7 @@ textarea:focus {
     color: #ffffff !important;
   }
 }
+*/
 
 /* ==========================================================================
    ALTO CONTRASTE OBLIGATORIO Y TEMA CLARO UNIVERSAL PARA DASHBOARD
