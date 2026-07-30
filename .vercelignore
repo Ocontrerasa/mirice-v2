@@ -1,0 +1,7 @@
+# Segunda barrera además de .gitignore: aunque alguno de estos archivos
+# quedara en el repositorio por error, Vercel no debe desplegarlo nunca.
+_resguardo_privado_NO_SUBIR_A_GIT
+src/data/liceo_db.js
+fuentes/*.xlsx
+mirice_completo.zip
+*.zip

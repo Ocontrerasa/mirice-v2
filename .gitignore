@@ -1,0 +1,11 @@
+# Nunca deben entrar al repositorio: datos reales de estudiantes, apoderados
+# y funcionarios, ni respaldos pesados del propio proyecto.
+_resguardo_privado_NO_SUBIR_A_GIT/
+src/data/liceo_db.js
+fuentes/*.xlsx
+fuentes/NOMINA*.xlsx
+mirice_completo.zip
+*.zip
+.env
+.env.local
+node_modules/

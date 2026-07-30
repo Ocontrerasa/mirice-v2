@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, interactive-widget=resizes-content">
+  <meta name="color-scheme" content="light dark">
+  <title>MiRice — Reporte Seguro a Convivencia Educativa</title>
+  <link rel="icon" type="image/png" href="assets/branding/Logo oficial de toda la plataforma y proyecto.png">
+  <link rel="apple-touch-icon" href="assets/branding/Logo oficial de toda la plataforma y proyecto.png">
+  <link rel="manifest" href="manifest.json">
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #047857;
+      --primary-light: #065f46;
+      --accent: #d97706;
+      --bg: #f8fafc;
+      --text-main: #0f172a;
+      --text-muted: #475569;
+      --border-card: rgba(0, 0, 0, 0.08);
+      --radius-md: 16px;
+      --radius-sm: 8px;
+      --shadow-sm: 0 4px 20px rgba(0, 0, 0, 0.04);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 16px;
+    }
+
+    .form-container {
+      background: white;
+      max-width: 680px;
+      width: 100%;
+      border-radius: var(--radius-md);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+      border: 1px solid var(--border-card);
+      overflow: hidden;
+      animation: fadeIn 0.4s ease;
+    }
+
+    .form-header {
+      background: linear-gradient(135deg, #047857 0%, #065f46 100%);
+      color: white;
+      padding: 22px 24px;
+      border-bottom: 3px solid #059669;
+    }
+
+    .disclaimer-card {
+      background: #fffbebfb;
+      border-left: 4px solid #f59e0b;
+      padding: 16px;
+      margin: 20px 24px;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      line-height: 1.5;
+      color: #713f12;
+      border: 1px solid #fef08a;
+    }
+
+    .disclaimer-title {
+      font-weight: 800;
+      margin-bottom: 4px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #b45309;
+    }
+
+    form {
+      padding: 0 24px 24px 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    label {
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #0f172a;
+    }
+
+    .form-control {
+      font-family: inherit;
+      width: 100%;
+      padding: 12px 14px;
+      border: 1.5px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      font-size: 0.9rem;
+      color: var(--text-main);
+      background: #f8fafc;
+      transition: all 0.2s ease;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--primary);
+      background: #ffffff;
+      box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.15);
+    }
+
+    textarea.form-control {
+      resize: vertical;
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 20px;
+      margin-top: 4px;
+    }
+
+    .radio-label {
+      font-size: 0.88rem;
+      font-weight: 500;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .conditional-section {
+      display: none;
+      animation: slideDown 0.3s ease;
+    }
+
+    .student-badge {
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      font-size: 0.85rem;
+      color: #0f172a;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .btn-submit {
+      background: linear-gradient(135deg, #047857 0%, #065f46 100%);
+      color: white;
+      border: none;
+      padding: 14px 20px;
+      border-radius: 50px;
+      font-size: 0.95rem;
+      font-weight: 800;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(4, 120, 87, 0.3);
+      transition: background 0.2s ease;
+      margin-top: 10px;
+    }
+
+    .btn-submit:hover {
+      background: linear-gradient(135deg, #065f46 0%, #047857 100%);
+    }
+
+    .success-panel {
+      display: none;
+      padding: 40px 24px;
+      text-align: center;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .success-icon {
+      font-size: 3.5rem;
+      color: #047857;
+    }
+
+    .success-panel h2 {
+      color: #047857;
+      font-size: 1.4rem;
+      font-weight: 800;
+    }
+
+    .success-panel p {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      max-width: 480px;
+      line-height: 1.5;
+    }
+
+    .btn-nav-back {
+      background: #ffffff;
+      color: #047857;
+      border: 2px solid #047857;
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-nav-back:hover {
+      background: #ecfdf5;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideDown {
+      from { opacity: 0; transform: translateY(-5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .contact-field small {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      font-weight: 400;
+    }
+
+    .identify-check {
+      display: flex;
+      align-items: flex-start;
+      gap: 8px;
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: var(--text-main);
+      background: #f1f5f9;
+      border: 1px solid #cbd5e1;
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+    }
+
+    .identify-check input { margin-top: 3px; }
+
+    .attach-note {
+      background: #f1f5f9;
+      border: 1px dashed #cbd5e1;
+      border-radius: var(--radius-sm);
+      padding: 10px 14px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      line-height: 1.5;
+    }
+
+    .form-error {
+      display: none;
+      background: #fef2f2;
+      border-left: 4px solid #dc2626;
+      color: #7f1d1d;
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      font-size: 0.86rem;
+      line-height: 1.5;
+    }
+
+    .btn-submit:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
+    .folio-badge {
+      background: #ecfdf5;
+      border: 1.5px solid #6ee7b7;
+      color: #047857;
+      font-weight: 800;
+      font-size: 1.05rem;
+      padding: 8px 18px;
+      border-radius: 50px;
+      letter-spacing: 0.02em;
+    }
+  </style>
+  <link rel="stylesheet" href="src/css/mirice-responsive.css">
+</head>
+
+<body>
+
+  <div class="form-container">
+    <div id="form-content">
+      <div class="form-header" style="display:flex; justify-content:space-between; align-items:center; text-align:left;">
+        <div>
+          <button type="button" onclick="volverAAplicacionPrincipal()" style="background:rgba(255,255,255,0.2); border:1px solid rgba(255,255,255,0.4); color:#ffffff !important; padding:4px 12px; border-radius:50px; font-size:0.78rem; font-weight:bold; cursor:pointer; margin-bottom:10px; display:inline-flex; align-items:center; gap:6px;">
+            ⬅️ Volver a la App MiRice
+          </button>
+          <h1 style="font-size:1.35rem; font-weight:800; color:#ffffff !important; margin:0;">Información a Convivencia Educativa</h1>
+          <p style="font-size:0.82rem; color:#e2e8f0 !important; opacity:0.95; margin-top:2px;">Liceo de Huara - Canal Seguro y Confidencial de Denuncia</p>
+        </div>
+        <div style="background:#ffffff; padding:6px 10px; border-radius:14px; box-shadow:0 4px 12px rgba(0,0,0,0.15); display:flex; align-items:center; justify-content:center; border:1.5px solid #6ee7b7; flex-shrink:0;">
+          <img src="assets/branding/Logo%20oficial%20de%20toda%20la%20plataforma%20y%20proyecto.png" alt="Logo MiRice" style="width:52px; height:52px; object-fit:contain;">
+        </div>
+      </div>
+
+      <div class="disclaimer-card">
+        <div class="disclaimer-title">⚠️ IMPORTANTE Y CONFIDENCIAL</div>
+        Esta plataforma es un canal oficial del Liceo de Huara amparado por la Circular 482 y Ley 21.430. La información entregada es de <strong>carácter estrictamente confidencial</strong>. Se exige veracidad y responsabilidad en los hechos descritos para resguardar el bienestar de los involucrados.
+      </div>
+
+      <form id="denuncia-form">
+        <!-- Badge identificatorio de sesión -->
+        <div class="form-group">
+          <label>Identificación del Estudiante Informante</label>
+          <div class="student-badge">
+            <span id="stud-name">Cargando...</span>
+            <span id="stud-rut" style="font-weight: bold;">...</span>
+          </div>
+        </div>
+
+        <!-- Asunto sugerido IA o manual -->
+        <div class="form-group">
+          <label for="den-asunto">Asunto o Categoría de la Situación (Protocolos RICE 2026)</label>
+          <select id="den-asunto" class="form-control" required>
+            <option value="">Seleccione asunto o protocolo...</option>
+            <option id="opt-suggested" value="" style="font-weight:bold; color:var(--primary); display:none;"></option>
+            <option value="Protocolo 1: Atrasos e Inasistencias Reiteradas">Protocolo 1: Atrasos e Inasistencias Reiteradas</option>
+            <option value="Protocolo 2: Pelea o maltrato entre compañeros">Protocolo 2: Pelea o maltrato entre compañeros (Riñas / Agresiones)</option>
+            <option value="Protocolo 3: Sospecha de acoso escolar (Bullying o Ciberacoso)">Protocolo 3: Sospecha de acoso escolar (Bullying o Ciberacoso)</option>
+            <option value="Protocolo 4: Vulneración de derechos o dificultades en el hogar">Protocolo 4: Vulneración de derechos o dificultades en el hogar</option>
+            <option value="Protocolo 5: Agresión o situación de connotación sexual">Protocolo 5: Agresión o situación de connotación sexual</option>
+            <option value="Protocolo 6: ⚠️ Presencia, consumo o venta de drogas o alcohol">Protocolo 6: ⚠️ Presencia, consumo o venta de drogas o alcohol</option>
+            <option value="Protocolo 7: ⚠️ Porte de elementos peligrosos o armas">Protocolo 7: ⚠️ Porte de elementos peligrosos o armas</option>
+            <option value="Protocolo 8: Situación de embarazo, maternidad o paternidad">Protocolo 8: Situación de embarazo, maternidad o paternidad adolescente</option>
+            <option value="Protocolo 14: Necesidad de apoyo emocional, TEA o salud mental">Protocolo 14: Necesidad de apoyo emocional, TEA o salud mental</option>
+            <option value="Otra causa">Otra causa...</option>
+          </select>
+        </div>
+
+        <!-- Asunto libre condicional -->
+        <div id="custom-asunto-group" class="form-group conditional-section">
+          <label for="den-asunto-custom">Escriba el Asunto del Reporte</label>
+          <input type="text" id="den-asunto-custom" class="form-control" placeholder="Escriba brevemente el motivo...">
+        </div>
+
+        <!-- Descripción amplia -->
+        <div class="form-group">
+          <label for="den-desc">Relato Detallado de la Situación</label>
+          <textarea id="den-desc" class="form-control" rows="5"
+            placeholder="Describa qué ocurrió, cuándo y quiénes están involucrados..." required></textarea>
+        </div>
+
+        <!-- Red de apoyo condicional -->
+        <div class="form-group">
+          <label>¿Esta situación ya ha sido informada a algún adulto u otro funcionario del liceo?</label>
+          <div class="radio-group">
+            <label class="radio-label">
+              <input type="radio" name="reported-before" value="si"> Sí
+            </label>
+            <label class="radio-label">
+              <input type="radio" name="reported-before" value="no" checked> No
+            </label>
+          </div>
+        </div>
+
+        <!-- Quien conditional -->
+        <div id="support-whocut" class="form-group conditional-section">
+          <label for="den-support-who">¿A quién se le informó?</label>
+          <input type="text" id="den-support-who" class="form-control"
+            placeholder="Ej: Profesor jefe, inspector, dupla psicosocial...">
+        </div>
+
+        <!-- Adjuntos: este canal todavía no los recibe. Antes se "guardaban"
+             solo en el teléfono de quien reportaba; es más honesto no
+             ofrecer algo que no llega a ningún lado. -->
+        <div class="form-group">
+          <label>Capturas de pantalla u otra evidencia</label>
+          <div class="attach-note">
+            📎 Este formulario todavía no recibe archivos adjuntos. Si tienes capturas, fotos u otra evidencia, descríbelo en el relato: el equipo de Convivencia te va a pedir que se las envíes por un canal seguro aparte.
+          </div>
+        </div>
+
+        <!-- Contacto opcional -->
+        <div class="form-group contact-field">
+          <label for="den-contacto">¿Cómo te pueden contactar? (opcional)</label>
+          <input type="text" id="den-contacto" class="form-control" maxlength="200"
+            placeholder="Un correo, un teléfono, o el nombre de tu profesor jefe">
+          <small>No es obligatorio. Ayuda si Convivencia necesita más antecedentes.</small>
+        </div>
+
+        <!-- Identificación: solo aparece si hay sesión iniciada -->
+        <div class="form-group" id="identify-group" style="display:none;">
+          <label class="identify-check">
+            <input type="checkbox" id="den-identificarse">
+            <span>Autorizo que Convivencia Educativa sepa que fui yo quien reportó esto.</span>
+          </label>
+        </div>
+
+        <div id="form-error" class="form-error"></div>
+
+        <button type="submit" id="btn-submit" class="btn-submit">📩 Enviar Información a Convivencia Educativa</button>
+      </form>
+    </div>
+
+    <!-- Panel de Éxito -->
+    <div id="success-panel" class="success-panel">
+      <div id="crisis-card" style="display:none; text-align:left; width:100%;"></div>
+      <span class="success-icon">✅</span>
+      <h2>Registro Enviado a Convivencia</h2>
+      <div id="folio-container" style="display:none;">
+        <span class="folio-badge">Folio: <span id="folio-numero"></span></span>
+      </div>
+      <p>
+        Tu reporte quedó <strong>registrado</strong> y el equipo de Convivencia Educativa del Liceo de Huara ya fue avisado.
+      </p>
+      <p style="font-size:0.82rem; margin-top:4px; color:#475569;">
+        Guarda el folio: sirve para preguntar por tu caso sin tener que contar todo de nuevo. El contenido queda reservado dentro del equipo.
+      </p>
+      <div style="display:flex; gap:12px; flex-wrap:wrap; justify-content:center; margin-top:14px;">
+        <button class="btn-nav-back" onclick="volverAAplicacionPrincipal();">
+          ⬅️ Volver a la App MiRice
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function volverAAplicacionPrincipal() {
+      if (window.history.length > 1 && document.referrer) {
+        window.history.back();
+      } else {
+        window.location.href = 'index.html';
+      }
+    }
+
+    // Traduce el asunto elegido (o escrito libremente) a una de las
+    // categorías fijas que acepta /api/reporte.js. Es una heurística por
+    // palabras clave: la prioridad real (crítica o normal) la calcula el
+    // servidor leyendo el relato completo, no esta categoría — así que un
+    // error de clasificación aquí no baja la urgencia de un caso grave.
+    function mapAsuntoACategoria(asunto) {
+      const t = String(asunto || '').toLowerCase();
+      if (/sexual|tocacion|abus/.test(t)) return 'vulneracion';
+      if (/droga|alcohol|estupefaciente|marihuana|pasta base/.test(t)) return 'drogas';
+      if (/arma|elemento peligroso|cortopunzante|cuchillo|navaja/.test(t)) return 'armas';
+      if (/ciberacoso|cyberbullying/.test(t)) return 'ciberacoso';
+      if (/acoso|bullying|hostigamiento/.test(t)) return 'acoso';
+      if (/discrimina/.test(t)) return 'discriminacion';
+      if (/robo|hurto|sustraj/.test(t)) return 'robo';
+      if (/transporte|furgon|bus escolar/.test(t)) return 'transporte';
+      if (/autolesi|suicid|cortarme/.test(t)) return 'autolesion';
+      if (/adulto|funcionario|profesor/.test(t) && /maltrat/.test(t)) return 'maltrato_adulto';
+      if (/vulneraci|hogar|embarazo|maternidad|paternidad/.test(t)) return 'vulneracion';
+      if (/pelea|maltrat|agresi|ri[nñ]a|golpe/.test(t)) return 'violencia';
+      return 'otro';
+    }
+
+    // Misma tarjeta y mismos tres teléfonos que usa bot.js en el corte de
+    // crisis del chat, para que la persona vea siempre la misma información
+    // sin importar por qué puerta de la app entró.
+    function tarjetaCrisisHTML() {
+      return `<div style="background:#fef2f2; border-left:5px solid #dc2626; padding:16px 18px; border-radius:14px; margin-bottom:16px; color:#7f1d1d; font-size:0.92rem; line-height:1.7;">
+        <strong>Lo que cuentas importa y lo tomamos en serio.</strong><br><br>
+        No tienes que esperar a que alguien revise el reporte. Hay personas disponibles ahora mismo:
+        <div style="background:#fff; border:1.5px solid #fecaca; border-radius:12px; padding:14px; margin:12px 0; font-size:0.92rem; line-height:1.9;">
+          <a href="tel:6003607777" style="color:#991b1b; font-weight:800; text-decoration:none;">📞 600 360 7777</a> — Salud Responde, 24 horas, gratuito<br>
+          <a href="tel:147" style="color:#991b1b; font-weight:800; text-decoration:none;">📞 147</a> — Fono Niños, gratuito desde cualquier teléfono<br>
+          <a href="tel:717" style="color:#991b1b; font-weight:800; text-decoration:none;">📞 717</a> — Teléfono de la Esperanza, 24 horas<br>
+          <a href="tel:131" style="color:#991b1b; font-weight:800; text-decoration:none;">📞 131</a> — SAMU, si hay peligro inmediato
+        </div>
+        En el liceo, la <strong>Dupla Psicosocial</strong> ya fue avisada por este reporte.
+      </div>`;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      // 1. Obtener parámetros de la URL — solo para prellenar el formulario,
+      // nunca para decidir quién es la persona (eso ahora depende de la
+      // sesión, ver más abajo).
+      const params = new URLSearchParams(window.location.search);
+      const asuntoAmable = params.get('asunto_sugerido');       // Lo que ve el estudiante
+      const protocoloInterno = params.get('protocolo_interno'); // Solo para clasificar
+      const descPrevia = params.get('desc');
+
+      // 1b. Sesión: mismo par de llaves que usará app.js al conectar el
+      // login (S3). Mientras esa sesión no exista, sessionStorage está
+      // vacío y el reporte viaja sin identificar — que es correcto: el
+      // RUT nunca fue algo que este formulario pudiera verificar.
+      const token = sessionStorage.getItem('mirice_token');
+      let persona = null;
+      try { persona = JSON.parse(sessionStorage.getItem('mirice_persona') || 'null'); } catch (e) { persona = null; }
+
+      const identifyGroup = document.getElementById('identify-group');
+      if (token && persona) {
+        document.getElementById('stud-name').textContent = persona.nombre || 'Sesión activa';
+        document.getElementById('stud-rut').textContent = persona.curso || persona.rol || '';
+        identifyGroup.style.display = 'block';
+      } else {
+        document.getElementById('stud-name').textContent = 'Sin identificar';
+        document.getElementById('stud-rut').textContent = 'puedes reportar igual';
+      }
+
+      if (descPrevia) {
+        document.getElementById('den-desc').value = descPrevia;
+      }
+
+      // Configurar etiqueta amable en el select (el estudiante NO ve protocolo técnico)
+      const selectAsunto = document.getElementById('den-asunto');
+      const optSuggested = document.getElementById('opt-suggested');
+      if (asuntoAmable) {
+        optSuggested.value = asuntoAmable;
+        optSuggested.textContent = `✏️ ${asuntoAmable}`;
+        optSuggested.style.display = 'block';
+        selectAsunto.value = asuntoAmable;
+      }
+
+      // 2. Condicionales de UI
+      const customAsuntoGroup = document.getElementById('custom-asunto-group');
+      const customAsuntoInput = document.getElementById('den-asunto-custom');
+
+      selectAsunto.addEventListener('change', () => {
+        if (selectAsunto.value === 'Otra causa') {
+          customAsuntoGroup.style.display = 'flex';
+          customAsuntoInput.setAttribute('required', 'true');
+        } else {
+          customAsuntoGroup.style.display = 'none';
+          customAsuntoInput.removeAttribute('required');
+        }
+      });
+
+      // Red de apoyo
+      const reportedRadios = document.getElementsByName('reported-before');
+      const supportGroup = document.getElementById('support-whocut');
+      const supportWhoInput = document.getElementById('den-support-who');
+
+      reportedRadios.forEach(radio => {
+        radio.addEventListener('change', () => {
+          if (radio.value === 'si') {
+            supportGroup.style.display = 'flex';
+            supportWhoInput.setAttribute('required', 'true');
+          } else {
+            supportGroup.style.display = 'none';
+            supportWhoInput.removeAttribute('required');
+          }
+        });
+      });
+
+      // 4. Submit
+      const form = document.getElementById('denuncia-form');
+      const formContent = document.getElementById('form-content');
+      const successPanel = document.getElementById('success-panel');
+
+      const btnSubmit = document.getElementById('btn-submit');
+      const formError = document.getElementById('form-error');
+      const identifyCheck = document.getElementById('den-identificarse');
+
+      function mostrarError(texto) {
+        formError.textContent = texto;
+        formError.style.display = 'block';
+      }
+
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        formError.style.display = 'none';
+
+        // Validar asunto libre si es "Otra causa"
+        let asuntoFinal = selectAsunto.value;
+        if (asuntoFinal === 'Otra causa') {
+          asuntoFinal = customAsuntoInput.value.trim();
+        }
+
+        const descripcion = document.getElementById('den-desc').value.trim();
+        if (!asuntoFinal || !descripcion) {
+          mostrarError('Por favor, completa el asunto y el relato antes de enviar.');
+          return;
+        }
+
+        const informoAdulto = document.querySelector('input[name="reported-before"]:checked').value;
+        const aQuien = informoAdulto === 'si' ? supportWhoInput.value.trim() : '';
+
+        // Todo el contexto que antes viajaba en campos aparte se pliega
+        // dentro del relato: /api/reporte.js solo acepta categoria + relato
+        // + identificarse + contacto + rol, así que nada de esto se pierde,
+        // solo cambia de forma.
+        let contexto = `Categoría indicada en el formulario: ${asuntoFinal}.`;
+        if (protocoloInterno && protocoloInterno !== asuntoFinal) {
+          contexto += ` Protocolo sugerido por el asistente: ${protocoloInterno}.`;
+        }
+        contexto += informoAdulto === 'si'
+          ? ` Ya fue informado antes a: ${aQuien || 'un adulto del liceo'}.`
+          : ' No había sido informado antes a ningún adulto.';
+
+        const relato = `${contexto}\n\n${descripcion}`.slice(0, 5000);
+        const categoria = mapAsuntoACategoria(asuntoFinal + ' ' + (protocoloInterno || ''));
+        const contacto = document.getElementById('den-contacto').value.trim().slice(0, 200);
+        const identificarse = !!(token && identifyCheck && identifyCheck.checked);
+
+        btnSubmit.disabled = true;
+        btnSubmit.textContent = '⏳ Enviando...';
+
+        try {
+          const headers = { 'Content-Type': 'application/json' };
+          if (token) headers.Authorization = 'Bearer ' + token;
+
+          const resp = await fetch('/api/reporte', {
+            method: 'POST',
+            headers,
+            body: JSON.stringify({ categoria, relato, identificarse, contacto, rol: 'estudiante' }),
+          });
+
+          const datos = await resp.json().catch(() => null);
+
+          if (resp.ok && datos && datos.estado === 'recibido') {
+            if (datos.tipo === 'crisis') {
+              const crisisCard = document.getElementById('crisis-card');
+              crisisCard.innerHTML = tarjetaCrisisHTML();
+              crisisCard.style.display = 'block';
+            }
+            if (datos.folio) {
+              document.getElementById('folio-numero').textContent = datos.folio;
+              document.getElementById('folio-container').style.display = 'block';
+            }
+            localStorage.removeItem('mirice_report_draft');
+            formContent.style.display = 'none';
+            successPanel.style.display = 'flex';
+            return;
+          }
+
+          // Errores conocidos del contrato de la API
+          if (resp.status === 403 && datos && datos.error === 'cambio_requerido') {
+            mostrarError(datos.texto || 'Antes de reportar tienes que elegir tu clave nueva. Vuelve a entrar a la app.');
+          } else if (datos && datos.texto) {
+            mostrarError(datos.texto);
+          } else if (resp.status === 429) {
+            mostrarError('Ya enviaste varios reportes seguidos. Si falta algo importante, acude directamente a Convivencia Educativa.');
+          } else {
+            mostrarError('No se pudo registrar el reporte. Inténtalo de nuevo en unos minutos, o acude directamente a Convivencia Educativa.');
+          }
+        } catch (err) {
+          console.error('[denuncia] fallo de red:', err);
+          mostrarError('No hay conexión en este momento, así que no puedo asegurar que tu reporte llegó. Por favor acude directamente a Convivencia Educativa o a Inspectoría General para contarlo en persona.');
+        } finally {
+          btnSubmit.disabled = false;
+          btnSubmit.textContent = '📩 Enviar Información a Convivencia Educativa';
+        }
+      });
+
+      // --- BORRADOR LOCAL (solo lo que la persona está escribiendo, nunca
+      // lo que ya se envió: eso vive únicamente en el servidor) ---
+      const descInput = document.getElementById('den-desc');
+      const contactoInput = document.getElementById('den-contacto');
+      const camposAutoguardado = [descInput, selectAsunto, customAsuntoInput, contactoInput];
+
+      try {
+        const borradorGuardado = localStorage.getItem('mirice_report_draft');
+        if (borradorGuardado) {
+          const borrador = JSON.parse(borradorGuardado);
+          if (borrador.descripcion && descInput && !descPrevia) descInput.value = borrador.descripcion;
+          if (borrador.contacto && contactoInput) contactoInput.value = borrador.contacto;
+          if (borrador.asunto === 'Otra causa' && borrador.asunto_otro) {
+            selectAsunto.value = 'Otra causa';
+            customAsuntoGroup.style.display = 'flex';
+            customAsuntoInput.value = borrador.asunto_otro;
+            customAsuntoInput.setAttribute('required', 'true');
+          }
+        }
+      } catch (e) {
+        console.warn('No se pudo cargar el borrador anterior:', e);
+      }
+
+      camposAutoguardado.forEach(el => {
+        if (!el) return;
+        el.addEventListener('input', () => {
+          localStorage.setItem('mirice_report_draft', JSON.stringify({
+            descripcion: descInput.value,
+            contacto: contactoInput.value,
+            asunto: selectAsunto.value,
+            asunto_otro: customAsuntoInput.value,
+          }));
+        });
+      });
+    });
+  </script>
+  <footer style="margin-top: 16px; font-size: 0.78rem; color: #64748b; text-align: center;">
+    <p>© 2026 Liceo de Huara • Plataforma y aplicación diseñada por Profesor Omar Contreras Ayala</p>
+  </footer>
+</body>
+
+</html>

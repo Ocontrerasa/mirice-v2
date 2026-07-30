@@ -1,0 +1,29 @@
+[
+  {
+    "rut_limpio": "223456789",
+    "rut_formato": "22.345.678-9",
+    "nombre": "Brayan Choque",
+    "curso": "2° Medio B",
+    "email": "brayan.choque@liceohuara.cl",
+    "estado": "Regular",
+    "matricula": "2026-H045"
+  },
+  {
+    "rut_limpio": "234567890",
+    "rut_formato": "23.456.789-0",
+    "nombre": "Nayara Mamani",
+    "curso": "4° Medio A",
+    "email": "nayara.mamani@liceohuara.cl",
+    "estado": "Regular",
+    "matricula": "2026-H112"
+  },
+  {
+    "rut_limpio": "24567890K",
+    "rut_formato": "24.567.890-K",
+    "nombre": "Diego Challapa",
+    "curso": "1° Medio A",
+    "email": "diego.challapa@liceohuara.cl",
+    "estado": "Regular",
+    "matricula": "2026-H008"
+  }
+]

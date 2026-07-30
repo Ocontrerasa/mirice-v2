@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="color-scheme" content="light dark">
+  <title>MiRice Admin — Consola Directiva Liceo de Huara</title>
+  <meta name="description" content="Consola de administración protegida de MiRice - Liceo de Huara.">
+  <link rel="icon" type="image/png" href="assets/branding/Logo oficial de toda la plataforma y proyecto.png">
+  <link rel="apple-touch-icon" href="assets/branding/Logo oficial de toda la plataforma y proyecto.png">
+  <link rel="manifest" href="manifest.json">
+  <link rel="stylesheet" href="src/css/styles.css?v=2.0.0">
+  <style>
+    /* Estilos exclusivos para la pantalla de Login Administrativo */
+    .login-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      height: 100%;
+      padding: 30px;
+    }
+    .login-card {
+      width: 100%;
+      max-width: 380px;
+      padding: 32px;
+      border-radius: var(--radius-md);
+      background: var(--bg-card);
+      border: 1px solid var(--border-card);
+      box-shadow: var(--shadow);
+      text-align: center;
+      animation: fadeIn 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .login-logo {
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: var(--primary);
+      margin-bottom: 8px;
+    }
+    .login-logo span {
+      color: var(--accent);
+    }
+    .login-subtitle {
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      margin-bottom: 30px;
+    }
+    .form-group {
+      text-align: left;
+      margin-bottom: 20px;
+    }
+    .form-group label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: var(--text-main);
+      margin-bottom: 6px;
+    }
+    .form-control {
+      width: 100%;
+      padding: 12px 16px;
+      border-radius: var(--radius-sm);
+      border: 1px solid var(--border-card);
+      background: rgba(255, 255, 255, 0.6);
+      font-family: inherit;
+      font-size: 0.95rem;
+      color: var(--text-main);
+      transition: var(--transition);
+    }
+    .form-control:focus {
+      outline: none;
+      border-color: var(--accent);
+      background: rgba(255, 255, 255, 0.9);
+      box-shadow: 0 0 0 3px rgba(229, 105, 30, 0.15);
+    }
+    .btn-login {
+      width: 100%;
+      padding: 14px;
+      border-radius: var(--radius-sm);
+      border: none;
+      background: var(--primary);
+      color: var(--text-white);
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: var(--transition);
+      margin-top: 10px;
+    }
+    .btn-login:hover {
+      background: var(--primary-light);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    }
+    .btn-login:active {
+      transform: translateY(0);
+    }
+    .error-message {
+      color: hsl(0, 80%, 45%);
+      background: hsl(0, 80%, 95%);
+      padding: 10px;
+      border-radius: var(--radius-sm);
+      font-size: 0.85rem;
+      margin-bottom: 20px;
+      display: none;
+      animation: shake 0.4s ease;
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Contenedor Principal de la App (Aislado para Admin) -->
+  <div id="app-container" aria-live="polite">
+    
+    <!-- 1. Pantalla de Login -->
+    <div id="login-screen" class="login-container">
+      <div class="login-card">
+        <img src="assets/branding/Logo oficial de toda la plataforma y proyecto.png" alt="Logo Oficial MiRice" class="logo-admin-login" style="max-width: 90px; object-fit: contain;">
+        <div class="login-logo">Mi<span>Rice</span> Admin</div>
+        <p class="login-subtitle">Gestión de Convivencia • Liceo de Huara</p>
+        
+        <div id="login-error" class="error-message" role="alert">Credenciales incorrectas. Intente nuevamente.</div>
+        
+        <form id="admin-login-form" novalidate>
+          <div class="form-group">
+            <label for="admin-email">RUT Directivo/Funcionario</label>
+            <input type="text" id="admin-email" class="form-control" placeholder="33.333.333-3" required autocomplete="username">
+          </div>
+          <div class="form-group">
+            <label for="admin-password">Contraseña</label>
+            <div class="password-wrapper">
+              <input type="password" id="admin-password" class="form-control" placeholder="••••••••" required autocomplete="current-password">
+              <button type="button" id="toggle-password" class="toggle-password" aria-label="Mostrar contraseña">👁️</button>
+            </div>
+          </div>
+          <button type="submit" class="btn-login">Ingresar a Consola</button>
+        </form>
+      </div>
+      <footer class="app-footer" style="border: none; margin-top: 20px;">
+        <p>© 2026 Liceo de Huara • Plataforma y aplicación diseñada por Profesor Omar Contreras Ayala</p>
+      </footer>
+    </div>
+
+    <!-- 2. Dashboard del Super Administrador (Protegido por login) -->
+    <div id="dashboard-layout" class="dashboard-layout" style="display: none;">
+      <header class="dashboard-header">
+        <div class="user-info">
+          <img src="assets/branding/Logo oficial de toda la plataforma y proyecto.png" alt="Logo Oficial MiRice" class="logo-dashboard-avatar" style="object-fit: contain; background: white; padding: 2px;">
+          <div class="user-meta">
+            <h2>Super Administrador</h2>
+            <p>Liceo de Huara • Consola Dirección</p>
+          </div>
+        </div>
+        <button class="btn-logout" id="btn-logout" aria-label="Cerrar sesión de administración">Cerrar Sesión</button>
+      </header>
+
+      <main class="dashboard-content" id="dashboard-content">
+        <!-- El contenido detallado se cargará por admin.js -->
+        <div class="welcome-card" style="background: var(--bg-card); padding: 24px; border-radius: var(--radius-md); border: 1px solid var(--border-card); animation: fadeIn 0.5s ease;">
+          <h3 style="font-size: 1.4rem; color: var(--primary); margin-bottom: 12px;">Consola de Control del RICE</h3>
+          <p style="color: var(--text-muted); font-size: 0.95rem; line-height: 1.5; margin-bottom: 16px;">
+            Bienvenido al portal central directivo. Desde aquí podrá subir anexos legales, verificar el estado de la indexación del RICE local para la IA y monitorear reportes de incidentes.
+          </p>
+          <div style="background: hsl(200, 60%, 95%); padding: 16px; border-radius: var(--radius-sm); border-left: 4px solid hsl(200, 80%, 40%); font-size: 0.9rem; color: hsl(200, 80%, 25%);">
+            🤖 <strong>Protección de Datos:</strong> Esta consola contiene información sensible del establecimiento. Recuerde cerrar sesión al finalizar sus actividades.
+          </div>
+        </div>
+      </main>
+
+      <footer class="app-footer">
+        <p>© 2026 Liceo de Huara • Plataforma y aplicación diseñada por Profesor Omar Contreras Ayala</p>
+      </footer>
+    </div> <!-- Cierre de dashboard-layout -->
+  </div> <!-- Cierre de app-container (movido aquí para liberar los modales de su desborde) -->
+
+  <!-- Modal de Vista y Generación de Acta Imprimible -->
+  <div id="acta-print-modal" class="acta-print-modal" style="display: none;">
+      <div class="acta-modal-header no-print" style="position: sticky; top: 0; z-index: 10000; display: flex; gap: 16px; justify-content: flex-end; padding: 16px; background: rgba(255,255,255,0.95); border-bottom: 1px solid var(--border-card); align-items: center; backdrop-filter: blur(8px); box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+        <button id="btn-close-acta" class="btn-primary" style="margin-top:0; width:auto; background:#6b7280; border-color:#6b7280;">← Volver a Consola</button>
+        <button id="btn-email-acta-trigger" class="btn-primary" style="margin-top:0; width:auto; background:#10b981; border-color:#10b981;">Enviar por Email ✉️</button>
+        <button id="btn-print-acta-trigger" class="btn-primary" style="margin-top:0; width:auto; background:var(--accent); border-color:var(--accent);">Imprimir Acta Oficial 🖨️</button>
+      </div>
+      <div class="acta-paper-container" style="padding: 24px; background: #374151; box-sizing: border-box; width: 100%;">
+        <div class="acta-paper" id="acta-paper-content" style="background: white; width: 100%; max-width: 800px; min-height: 297mm; padding: 40px; margin: 40px auto; box-shadow: 0 10px 25px rgba(0,0,0,0.3); border-radius: 4px; color: black; font-family: 'Outfit', sans-serif; box-sizing: border-box;">
+          <!-- Contenido dinámico del acta oficial inyectado por admin.js -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal Flotante para Enviar Acta por Email -->
+    <div id="email-send-modal" class="no-print" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.7); z-index: 10000; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease;">
+      <div class="modal-card" style="background: var(--bg-card); border: 1px solid var(--border-card); padding: 28px; border-radius: var(--radius-md); max-width: 420px; width: 90%; text-align: center; box-shadow: var(--shadow); position: relative; animation: fadeIn 0.4s ease;">
+        <h4 style="color: var(--primary); font-size: 1.25rem; font-weight: 700; margin-bottom: 8px;">Enviar Acta Oficial ✉️</h4>
+        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; margin-bottom: 20px;">
+          Se enviará una copia en formato PDF adjunto con firmas validadas electrónicamente.
+        </p>
+        
+        <form id="email-send-form" style="display: flex; flex-direction: column; gap: 14px; text-align: left;">
+          <div class="form-group" style="margin-bottom: 0;">
+            <label for="dest-email" style="font-weight:600; color:var(--text-main); font-size:0.85rem;">Correo Electrónico Destinatario</label>
+            <input type="email" id="dest-email" class="form-control" placeholder="apoderado@correo.cl" required style="background: white; border-color:var(--border-card); color:black;">
+          </div>
+          <div style="display: flex; gap: 12px; margin-top: 10px;">
+            <button type="button" id="btn-cancel-email" class="btn-primary" style="margin: 0; background: #6b7280; border-color: #6b7280; width: auto; padding: 10px 16px;">Cancelar</button>
+            <button type="submit" id="btn-submit-email" class="btn-primary" style="margin: 0; flex: 1; background: #10b981; border-color: #10b981; width: auto; padding: 10px 16px;">Enviar Acta</button>
+          </div>
+        </form>
+
+        <!-- Loader de Envío Simulado -->
+        <div id="email-sender-loader" style="display: none; margin-top: 20px; flex-direction: column; align-items: center; gap: 12px;">
+          <div class="spinner" style="width: 36px; height: 36px; border: 4px solid rgba(16, 185, 129, 0.15); border-top-color: #10b981; border-radius: 50%; animation: spin 1s infinite linear;"></div>
+          <div id="email-loader-text" style="font-size: 0.82rem; color: var(--text-muted); font-weight: 600;">Estableciendo conexión segura...</div>
+        </div>
+      </div>
+    </div>
+
+
+  <script src="src/js/bot.js"></script>
+  <script src="src/js/admin.js"></script>
+</body>
+</html>

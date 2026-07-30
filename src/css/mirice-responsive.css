@@ -1,0 +1,401 @@
+/* ============================================================
+   MIRICE 2026 — CAPA RESPONSIVA
+   Liceo de Huara • SLEP Tamarugal
+
+   IMPORTANTE: este archivo debe cargarse DESPUÉS de styles.css.
+   En index.html, denuncia.html y admin.html:
+
+     <link rel="stylesheet" href="src/css/styles.css?v=3.0.0">
+     <link rel="stylesheet" href="src/css/mirice-responsive.css?v=1.0.0">
+
+   Y reemplazar la etiqueta viewport de los tres archivos por:
+
+     <meta name="viewport"
+           content="width=device-width, initial-scale=1, viewport-fit=cover,
+                    interactive-widget=resizes-content">
+
+   No modifica colores ni identidad visual: solo corrige geometría,
+   alturas móviles, teclado virtual, áreas táctiles y desbordes.
+   ============================================================ */
+
+
+/* ------------------------------------------------------------
+   1. UNIDADES DE ALTURA REALES EN MÓVIL
+   Problema original: body y #app-container usan 100vh. En Chrome
+   Android y Safari iOS, 100vh incluye la barra de direcciones, así
+   que ~90px del final de la app quedan bajo el navegador. Con
+   overflow:hidden en body, ese contenido es inalcanzable.
+   Solución: dvh (dynamic viewport height) con vh de respaldo.
+   ------------------------------------------------------------ */
+
+html {
+  overflow-x: hidden;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+body {
+  height: 100vh;          /* respaldo navegadores antiguos */
+  height: 100dvh;         /* real: se ajusta a la barra del navegador */
+  min-height: 0;
+  padding: 12px;
+  padding-top: max(12px, env(safe-area-inset-top));
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+  padding-left: max(12px, env(safe-area-inset-left));
+  padding-right: max(12px, env(safe-area-inset-right));
+  overflow-x: hidden;
+}
+
+#app-container {
+  height: calc(100vh - 24px);
+  height: calc(100dvh - 24px);
+  max-height: none;       /* el tope de 900px recortaba pantallas altas */
+}
+
+/* En escritorio sí conviene un contenedor con tope de altura */
+@media (min-width: 1024px) {
+  #app-container {
+    max-height: 940px;
+    max-width: 1100px;
+  }
+}
+
+@media (min-width: 1440px) {
+  #app-container {
+    max-width: 1240px;
+  }
+}
+
+/* Teléfonos: sin márgenes desperdiciados, la app ocupa la pantalla */
+@media (max-width: 600px) {
+  body {
+    padding: 0;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
+    align-items: stretch;
+  }
+
+  #app-container {
+    height: 100dvh;
+    height: calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom));
+    max-width: 100%;
+    border-radius: 0;
+    border-left: none;
+    border-right: none;
+  }
+}
+
+
+/* ------------------------------------------------------------
+   2. TECLADO VIRTUAL Y ZOOM AUTOMÁTICO EN iOS
+   Safari hace zoom sobre cualquier campo con fuente < 16px y no
+   vuelve al nivel anterior. El chat usaba 0.9rem (14.4px), así que
+   al tocar "escribe tu mensaje" la app quedaba ampliada y cortada.
+   ------------------------------------------------------------ */
+
+input,
+select,
+textarea,
+#chat-input,
+#apo-chat-input,
+#fun-chat-input,
+#chat-form input,
+#apo-chat-form input,
+#fun-chat-form input {
+  font-size: 16px !important;
+  max-width: 100%;
+}
+
+@media (min-width: 769px) {
+  /* En escritorio no existe el zoom de iOS: se puede afinar el tamaño */
+  input,
+  select,
+  textarea {
+    font-size: 0.95rem !important;
+  }
+}
+
+
+/* ------------------------------------------------------------
+   3. CHAT: ALTURA POR FLEX, NO POR CÁLCULOS MÁGICOS
+   Original: height:550px, luego calc(100vh - 170px), luego
+   calc(100vh - 180px). Cada número supone una altura de cabecera
+   que cambia según el rol y el largo del nombre del usuario.
+   ------------------------------------------------------------ */
+
+.chat-wrapper {
+  height: auto !important;
+  min-height: 0 !important;
+  max-height: none !important;
+  flex: 1 1 auto !important;
+  margin: 8px auto !important;
+  width: 100% !important;
+}
+
+.dashboard-content.chat-mode,
+.chat-fullscreen {
+  display: flex !important;
+  flex-direction: column !important;
+  min-height: 0 !important;
+}
+
+#chat-messages,
+#apo-chat-messages,
+#fun-chat-messages {
+  flex: 1 1 auto !important;
+  min-height: 0 !important;        /* sin esto, flexbox nunca deja scrollear */
+  overscroll-behavior: contain;    /* el scroll del chat no arrastra la página */
+  scroll-padding-bottom: 16px;
+}
+
+#chat-form,
+#apo-chat-form,
+#fun-chat-form {
+  flex: 0 0 auto !important;
+  position: relative !important;   /* sticky dentro de un flex ya fijo sobraba */
+  padding-bottom: max(12px, env(safe-area-inset-bottom)) !important;
+}
+
+@media (max-width: 768px) {
+  .chat-wrapper {
+    height: auto !important;
+    min-height: 0 !important;
+    border-radius: 12px !important;
+    margin: 4px 0 !important;
+  }
+
+  #chat-form,
+  #apo-chat-form,
+  #fun-chat-form {
+    padding: 8px 10px !important;
+    padding-bottom: max(8px, env(safe-area-inset-bottom)) !important;
+  }
+}
+
+/* Burbujas: nombres largos, RUT, correos y enlaces ya no rompen el ancho */
+.chat-bubble,
+.chat-bubble *,
+#chat-messages div,
+#apo-chat-messages div,
+#fun-chat-messages div {
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  max-width: 100%;
+}
+
+/* El contenido que inyecta el bot trae anchos y tipografías fijas */
+#chat-messages img,
+#apo-chat-messages img,
+#fun-chat-messages img,
+#chat-messages table,
+#apo-chat-messages table,
+#fun-chat-messages table {
+  max-width: 100% !important;
+  height: auto;
+}
+
+
+/* ------------------------------------------------------------
+   4. ÁREAS TÁCTILES
+   Objetivo: 44x44 px mínimo (WCAG 2.2 AA, criterio 2.5.8).
+   Varios botones estaban en 28-36px de alto.
+   ------------------------------------------------------------ */
+
+@media (pointer: coarse) {
+  button,
+  .btn,
+  .btn-primary,
+  .tab-btn,
+  .role-card,
+  a.btn,
+  [role="button"],
+  input[type="checkbox"],
+  input[type="radio"] {
+    min-height: 44px;
+    touch-action: manipulation;
+  }
+
+  input[type="checkbox"],
+  input[type="radio"] {
+    min-width: 24px;
+    width: 24px;
+    height: 24px;
+  }
+
+  .toggle-password,
+  .icon-btn {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+
+
+/* ------------------------------------------------------------
+   5. TIPOGRAFÍA FLUIDA
+   Reemplaza los saltos bruscos entre 2.1rem y 1.35rem por una
+   escala continua. Sin esto, en 360px (Android de gama baja, muy
+   común en la comuna) el título seguía ocupando tres líneas.
+   ------------------------------------------------------------ */
+
+.welcome-header h1 {
+  font-size: clamp(1.25rem, 5.5vw, 2.1rem) !important;
+  line-height: 1.2 !important;
+  text-wrap: balance;
+}
+
+.welcome-header p {
+  font-size: clamp(0.82rem, 3.2vw, 0.95rem) !important;
+}
+
+.header-title,
+.user-meta h2 {
+  font-size: clamp(0.85rem, 3.4vw, 1.05rem) !important;
+}
+
+h2 { font-size: clamp(1.05rem, 4vw, 1.4rem); }
+h3 { font-size: clamp(0.95rem, 3.6vw, 1.15rem); }
+
+
+/* ------------------------------------------------------------
+   6. REJILLAS QUE SE ADAPTAN SOLAS
+   grid-template-columns: repeat(3, 1fr) fijo rompe en tablets en
+   vertical (768px) y en pantallas partidas.
+   ------------------------------------------------------------ */
+
+.roles-grid {
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)) !important;
+  gap: clamp(10px, 2.5vw, 16px) !important;
+}
+
+.cards-grid,
+.modules-grid,
+.stats-grid,
+.dashboard-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
+  gap: clamp(10px, 2vw, 16px);
+}
+
+
+/* ------------------------------------------------------------
+   7. TABLAS DEL PANEL ADMIN
+   En móvil se salían del ancho y empujaban toda la página.
+   ------------------------------------------------------------ */
+
+.table-wrap,
+.tabla-responsive {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+@media (max-width: 768px) {
+  table {
+    display: block;
+    width: 100%;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .dashboard-layout {
+    flex-direction: column !important;
+  }
+
+  .sidebar,
+  .admin-sidebar {
+    width: 100% !important;
+    height: auto !important;
+    flex-direction: row !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+  }
+}
+
+
+/* ------------------------------------------------------------
+   8. TELÉFONO EN HORIZONTAL
+   Con 360px de alto, el splash y los logos ocupaban toda la
+   pantalla y los botones quedaban fuera.
+   ------------------------------------------------------------ */
+
+@media (max-height: 520px) and (orientation: landscape) {
+  .splash-card { padding: 10px 18px; margin-bottom: 10px; }
+  .logo-splash-badge { max-width: 130px; }
+  .splash-institution { font-size: 0.8rem; margin-bottom: 14px; }
+
+  .logo-header-wrap { min-height: 36px !important; padding: 4px 10px !important; }
+  .logo-header, .logo-slep { max-height: 32px !important; }
+
+  .welcome-header { margin-bottom: 8px !important; }
+  .welcome-header h1 { font-size: 1.15rem !important; }
+
+  .role-selection-screen { padding: 8px 12px !important; }
+  .roles-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 180px), 1fr)) !important; }
+}
+
+
+/* ------------------------------------------------------------
+   9. PANTALLAS MUY ANGOSTAS (320–360px)
+   ------------------------------------------------------------ */
+
+@media (max-width: 360px) {
+  .role-selection-screen { padding: 8px 10px !important; }
+  .role-card { padding: 10px 12px !important; }
+  .tab-btn { padding: 8px 10px !important; font-size: 0.74rem !important; }
+  .logo-header, .logo-slep { max-height: 34px !important; }
+}
+
+
+/* ------------------------------------------------------------
+   10. MODO OSCURO DEL SISTEMA
+   denuncia.html y admin.html declaran color-scheme "light dark",
+   pero los estilos fijan fondos blancos con texto oscuro. En un
+   teléfono con modo oscuro activo, Android pintaba los campos de
+   formulario en oscuro y el texto tecleado quedaba invisible.
+   Hasta que exista un tema oscuro real, se fuerza el claro.
+   ------------------------------------------------------------ */
+
+:root {
+  color-scheme: light;
+}
+
+input,
+select,
+textarea {
+  color-scheme: light;
+  background-color: #ffffff;
+  color: #1e293b;
+}
+
+
+/* ------------------------------------------------------------
+   11. ACCESIBILIDAD BASE
+   ------------------------------------------------------------ */
+
+:focus-visible {
+  outline: 3px solid #047857;
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Evita el desborde horizontal que provocan los estilos en línea */
+img,
+svg,
+video,
+canvas,
+iframe {
+  max-width: 100%;
+  height: auto;
+}

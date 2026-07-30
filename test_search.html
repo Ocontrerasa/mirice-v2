@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Verificación de Búsqueda Semántica Local - MiRice</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      max-width: 900px;
+      margin: 40px auto;
+      padding: 0 20px;
+      background-color: #f8fafc;
+      color: #1e293b;
+    }
+    h1 {
+      color: #0f172a;
+      border-bottom: 2px solid #e2e8f0;
+      padding-bottom: 12px;
+    }
+    .query-section {
+      background: white;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
+    .query-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #2563eb;
+      margin-top: 0;
+      margin-bottom: 14px;
+    }
+    .result-item {
+      background: #f1f5f9;
+      border-left: 4px solid #64748b;
+      padding: 12px 16px;
+      margin-bottom: 12px;
+      border-radius: 0 4px 4px 0;
+    }
+    .result-item.boosted {
+      border-left-color: #10b981;
+      background: #f0fdf4;
+    }
+    .result-header {
+      font-weight: bold;
+      font-size: 0.95rem;
+      margin-bottom: 4px;
+    }
+    .result-meta {
+      font-size: 0.8rem;
+      color: #64748b;
+      margin-bottom: 8px;
+    }
+    .result-content {
+      font-size: 0.9rem;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <h1>Panel de Diagnóstico del Buscador Local RAG</h1>
+  <p>Resultados devueltos por el motor de búsqueda en base a <strong id="total-chunks">...</strong> fragmentos cargados:</p>
+
+  <div id="results">Cargando diagnóstico...</div>
+
+  <script src="src/js/rice_db.js"></script>
+  <script src="src/js/search_engine.js"></script>
+  <script>
+    const testQueries = [
+      "atrasos y puntualidad",
+      "delitos de connotacion sexual",
+      "desregulacion emocional o TEA",
+      "inasistencia reiterada y desercion",
+      "Tengo un amigo que está teniendo problemas con su polola, y parece que on violentos. que hago? el es de mi curso"
+    ];
+
+    let html = "";
+    testQueries.forEach(q => {
+      const results = RICE_SearchEngine.buscar(q, 2);
+      html += `<div class="query-section">`;
+      html += `<div class="query-title">Búsqueda: "${q}"</div>`;
+      
+      if (results.length === 0) {
+        html += `<p style="color:#ef4444">No se encontraron resultados.</p>`;
+      } else {
+        results.forEach(res => {
+          const isBoosted = res.id.startsWith("RICE-ART-");
+          const itemClass = isBoosted ? "result-item boosted" : "result-item";
+          html += `
+            <div class="${itemClass}">
+              <div class="result-header">[${res.id}] ${res.titulo}</div>
+              <div class="result-meta">Sección: ${res.seccion} ${isBoosted ? '🔥 (Score Boosted)' : ''}</div>
+              <div class="result-content">${res.contenido}</div>
+            </div>
+          `;
+        });
+      }
+      html += `</div>`;
+    });
+
+    document.getElementById("total-chunks").innerText = RICE_DATABASE.length;
+    document.getElementById("results").innerHTML = html;
+  </script>
+</body>
+</html>

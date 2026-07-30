@@ -1,0 +1,2333 @@
+/* SYSTEM DESIGN: MiRice - Conviviendo en el Desierto de Huara */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap');
+
+:root {
+  /* Paleta Oficial Liceo de Huara - Alto Contraste Institucional */
+  --primary-hue: 160;
+  --accent-hue: 28;
+  
+  --primary: #047857;
+  --primary-light: #065f46;
+  --accent: #d97706;
+  --accent-hover: #b45309;
+  
+  --bg-app: #f1f5f9;
+  --bg-card: #ffffff;
+  --border-card: #cbd5e1;
+  
+  --text-main: #0f172a;
+  --text-muted: #334155;
+  --text-white: #ffffff;
+  
+  --shadow: 0 4px 14px 0 rgba(0, 0, 0, 0.06);
+  --shadow-hover: 0 8px 24px 0 rgba(0, 0, 0, 0.12);
+  
+  /* Layout */
+  --radius-lg: 24px;
+  --radius-md: 16px;
+  --radius-sm: 8px;
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  --font-sans: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Garantizar Fondo Claro y Lectura 100% Impecable en Todos los Teléfonos (Incluso con Modo Oscuro Activado) */
+/* Reset de Estilos */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-sans);
+  background: var(--bg-app);
+  color: var(--text-main);
+  height: 100vh;
+  margin: 0;
+  padding: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+}
+
+/* FIX: Título de bienvenida compacto en móvil (evitar 3 líneas) */
+@media (max-width: 480px) {
+  .welcome-header h1 {
+    font-size: 1.35rem !important;
+    flex-wrap: wrap !important;
+    justify-content: center !important;
+    line-height: 1.3 !important;
+  }
+  .welcome-header h1 .version-badge {
+    font-size: 0.65rem !important;
+    padding: 2px 8px !important;
+  }
+}
+
+/* Contenedor Principal de la App (Simulación Móvil/Web Unificada) */
+#app-container {
+  width: 100%;
+  max-width: 480px;
+  height: calc(100vh - 24px);
+  max-height: 900px;
+  background: var(--bg-card);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  position: relative;
+  transition: var(--transition);
+}
+
+@media (min-width: 768px) {
+  #app-container {
+    max-width: 1020px;
+  }
+}
+
+/* Pantalla de Carga/Splash Screen - Diseño Premium Awwwards */
+.splash-screen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #064e3b 0%, #047857 50%, #0f172a 100%);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-white);
+  z-index: 100;
+  transition: opacity 0.6s ease;
+  padding: 24px;
+}
+
+.splash-card {
+  background: white;
+  padding: 20px 32px;
+  border-radius: 24px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  animation: pulse 2.5s infinite ease-in-out;
+}
+
+.logo-splash-badge {
+  max-width: 210px;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.splash-institution {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.92);
+  letter-spacing: 0.5px;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.loader {
+  width: 40px;
+  height: 40px;
+  border: 4px solid rgba(255, 255, 255, 0.2);
+  border-left-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* Pantalla de Selección de Roles */
+.role-selection-screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  padding: 20px 24px;
+  text-align: center;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: var(--transition);
+  overflow-y: auto;
+  min-height: 0;
+  width: 100%;
+}
+
+.role-selection-screen.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.welcome-header {
+  margin-bottom: 18px;
+}
+
+.welcome-header h1 {
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 6px;
+}
+
+.welcome-header p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.roles-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  margin-bottom: 16px;
+}
+
+@media (min-width: 768px) {
+  .roles-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+}
+
+/* Optimización de Tarjetas de Rol Compactas para Dispositivos Móviles (Sin Scroll) */
+@media (max-width: 767px) {
+  .role-selection-screen {
+    padding: 10px 14px;
+    justify-content: space-around;
+  }
+
+  .logo-header-wrap {
+    min-height: 48px;
+    padding: 6px 12px;
+    margin-bottom: 8px;
+  }
+
+  .logo-header, .logo-slep {
+    max-height: 44px;
+  }
+
+  .welcome-header {
+    margin-bottom: 10px;
+  }
+
+  .welcome-header h1 {
+    font-size: 1.55rem;
+    margin-bottom: 2px;
+  }
+
+  .welcome-header p {
+    font-size: 0.82rem;
+  }
+
+  .roles-grid {
+    gap: 8px;
+    margin-bottom: 8px;
+  }
+
+  .role-card {
+    padding: 10px 14px;
+    flex-direction: row;
+    align-items: center;
+    text-align: left;
+    gap: 12px;
+    border-radius: 14px;
+  }
+
+  .role-icon {
+    width: 42px;
+    height: 42px;
+    font-size: 1.3rem;
+    margin-bottom: 0;
+    flex-shrink: 0;
+  }
+
+  .role-title {
+    font-size: 1rem;
+    margin-bottom: 2px;
+    display: block;
+  }
+
+  .role-desc {
+    font-size: 0.76rem;
+    line-height: 1.3;
+    display: block;
+  }
+}
+
+.role-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-md);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+  transition: var(--transition);
+  text-decoration: none;
+  color: inherit;
+  outline: none;
+}
+
+.role-card:hover, .role-card:focus-visible {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-hover);
+  border-color: var(--accent);
+}
+
+.role-card:active {
+  transform: translateY(-1px);
+}
+
+.role-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: hsl(var(--primary-hue), 60%, 95%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 16px;
+  font-size: 1.8rem;
+  color: var(--primary);
+  transition: var(--transition);
+}
+
+.role-card:hover .role-icon {
+  background: var(--accent);
+  color: var(--text-white);
+  transform: scale(1.1);
+}
+
+.role-title {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: var(--primary);
+}
+
+.role-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+/* Estructura Principal del Dashboard de Roles (Una vez logueado) */
+.dashboard-layout {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  overflow: hidden;
+  opacity: 0;
+  transition: var(--transition);
+}
+
+.dashboard-layout.active {
+  opacity: 1;
+}
+
+.dashboard-header {
+  padding: 16px 24px;
+  border-bottom: 1px solid var(--border-card);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: var(--text-white);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 600;
+}
+
+.user-meta h2 {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
+.user-meta p {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+.btn-logout {
+  background: transparent;
+  border: 1px solid var(--border-card);
+  padding: 8px 16px;
+  border-radius: var(--radius-sm);
+  color: var(--text-muted);
+  font-family: inherit;
+  font-weight: 500;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.btn-logout:hover {
+  background: hsl(0, 80%, 95%);
+  color: hsl(0, 80%, 40%);
+  border-color: hsl(0, 80%, 90%);
+}
+
+/* Área de contenido del Dashboard */
+.dashboard-content {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Modo chat-fullscreen: dashboard-content pasa a flex sin scroll
+   pero MANTIENE padding-top:24px para que .role-tabs con negative margin
+   no quede cortado al desplazarse -24px */
+.dashboard-content.chat-mode {
+  overflow: hidden;
+  padding: 24px 24px 0 24px;
+  gap: 0;
+}
+
+/* El role-tabs (nav de pestañas) siempre encogible */
+.dashboard-content .role-tabs {
+  flex-shrink: 0;
+}
+
+/* Animaciones */
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.8; transform: scale(0.98); }
+}
+
+/* Footer / Branding de la app */
+.app-footer {
+  padding: 16px;
+  text-align: center;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  border-top: 1px solid var(--border-card);
+}
+
+/* Clases para Integración de Logos Reales */
+.logo-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.logo-splash {
+  max-width: 140px;
+  height: auto;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+  animation: pulse 2.5s infinite ease-in-out;
+}
+
+.logo-header-wrap {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 10px 20px;
+  margin-bottom: 14px;
+  background: rgba(255, 255, 255, 0.92);
+  backdrop-filter: blur(8px);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-card);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+  overflow: visible;
+  min-height: 74px;
+}
+
+.logo-header {
+  max-height: 60px;
+  max-width: 48%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  display: block;
+}
+
+.logo-slep {
+  max-height: 60px;
+  max-width: 48%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  background: white;
+  padding: 4px 12px;
+  border-radius: 12px;
+  border: 1px solid var(--border-card);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  display: block;
+}
+
+.logo-admin-login {
+  background: white;
+  padding: 10px 16px;
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  border: 1px solid var(--border-card);
+  max-width: 180px !important;
+  width: 100%;
+  height: auto;
+  margin: 0 auto 16px auto;
+  display: block;
+  object-fit: contain;
+}
+
+.logo-dashboard-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  object-fit: contain;
+  background: white;
+  padding: 2px;
+  border: 1px solid var(--border-card);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+  flex-shrink: 0;
+}
+
+/* Botón Hamburguesa 3 Rayitas en Header */
+.btn-header-menu {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 4px;
+  width: 36px;
+  height: 36px;
+  background: #ffffff;
+  border: 1.5px solid #cbd5e1;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 6px;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.06);
+}
+
+.btn-header-menu:hover {
+  background: #f1f5f9;
+  border-color: #047857;
+}
+
+.btn-header-menu span {
+  display: block;
+  width: 18px;
+  height: 2.5px;
+  background: #0f172a;
+  border-radius: 2px;
+  transition: all 0.2s ease;
+}
+
+/* Menú Desplegable Flotante (Dropdown) */
+.header-dropdown-menu {
+  position: absolute;
+  top: 64px;
+  right: 16px;
+  width: 260px;
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border: 1.5px solid #cbd5e1 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.35) !important;
+  padding: 10px;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  animation: fadeIn 0.2s ease;
+}
+
+.dropdown-header-user {
+  padding: 8px 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.dropdown-header-user strong {
+  font-size: 0.9rem;
+  color: #0f172a !important;
+  font-weight: 700;
+}
+
+.dropdown-header-user span {
+  font-size: 0.78rem;
+  color: #475569 !important;
+}
+
+.dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
+  border: none;
+  background: transparent;
+  color: #1e293b !important;
+  font-size: 0.86rem;
+  font-weight: 600;
+  border-radius: 10px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.15s ease;
+}
+
+.dropdown-item:hover {
+  background: #f1f5f9 !important;
+  color: #047857 !important;
+}
+
+.dropdown-item.dropdown-logout {
+  color: #dc2626 !important;
+}
+
+.dropdown-item.dropdown-logout:hover {
+  background: #fef2f2 !important;
+  color: #991b1b !important;
+}
+
+/* Campos de Formulario y Password Toggle */
+.password-wrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.password-wrapper .form-control {
+  padding-right: 48px;
+}
+
+.toggle-password {
+  position: absolute;
+  right: 12px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  padding: 4px;
+  user-select: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  outline: none;
+}
+
+/* Pantalla de Login de Rol en la SPA (Estudiante/Apoderado/Funcionario) */
+.role-login-screen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 32px 24px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: var(--transition);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.role-login-screen.active {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.login-back-btn {
+  align-self: flex-start;
+  background: transparent;
+  border: none;
+  color: var(--primary);
+  font-family: inherit;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 24px;
+  font-size: 0.95rem;
+  transition: var(--transition);
+}
+
+.login-back-btn:hover {
+  transform: translateX(-4px);
+  color: var(--accent);
+}
+
+.role-login-card {
+  width: 100%;
+  max-width: 380px;
+  padding: 30px 24px;
+  border-radius: var(--radius-md);
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  box-shadow: var(--shadow);
+  text-align: center;
+}
+
+.role-login-logo {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary);
+  margin-bottom: 6px;
+}
+
+.role-login-logo span {
+  color: var(--accent);
+}
+
+.role-login-subtitle {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+
+.form-group {
+  text-align: left;
+  margin-bottom: 16px;
+  width: 100%;
+}
+
+.form-group label {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 6px;
+}
+
+.form-control {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-card);
+  background: rgba(255, 255, 255, 0.6);
+  font-family: inherit;
+  font-size: 0.95rem;
+  color: var(--text-main);
+  transition: var(--transition);
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.9);
+  box-shadow: 0 0 0 3px rgba(229, 105, 30, 0.15);
+}
+
+.btn-primary {
+  width: 100%;
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: var(--primary);
+  color: var(--text-white);
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+  transition: var(--transition);
+  margin-top: 10px;
+}
+
+.btn-primary:hover {
+  background: var(--primary-light);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.btn-primary:active {
+  transform: translateY(0);
+}
+
+.error-message {
+  color: hsl(0, 80%, 45%);
+  background: hsl(0, 80%, 95%);
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  font-size: 0.85rem;
+  margin-bottom: 16px;
+  display: none;
+  text-align: center;
+  border-left: 4px solid hsl(0, 80%, 45%);
+}
+
+.student-badge {
+  display: inline-block;
+  background: hsl(var(--primary-hue), 60%, 95%);
+  color: var(--primary);
+  padding: 6px 12px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  margin-top: 8px;
+}
+
+/* --- HITO 2: NAVEGACIÓN Y VISTAS DE ROLES --- */
+
+/* Barra de Navegación del Rol (Tabs de control de la SPA) */
+.role-tabs {
+  display: flex;
+  background: var(--bg-card);
+  border-bottom: 2px solid var(--border-card);
+  padding: 0 0 0 0;
+  margin: -24px -24px 16px -24px;
+  width: calc(100% + 48px);
+  box-sizing: border-box;
+  overflow-x: auto;
+  overflow-y: hidden;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
+  flex-shrink: 0;
+  align-items: flex-end;
+}
+
+.role-tabs::-webkit-scrollbar {
+  height: 4px;
+}
+
+.role-tabs::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.15);
+  border-radius: 4px;
+}
+
+.tab-btn {
+  flex: 0 0 auto;
+  white-space: nowrap;
+  background: transparent;
+  border: none;
+  padding: 12px 16px;
+  color: var(--text-muted);
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+  display: inline-flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 6px;
+  transition: var(--transition);
+  outline: none;
+  border-bottom: 3px solid transparent;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+}
+
+.tab-btn:hover {
+  background: rgba(var(--primary-hue), 10%, 97%);
+  color: var(--primary);
+}
+
+.tab-btn.active {
+  background: transparent;
+  color: var(--primary);
+  border-bottom: 3px solid var(--accent);
+}
+
+.tab-icon {
+  font-size: 1rem;
+  display: inline-flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+
+/* Área de Vistas Dinámicas */
+.role-view-section {
+  display: none;
+  animation: fadeIn 0.4s ease;
+}
+
+.role-view-section:not(.active) {
+  display: none !important;
+}
+
+.role-view-section.active {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Estilos del Chatbot Responsivo Fullscreen (Móvil y Escritorio) */
+.dashboard-content.chat-mode {
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  overflow: hidden !important;
+  padding-bottom: 0 !important;
+}
+
+.role-view-section.active.chat-fullscreen {
+  flex: 1 !important;
+  display: flex !important;
+  flex-direction: column !important;
+  height: 100% !important;
+  min-height: 0 !important;
+  overflow: hidden !important;
+  gap: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+.chat-wrapper {
+  display: flex !important;
+  flex-direction: column !important;
+  justify-content: space-between !important;
+  width: 100% !important;
+  max-width: 960px !important;
+  margin: 8px auto !important;
+  min-height: 420px !important;
+  height: 550px !important;
+  max-height: calc(100vh - 180px) !important;
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-card);
+  overflow: hidden;
+  position: relative !important;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+}
+
+.chat-fullscreen .chat-wrapper,
+.chat-mode .chat-wrapper {
+  height: 100% !important;
+  max-height: none !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+}
+
+#chat-messages,
+#apo-chat-messages,
+#fun-chat-messages {
+  flex: 1 1 auto !important;
+  min-height: 180px !important;
+  padding: 18px !important;
+  overflow-y: auto !important;
+  -webkit-overflow-scrolling: touch !important;
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 14px !important;
+  margin-bottom: 0 !important;
+}
+
+#chat-form,
+#apo-chat-form,
+#fun-chat-form {
+  display: flex !important;
+  align-items: center !important;
+  flex-shrink: 0 !important;
+  width: 100% !important;
+  background: #ffffff !important;
+  padding: 12px 14px !important;
+  border-top: 2px solid var(--border-card) !important;
+  position: sticky !important;
+  bottom: 0 !important;
+  left: 0 !important;
+  z-index: 100 !important;
+  box-shadow: 0 -3px 12px rgba(0, 0, 0, 0.08) !important;
+  gap: 10px !important;
+}
+
+#chat-input,
+#apo-chat-input,
+#fun-chat-input {
+  flex: 1 !important;
+  height: 44px !important;
+  min-height: 44px !important;
+  border: 1.5px solid #047857 !important;
+  border-radius: 25px !important;
+  padding: 8px 16px !important;
+  font-size: 0.9rem !important;
+  background: #ffffff !important;
+  color: #1e293b !important;
+  display: block !important;
+  visibility: visible !important;
+  opacity: 1 !important;
+}
+
+/* Acordeones Interactivos para Reglamentos */
+.accordion {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+}
+
+.accordion-item {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.01);
+  transition: var(--transition);
+}
+
+.accordion-header {
+  width: 100%;
+  padding: 16px 20px;
+  background: transparent;
+  border: none;
+  text-align: left;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 1rem;
+  color: var(--primary);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  outline: none;
+  transition: var(--transition);
+}
+
+.accordion-header:hover, .accordion-header:focus-visible {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+.accordion-icon {
+  transition: var(--transition);
+  font-size: 0.9rem;
+}
+
+.accordion-item.open .accordion-icon {
+  transform: rotate(180deg);
+}
+
+.accordion-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  background: rgba(255, 255, 255, 0.2);
+}
+
+.accordion-content-inner {
+  padding: 20px;
+  border-top: 1px solid var(--border-card);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  color: var(--text-main);
+}
+
+/* FAQs */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.faq-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-md);
+  padding: 18px 20px;
+  cursor: pointer;
+  transition: var(--transition);
+}
+
+.faq-card:hover {
+  border-color: var(--accent);
+  box-shadow: var(--shadow);
+}
+
+.faq-question {
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.faq-answer {
+  font-size: 0.88rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+  display: none;
+  margin-top: 10px;
+  padding-top: 10px;
+  border-top: 1px dotted var(--border-card);
+  animation: fadeIn 0.3s ease;
+}
+
+.faq-card.open .faq-answer {
+  display: block;
+}
+
+/* Área de Firmas Digitales Simuladas */
+.signature-box {
+  border: 2px dashed var(--border-card);
+  border-radius: var(--radius-sm);
+  background: rgba(255, 255, 255, 0.5);
+  padding: 30px;
+  text-align: center;
+  margin-bottom: 16px;
+  cursor: pointer;
+  position: relative;
+  transition: var(--transition);
+}
+
+.signature-box:hover {
+  border-color: var(--accent);
+  background: rgba(255, 255, 255, 0.8);
+}
+
+.signature-box.signed {
+  border-color: #10b981;
+  background: hsl(150, 60%, 97%);
+}
+
+/* Formularios de Incidentes */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+}
+
+@media (min-width: 768px) {
+  .form-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .form-full {
+    grid-column: span 2;
+  }
+}
+
+.select-control {
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='rgba(0,0,0,0.5)' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  padding-right: 40px !important;
+}
+
+/* Ficha de Protocolo / Pasos */
+.protocol-timeline {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  position: relative;
+  padding-left: 20px;
+  border-left: 2px solid var(--border-card);
+}
+
+.protocol-step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.protocol-step::before {
+  content: '';
+  position: absolute;
+  left: -27px;
+  top: 4px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--border-card);
+  border: 2px solid var(--bg-card);
+  transition: var(--transition);
+}
+
+.protocol-step.active::before {
+  background: var(--accent);
+  box-shadow: 0 0 0 4px rgba(229, 105, 30, 0.2);
+}
+
+.step-num {
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.step-title {
+  font-weight: 600;
+  font-size: 0.95rem;
+  color: var(--primary);
+}
+
+.step-desc {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.4;
+}
+
+/* ==========================================================================
+   MÓDULO DE CHATBOT RAG INTELIGENTE
+   ========================================================================== */
+.chat-wrapper {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  min-height: 280px;
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  margin-top: 8px;
+}
+
+/* Chat wrapper dentro de sección fullscreen — ocupa 100% del padre */
+.chat-fullscreen .chat-wrapper {
+  flex: 1;
+  min-height: 0;
+  border-radius: 0;
+  border-left: none;
+  border-right: none;
+  border-bottom: none;
+  margin-top: 0;
+}
+
+/* ==========================================================================
+   FORMULARIO BITÁCORA DE INCIDENTES (6 SECCIONES)
+   ========================================================================== */
+.form-section-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--primary);
+  color: white;
+  border-radius: var(--radius-sm) var(--radius-sm) 0 0;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+}
+
+.form-section-header .section-num {
+  background: rgba(255,255,255,0.25);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 800;
+  flex-shrink: 0;
+}
+
+.form-section-body {
+  padding: 16px;
+  background: rgba(255,255,255,0.6);
+  border: 1px solid var(--border-card);
+  border-top: none;
+  border-radius: 0 0 var(--radius-sm) var(--radius-sm);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.checkbox-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.checkbox-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 0.82rem;
+  line-height: 1.4;
+  color: var(--text-main);
+  cursor: pointer;
+  padding: 6px 8px;
+  border-radius: 6px;
+  transition: background 0.15s;
+}
+
+.checkbox-item:hover {
+  background: rgba(0,0,0,0.03);
+}
+
+.checkbox-item input[type=checkbox] {
+  margin-top: 2px;
+  accent-color: var(--primary);
+  width: 15px;
+  height: 15px;
+  flex-shrink: 0;
+}
+
+.derivacion-panel {
+  border: 2px solid var(--accent);
+  border-radius: var(--radius-sm);
+  padding: 14px;
+  background: hsl(28, 85%, 98%);
+  display: none;
+}
+
+.derivacion-panel.visible {
+  display: block;
+  animation: fadeIn 0.3s ease;
+}
+
+.bitacora-success {
+  background: hsl(150, 60%, 95%);
+  color: hsl(150, 80%, 25%);
+  border: 1px solid hsl(150, 60%, 80%);
+  border-left: 4px solid #10b981;
+  border-radius: var(--radius-sm);
+  padding: 14px 16px;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  display: none;
+}
+
+.bitacora-success.visible {
+  display: block;
+  animation: fadeIn 0.4s ease;
+}
+
+#chat-messages,
+#apo-chat-messages,
+#fun-chat-messages {
+  flex: 1;
+  padding: 16px 16px 28px 16px; /* Más padding inferior para evitar solapamientos y cortes */
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  font-size: 0.9rem;
+  scroll-behavior: smooth;
+}
+
+/* Evitar que el scrollbar se vea tosco */
+#chat-messages::-webkit-scrollbar,
+#apo-chat-messages::-webkit-scrollbar,
+#fun-chat-messages::-webkit-scrollbar {
+  width: 6px;
+}
+#chat-messages::-webkit-scrollbar-track,
+#apo-chat-messages::-webkit-scrollbar-track,
+#fun-chat-messages::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.02);
+}
+#chat-messages::-webkit-scrollbar-thumb,
+#apo-chat-messages::-webkit-scrollbar-thumb,
+#fun-chat-messages::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+}
+
+.chat-bubble {
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  line-height: 1.5;
+  max-width: 80%;
+  word-wrap: break-word;
+  animation: chatBubbleFadeIn 0.3s ease forwards;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+
+.user-bubble {
+  align-self: flex-end;
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  color: var(--text-main);
+  border-bottom-right-radius: 2px;
+}
+
+.bot-bubble {
+  align-self: flex-start;
+  background: var(--primary);
+  color: white;
+  border-bottom-left-radius: 2px;
+}
+
+.error-bubble {
+  align-self: center;
+  background: hsl(0, 80%, 95%);
+  border: 1px solid hsl(0, 80%, 90%);
+  color: hsl(0, 80%, 35%);
+  width: 90%;
+  max-width: 90%;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+}
+
+/* Indicador de carga animado */
+#chat-typing-indicator {
+  padding: 8px 14px;
+  align-self: flex-start;
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 20px;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-left: 16px;
+  margin-bottom: 8px;
+  animation: chatTypingPulse 1.2s infinite ease-in-out;
+}
+
+@keyframes chatBubbleFadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes chatTypingPulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
+}
+
+/* Contenedor de chips de referencia */
+.ref-chip-container {
+  display: flex;
+  gap: 6px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
+  padding-top: 8px;
+}
+
+.ref-chip {
+  font-size: 0.7rem;
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  padding: 3px 8px;
+  border-radius: 50px;
+  color: white;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.ref-chip:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+/* ==========================================================================
+   MODAL DE ACTA DE INCIDENTES IMPRIMIBLE (Hito 4)
+   ========================================================================== */
+.acta-print-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  background: #374151;
+  overflow-y: auto; /* Permite el scroll a nivel de todo el modal */
+}
+
+/* Estructura editorial de la hoja del acta */
+.acta-paper {
+  background: white;
+  width: 100%;
+  max-width: 800px;
+  min-height: 297mm; /* Proporción A4 */
+  padding: 40px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  border-radius: 4px;
+  color: black !important;
+  font-family: 'Inter', 'Outfit', sans-serif;
+  line-height: 1.6;
+}
+
+/* Clases de utilidad para tablas y firmas del acta */
+.acta-header-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 24px;
+  border-bottom: 3px double #1e3a8a;
+  padding-bottom: 12px;
+}
+
+.acta-title {
+  font-size: 1.4rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #1e3a8a;
+  text-align: center;
+}
+
+.acta-section-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: #1e3a8a;
+  background: #f3f4f6;
+  padding: 6px 12px;
+  margin-top: 20px;
+  margin-bottom: 12px;
+  border-left: 4px solid #1e3a8a;
+}
+
+.acta-data-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+  font-size: 0.88rem;
+}
+
+.acta-data-item {
+  border-bottom: 1px solid #e5e7eb;
+  padding-bottom: 4px;
+}
+
+.acta-data-item strong {
+  color: #374151;
+}
+
+.acta-text-box {
+  border: 1px solid #d1d5db;
+  padding: 12px;
+  border-radius: 4px;
+  background: #f9fafb;
+  min-height: 80px;
+  font-size: 0.88rem;
+  margin-bottom: 16px;
+  white-space: pre-wrap;
+}
+
+.acta-signatures {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 20px;
+  margin-top: 60px;
+  text-align: center;
+  font-size: 0.8rem;
+}
+
+.acta-sig-line {
+  border-top: 1px solid #9ca3af;
+  padding-top: 8px;
+  margin-top: 40px;
+}
+
+/* ALERTA DE PROTOCOLO CRÍTICO EN EL ACTA */
+.acta-critical-banner {
+  background: #fee2e2;
+  border: 1px solid #fecaca;
+  color: #991b1b;
+  padding: 12px;
+  border-radius: 4px;
+  font-size: 0.82rem;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+}
+
+.acta-critical-banner.tea-banner {
+  background: #ffedd5;
+  border-color: #fed7aa;
+  color: #9a3412;
+}
+
+.acta-critical-banner.drg-banner {
+  background: #ecfdf5;
+  border-color: #a7f3d0;
+  color: #065f46;
+}
+
+/* ==========================================================================
+   DIRECTIVAS DE IMPRESIÓN OFICIAL (@media print)
+   ========================================================================== */
+@media print {
+  /* Ocultar toda la interfaz del navegador y de la consola web */
+  body > * {
+    display: none !important;
+  }
+  
+  /* Mostrar exclusivamente el modal de acta imprimible */
+  body {
+    background: white !important;
+    color: black !important;
+  }
+
+  .acta-print-modal {
+    display: block !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    height: auto !important;
+    background: white !important;
+  }
+
+  .acta-modal-header.no-print {
+    display: none !important; /* Ocultar botones superiores de cerrar e imprimir */
+  }
+
+  .acta-paper-container {
+    background: white !important;
+    padding: 0 !important;
+    overflow: visible !important;
+  }
+
+  .acta-paper {
+    box-shadow: none !important;
+    border: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+}
+
+/* Spinner de carga para envío de actas por correo */
+.spinner {
+  border: 4px solid rgba(16, 185, 129, 0.15);
+  border-top-color: #10b981;
+  border-radius: 50%;
+  width: 36px;
+  height: 36px;
+  animation: spin 1s infinite linear;
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Correcciones de Scroll y Ajustes de Layout (Hito 8) */
+.dashboard-layout:has(.chat-mode) .app-footer {
+  display: none !important;
+}
+
+/* En modo normal: el inner-content crece con su contenido (el dashboard-content hace el scroll) */
+.dashboard-inner-content {
+  display: flex;
+  flex-direction: column;
+}
+
+/* En modo chat: el inner-content usa flex:1 + min-height:0 para contener el chat */
+.dashboard-content.chat-mode .dashboard-inner-content {
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+#chat-messages,
+#apo-chat-messages,
+#fun-chat-messages {
+  flex: 1 !important;
+  min-height: 0 !important;
+  overflow-y: auto !important;
+}
+
+/* Tarjeta Sabías Que... */
+.sabias-que-card {
+  background: linear-gradient(135deg, hsl(var(--accent-hue), 85%, 97%) 0%, hsl(var(--accent-hue), 70%, 93%) 100%);
+  border-left: 5px solid var(--accent);
+  padding: 16px;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow);
+  margin-top: 10px;
+  margin-bottom: 16px;
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+  flex-shrink: 0; /* Evita que la tarjeta se comprima/corte */
+  overflow: visible;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.sabias-que-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.sabias-que-content h4 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: hsl(var(--accent-hue), 80%, 25%);
+  margin-bottom: 4px;
+}
+
+.sabias-que-content p {
+  font-size: 0.82rem;
+  color: hsl(var(--accent-hue), 75%, 20%);
+  line-height: 1.45;
+  margin: 0;
+}
+
+/* Tabla de Historial de Actas Firmadas */
+.firma-actas-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+  margin-top: 12px;
+}
+
+.firma-actas-table th,
+.firma-actas-table td {
+  padding: 8px 12px;
+  border-bottom: 1px solid var(--border-card);
+  text-align: left;
+}
+
+.firma-actas-table th {
+  background: var(--primary);
+  color: white;
+  font-weight: 600;
+}
+
+/* Modal de aviso LIRMI (Ámbito de Aplicación) - Pantalla Intermedia Global */
+.lirmi-notice-modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 23, 42, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  border-radius: inherit;
+  /* Oculto por defecto - se muestra con clase .visible */
+  display: none;
+}
+
+.lirmi-notice-modal.visible {
+  display: flex !important;
+  animation: fadeIn 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.lirmi-notice-modal.hidden {
+  display: none !important;
+}
+
+.lirmi-modal-card {
+  background: var(--bg-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-md);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3), 0 10px 10px -5px rgba(0, 0, 0, 0.2);
+  width: 100%;
+  max-width: 440px;
+  max-height: 85vh;
+  overflow-y: auto;
+  padding: 24px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin: auto;
+  animation: slideUp 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  backdrop-filter: blur(10px);
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.lirmi-modal-icon {
+  font-size: 2.2rem;
+}
+
+.lirmi-modal-card h3 {
+  font-size: 1.25rem;
+  color: var(--primary);
+  font-weight: 700;
+  margin: 0;
+}
+
+.lirmi-modal-text {
+  font-size: 0.88rem;
+  color: var(--text-main);
+  line-height: 1.5;
+  text-align: left;
+  margin: 0;
+}
+
+.lirmi-modal-box {
+  background: rgba(var(--primary-hue), 8%, 97%);
+  border-left: 4px solid var(--primary);
+  padding: 12px;
+  border-radius: var(--radius-sm);
+  font-size: 0.82rem;
+  color: var(--text-muted);
+  line-height: 1.45;
+  text-align: left;
+}
+
+.lirmi-checkbox-container {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  text-align: left;
+  font-size: 0.82rem;
+  cursor: pointer;
+  user-select: none;
+  color: var(--text-main);
+  padding: 4px 0;
+}
+
+.lirmi-checkbox-container input[type=checkbox] {
+  margin-top: 3px;
+  width: 16px;
+  height: 16px;
+  accent-color: var(--primary);
+  flex-shrink: 0;
+}
+
+/* Estilo de caja modal LIRMI */
+.lirmi-modal-box {
+  background: #f1f5f9;
+  border-left: 4px solid #047857;
+  color: #0f172a;
+}
+
+/* Diseño responsivo de 2 columnas para el perfil de estudiantes, apoderados y funcionarios (sin scroll) */
+.student-profile-grid.active,
+.profile-main-grid.active {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+
+.student-info-sidebar,
+.profile-info-sidebar {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+
+/* En resoluciones medianas y grandes, organizar en dos columnas sin scroll */
+@media (min-width: 768px) {
+  .student-profile-grid.active,
+  .profile-main-grid.active {
+    display: grid !important;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 16px;
+    align-items: start;
+  }
+}
+
+/* ==========================================================================
+   SISTEMA UNIVERSAL DE ALTO CONTRASTE PARA VENTANAS, DIÁLOGOS Y MODALES
+   Garantiza que TODAS las ventanas emergentes, avisos, diálogos y formularios
+   tengan FONDOS CLAROS (#ffffff / #f8fafc) y LETRAS OSCURAS (#0f172a / #1e293b),
+   independientemente de las preferencias del sistema operativo o modo oscuro.
+   ========================================================================== */
+
+/* 1. Fondo emergente u Overlay de pantalla completa
+   NOTA: Se excluyen #lirmi-notice-modal, #pwa-install-modal y #splash-screen
+   porque ya tienen sus propios estilos funcionales correctos (líneas 1677-1721).
+   Incluirlos aquí causaba pantalla blanca post-login al sobreescribir z-index y overlay. */
+#rice-protocol-modal,
+.modal-backdrop,
+.modal-overlay {
+  background: rgba(15, 23, 42, 0.82) !important;
+  backdrop-filter: blur(8px) !important;
+  -webkit-backdrop-filter: blur(8px) !important;
+  z-index: 10000 !important;
+}
+
+/* 2. Cajas Principales de Modales, Ventanas Emergentes y Tarjetas de Login */
+.lirmi-modal-card,
+.role-login-card,
+.splash-card,
+.login-card,
+.form-container,
+.modal-card,
+.modal-content,
+.dialog-card,
+.dialog-box,
+.popup-card,
+#rice-protocol-modal > div {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border: 1.5px solid #cbd5e1 !important;
+  border-radius: var(--radius-md, 16px) !important;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4), 0 0 0 1px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* 3. Títulos y Encabezados de Modales */
+.lirmi-modal-card h1, .lirmi-modal-card h2, .lirmi-modal-card h3, .lirmi-modal-card h4,
+.role-login-card h1, .role-login-card h2, .role-login-card h3, .role-login-card h4,
+.role-login-logo, #login-role-title, #lirmi-modal-title,
+.modal-title, .dialog-title, .login-logo {
+  color: #0f172a !important;
+  font-weight: 800 !important;
+}
+
+/* 4. Textos de Párrafos, Subtítulos y Etiquetas en Modales */
+.lirmi-modal-card p, .role-login-card p, .modal-card p, .dialog-box p,
+.lirmi-modal-text, .role-login-subtitle, .login-subtitle,
+.lirmi-checkbox-container, .modal-body, .dialog-body,
+.role-login-card label, .lirmi-modal-card label, .modal-card label, .dialog-box label,
+.form-group label {
+  color: #1e293b !important;
+  font-weight: 500 !important;
+}
+
+/* 5. Cajas de Scroll Legal, Paneles Informativos y Destacados Internos */
+#legal-scroll-box,
+.lirmi-modal-box,
+.disclaimer-card,
+.info-box,
+.protocol-step-box {
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+  border: 1px solid #cbd5e1 !important;
+}
+
+#legal-scroll-box h4, #legal-scroll-box h5,
+.lirmi-modal-box h4, .lirmi-modal-box h5 {
+  color: #047857 !important;
+  font-weight: 700 !important;
+}
+
+#legal-scroll-box p, #legal-scroll-box span, #legal-scroll-box li,
+.lirmi-modal-box p, .lirmi-modal-box span {
+  color: #1e293b !important;
+}
+
+#legal-scroll-box strong, #legal-scroll-box b,
+.lirmi-modal-box strong, .lirmi-modal-box b {
+  color: #0f172a !important;
+}
+
+/* 6. Controles de Formulario (Inputs, Selects, Textareas) dentro de Modales */
+.role-login-card .form-control,
+.lirmi-modal-card .form-control,
+.login-card .form-control,
+.form-container .form-control,
+.modal-card .form-control,
+.dialog-box .form-control,
+input[type="text"],
+input[type="password"],
+input[type="email"],
+select.form-control,
+textarea {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border: 1.5px solid #94a3b8 !important;
+  border-radius: var(--radius-sm, 8px) !important;
+  font-weight: 500 !important;
+}
+
+.form-control::placeholder,
+input::placeholder,
+textarea::placeholder {
+  color: #64748b !important;
+}
+
+.form-control:focus,
+input:focus,
+textarea:focus {
+  border-color: #047857 !important;
+  background: #ffffff !important;
+  color: #0f172a !important;
+  box-shadow: 0 0 0 3px rgba(4, 120, 87, 0.2) !important;
+}
+
+/* 7. Mensajes de Alerta y Notificaciones dentro de Modales */
+#scroll-hint-msg {
+  background: #fffbebfb !important;
+  color: #92400e !important;
+  border: 1px solid #fde68a !important;
+}
+
+.error-message {
+  color: #991b1b !important;
+  background: #fef2f2 !important;
+  border: 1px solid #fecaca !important;
+}
+
+/* 8. Botones de Volver / Cierre en Modales */
+.login-back-btn, .btn-close-modal {
+  color: #1e293b !important;
+  background: #f1f5f9 !important;
+  border: 1px solid #cbd5e1 !important;
+}
+
+/* 9. Enlaces dentro de Modales */
+.lirmi-modal-card a, .role-login-card a, #legal-scroll-box a, .dialog-box a {
+  color: #047857 !important;
+  text-decoration: underline !important;
+  font-weight: 700 !important;
+}
+
+/* ADAPTABILIDAD Y GARANTÍA DE CONTRASTE LEGIBLE (Modo Oscuro Adaptativo Protegido) */
+@media (prefers-color-scheme: dark) {
+  body {
+    background: #0f172a !important;
+    color: #f8fafc !important;
+  }
+
+  #app-container, .role-card, .welcome-card, .sabias-que-card, .role-view-section {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+    color: #f8fafc !important;
+  }
+
+  .role-title, .welcome-header h1, h1, h2, h3, h4 {
+    color: #ffffff !important;
+  }
+
+  p, span, label, .role-desc, .welcome-header p {
+    color: #cbd5e1 !important;
+  }
+
+  .chat-wrapper {
+    background: #1e293b !important;
+    border-color: #334155 !important;
+  }
+
+  #chat-messages, #apo-chat-messages, #fun-chat-messages {
+    background: #0f172a !important;
+  }
+
+  #chat-form, #apo-chat-form, #fun-chat-form {
+    background: #1e293b !important;
+    border-top-color: #334155 !important;
+  }
+
+  #chat-input, #apo-chat-input, #fun-chat-input {
+    background: #0f172a !important;
+    color: #ffffff !important;
+    border-color: #047857 !important;
+  }
+
+  .chat-bubble.bot-bubble, div.bot-bubble {
+    background: #047857 !important;
+    color: #ffffff !important;
+  }
+
+  .chat-bubble.user-bubble, div.user-bubble {
+    background: #334155 !important;
+    color: #ffffff !important;
+  }
+}
+
+  .chat-bubble.bot-bubble *, div.bot-bubble * {
+    color: #ffffff !important;
+  }
+
+  .chat-bubble.user-bubble, div.user-bubble {
+    background: #334155 !important;
+    color: #ffffff !important;
+  }
+
+  .chat-bubble.user-bubble *, div.user-bubble * {
+    color: #ffffff !important;
+  }
+}
+
+/* ==========================================================================
+   ALTO CONTRASTE OBLIGATORIO Y TEMA CLARO UNIVERSAL PARA DASHBOARD
+   (Corrige 100% las capturas móviles: elimina texto oscuro sobre fondo oscuro)
+   ========================================================================== */
+
+#dashboard-layout,
+.dashboard-layout,
+#dashboard-content,
+.dashboard-content {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+}
+
+/* 1. Contenedores y Tarjetas Principales */
+.welcome-card,
+.role-view-section,
+.student-profile-grid > div,
+.student-info-sidebar > div,
+.profile-main-grid > div,
+.profile-info-sidebar > div,
+.sabias-que-card,
+.protocol-card,
+.disclaimer-card,
+.info-box,
+.step-card,
+.form-container,
+div[class*="-card"] {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+  border: 1.5px solid #cbd5e1 !important;
+  border-radius: 16px !important;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05) !important;
+}
+
+/* 2. Titulares en Tarjetas y Secciones (Siempre Esmeralda o Pizarra Oscuro) */
+.welcome-card h1, .welcome-card h2, .welcome-card h3, .welcome-card h4,
+.role-view-section h1, .role-view-section h2, .role-view-section h3, .role-view-section h4,
+.sabias-que-card h1, .sabias-que-card h2, .sabias-que-card h3, .sabias-que-card h4,
+.protocol-card h1, .protocol-card h2, .protocol-card h3, .protocol-card h4 {
+  color: #047857 !important;
+  font-weight: 800 !important;
+}
+
+/* 3. Textos y Párrafos Secundarios */
+.welcome-card p, .welcome-card span,
+.role-view-section p, .role-view-section span,
+.sabias-que-card p, .sabias-que-card span,
+.protocol-card p, .protocol-card span {
+  color: #1e293b !important;
+}
+
+/* 4. Acordeones RICE (Capítulos y Secciones) */
+.accordion-item {
+  background-color: #ffffff !important;
+  border: 1.5px solid #cbd5e1 !important;
+  border-radius: 12px !important;
+  overflow: hidden !important;
+  margin-bottom: 10px !important;
+}
+
+.accordion-header {
+  background-color: #ffffff !important;
+  color: #047857 !important;
+  font-weight: 800 !important;
+  padding: 14px 18px !important;
+  border-bottom: 1px solid #cbd5e1 !important;
+}
+
+.accordion-header span {
+  color: #047857 !important;
+  font-weight: 800 !important;
+}
+
+.accordion-content {
+  background-color: #f8fafc !important;
+  color: #1e293b !important;
+  padding: 16px !important;
+}
+
+.accordion-content-inner,
+.accordion-content p {
+  color: #1e293b !important;
+  font-size: 0.88rem !important;
+  line-height: 1.6 !important;
+}
+
+/* 5. Rejilla de Botones de Protocolos RICE (Corregir blanco sobre blanco en capturas) */
+.protocol-grid button,
+.protocol-selector button,
+div[id*="protocol"] button {
+  background: #ffffff !important;
+  color: #0f172a !important;
+  border: 1.5px solid #cbd5e1 !important;
+  font-weight: 800 !important;
+  padding: 12px !important;
+  border-radius: 12px !important;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04) !important;
+}
+
+.protocol-grid button.active,
+.protocol-grid button:hover,
+.protocol-selector button.active {
+  background: #047857 !important;
+  color: #ffffff !important;
+  border-color: #047857 !important;
+}
+
+/* 6. Cajas de Datos e Informaciones Internas */
+div[style*="background: rgba(255,255,255,0.4)"],
+div[style*="background: rgba(255, 255, 255, 0.4)"],
+div[style*="background: #f8fafc"],
+div[style*="background:#f8fafc"],
+div[style*="background: #ecfdf5"],
+div[style*="background:#ecfdf5"] {
+  background-color: #f1f5f9 !important;
+  color: #0f172a !important;
+  border: 1.5px solid #cbd5e1 !important;
+}
+
+div[style*="background: rgba(255,255,255,0.4)"] *:not(button):not(.btn-primary):not([style*="background:#047857"]):not([style*="background: #047857"]),
+div[style*="background: #f8fafc"] *:not(button):not(.btn-primary):not([style*="background:#047857"]):not([style*="background: #047857"]),
+div[style*="background:#f8fafc"] *:not(button):not(.btn-primary):not([style*="background:#047857"]):not([style*="background: #047857"]) {
+  color: #0f172a;
+}
+
+/* Garantizar Texto Blanco de Alto Contraste en Nodos de Flujogramas, Banners y Botones Primarios */
+div[style*="background:#047857"],
+div[style*="background: #047857"],
+div[style*="background:#065f46"],
+div[style*="background: #065f46"],
+div[style*="background:linear-gradient"],
+div[style*="background: linear-gradient"],
+.role-banner,
+.role-banner *,
+div[style*="background:#047857"] *,
+div[style*="background: #047857"] *,
+div[style*="background:linear-gradient"] *:not(button):not(a),
+div[style*="background: linear-gradient"] *:not(button):not(a),
+.btn-primary,
+.flujograma-pill {
+  color: #ffffff !important;
+}
+
+div[style*="background:#047857"],
+div[style*="background: #047857"],
+div[style*="background:#065f46"],
+div[style*="background: #065f46"],
+.role-banner {
+  background-color: #047857 !important;
+}
+
+/* 7. Tablas de Bitácora y Reportes */
+table {
+  width: 100% !important;
+  border-collapse: collapse !important;
+  background: #ffffff !important;
+  border: 1.5px solid #cbd5e1 !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+}
+
+th {
+  background: #f1f5f9 !important;
+  color: #0f172a !important;
+  font-weight: 700 !important;
+  border-bottom: 2px solid #cbd5e1 !important;
+  padding: 10px 12px !important;
+}
+
+td {
+  background: #ffffff !important;
+  color: #1e293b !important;
+  border-bottom: 1px solid #e2e8f0 !important;
+  padding: 10px 12px !important;
+}
+
+tr:nth-child(even) td {
+  background: #f8fafc !important;
+}
+
+/* 8. OPTIMIZACIÓN RESPONSIVA MÓVIL (HEADER, NAVEGACIÓN Y CHATBOT STICKY INPUT) */
+@media (max-width: 768px) {
+  .dashboard-header {
+    padding: 8px 12px !important;
+    gap: 6px !important;
+  }
+  .user-info {
+    gap: 8px !important;
+  }
+  .header-title {
+    font-size: 0.92rem !important;
+  }
+  .user-meta h2 {
+    font-size: 0.88rem !important;
+  }
+  .user-meta p {
+    font-size: 0.72rem !important;
+  }
+
+  /* Pestañas de Navegación Móvil (Scroll Horizontal Fluido) */
+  .role-tabs {
+    padding: 6px 6px !important;
+    gap: 4px !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+    -webkit-overflow-scrolling: touch !important;
+    border-bottom: 2px solid #047857 !important;
+    background: #ffffff !important;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04) !important;
+  }
+
+  .tab-btn {
+    padding: 8px 12px !important;
+    font-size: 0.78rem !important;
+    border-radius: 8px 8px 0 0 !important;
+  }
+
+  /* Chatbot en Móvil: Barra de Mensajes Sticky e Insumo Accesible */
+  .dashboard-content.chat-mode {
+    padding: 8px 8px 0 8px !important;
+  }
+
+  .chat-wrapper {
+    width: 100% !important;
+    max-width: 100% !important;
+    height: calc(100vh - 170px) !important;
+    min-height: 400px !important;
+    max-height: none !important;
+    border-radius: 12px !important;
+    border: 1.5px solid #047857 !important;
+    margin: 4px 0 !important;
+  }
+
+  #chat-messages, #apo-chat-messages, #fun-chat-messages {
+    padding: 12px !important;
+    padding-bottom: 20px !important;
+  }
+
+  #chat-form, #apo-chat-form, #fun-chat-form {
+    position: sticky !important;
+    bottom: 0 !important;
+    left: 0 !important;
+    width: 100% !important;
+    z-index: 9999 !important;
+    background: #ffffff !important;
+    padding: 8px 10px !important;
+    border-top: 2px solid #047857 !important;
+    box-shadow: 0 -4px 20px rgba(0,0,0,0.15) !important;
+  }
+
+  #chat-form input, #apo-chat-form input, #fun-chat-form input,
+  #chat-input, #apo-chat-input, #fun-chat-input {
+    font-size: 0.9rem !important;
+    padding: 10px 14px !important;
+    border: 1.5px solid #cbd5e1 !important;
+    border-radius: 25px !important;
+  }
+
+  #chat-form button, #apo-chat-form button, #fun-chat-form button {
+    padding: 10px 16px !important;
+    font-size: 0.88rem !important;
+    border-radius: 25px !important;
+    background: #047857 !important;
+    color: #ffffff !important;
+    flex-shrink: 0 !important;
+  }
+}
+
+
