@@ -46,21 +46,31 @@ function normalizarRut(bruto) {
 
 function rutValido(rut) {
   const limpio = normalizarRut(rut);
-  if (!/^\d{7,8}[0-9K]$/.test(limpio)) return false;
 
-  const cuerpo = limpio.slice(0, -1);
-  const dado = limpio.slice(-1);
+  // RUT chileno con dígito verificador (caso más común)
+  const esFormaChilena = /^\d{7,8}[0-9K]$/.test(limpio);
+  if (esFormaChilena) {
+    const cuerpo = limpio.slice(0, -1);
+    const dado = limpio.slice(-1);
 
-  let suma = 0;
-  let factor = 2;
-  for (let i = cuerpo.length - 1; i >= 0; i--) {
-    suma += Number(cuerpo[i]) * factor;
-    factor = factor === 7 ? 2 : factor + 1;
+    let suma = 0;
+    let factor = 2;
+    for (let i = cuerpo.length - 1; i >= 0; i--) {
+      suma += Number(cuerpo[i]) * factor;
+      factor = factor === 7 ? 2 : factor + 1;
+    }
+    const resto = 11 - (suma % 11);
+    const esperado = resto === 11 ? '0' : resto === 10 ? 'K' : String(resto);
+
+    if (dado === esperado) return true;
   }
-  const resto = 11 - (suma % 11);
-  const esperado = resto === 11 ? '0' : resto === 10 ? 'K' : String(resto);
 
-  return dado === esperado;
+  // Documento de identidad extranjero (29-jul-2026): varios estudiantes del
+  // Liceo de Huara son bolivianos, venezolanos, peruanos o cubanos y su
+  // documento no tiene dígito verificador chileno. Se acepta un formato
+  // razonable para no excluirlos — solo se descartan errores de tipeo
+  // obvios (vacío, demasiado corto/largo, caracteres fuera de lo esperado).
+  return /^[A-Z0-9]{6,15}$/.test(limpio);
 }
 
 /**
