@@ -26,18 +26,32 @@ const RICE_DATABASE = [
     keywords: ["atrasos", "atraso", "llegar tarde", "inasistencia", "inasistencias", "ausencias", "falta", "uniforme", "porteria", "circular 482"]
   },
   {
-    id: "RICE-PROT-002",
-    titulo: "PROTOCOLO N° 2: PELEAS, RIÑAS Y VIOLENCIA FÍSICA ENTRE ESTUDIANTES",
-    seccion: "PROTOCOLOS DE CONVIVENCIA ESCOLAR",
-    contenido: "PROTOCOLO ANTE PELEAS Y RIÑAS: Ante una agresión física o pelea entre estudiantes, los docentes e inspectores separan de inmediato a los involucrados con serenidad sin usar fuerza excesiva. Se brinda atención médica en enfermería si hay lesiones, se traslada a los estudiantes a un espacio de calma y se cita a los apoderados para aplicar la resolución restaurativa del conflicto y medidas de reparación.",
-    keywords: ["pelea", "peleas", "rina", "rinas", "golpes", "pegan", "agresion", "violencia", "lesiones", "enfermeria", "apoderados"]
+    id: "RICE-PROT-N01",
+    titulo: "PROTOCOLO N°1 (RICE 2026): MALTRATO ESCOLAR, ACOSO (BULLYING) Y CIBERACOSO",
+    seccion: "PROTOCOLOS INSTITUCIONALES DE ACTUACIÓN (RICE 2026)",
+    contenido: "MALTRATO, ACOSO Y CIBERACOSO ENTRE ESTUDIANTES: Se distingue el maltrato aislado (falta grave: hecho puntual y esporádico, sin persecución previa) del acoso escolar o bullying (falta gravísima: requiere intencionalidad, reiteración sostenida y asimetría de poder que deja a la víctima en indefensión) y del ciberacoso (falta gravísima: hostigamiento por redes sociales, WhatsApp u otras plataformas digitales). Procedimiento: el funcionario que recibe el reporte registra el hito en la bitácora dentro de 24 horas hábiles; se aplican medidas de resguardo inmediatas (separación de espacios en recreos, casino y transporte rural; contención con la Dupla Psicosocial); la investigación dura hasta 5 días hábiles y la resolución se dicta en un máximo de 10 días hábiles (prorrogable por 5). Si el estudiante investigado pertenece al PIE o tiene diagnóstico Ley TEA, la Mesa Multidisciplinaria evalúa el caso antes de sancionar, prohibiéndose sanciones punitivas si la conducta se vincula a su condición. Sanciones: maltrato aislado → registro y talleres formativos; bullying o ciberacoso sostenido → suspensión interna de 3 a 5 días hábiles y condicionalidad extrema de matrícula, pudiendo escalar a expulsión bajo la Ley Aula Segura en casos de daño severo a la salud mental de la víctima.",
+    keywords: ["acoso", "bullying", "ciberacoso", "maltrato escolar", "hostigamiento", "burlas", "molestan", "excluyen", "grupo whatsapp", "funa", "no estas solo", "dupla psicosocial"]
   },
   {
-    id: "RICE-PROT-003",
-    titulo: "PROTOCOLO N° 3: PREVENCIÓN Y ACTUACIÓN ANTE MALTRATO, ACOSO ESCOLAR O BULLYING",
-    seccion: "PROTOCOLOS DE CONVIVENCIA ESCOLAR",
-    contenido: "PROTOCOLO DE ACOSO ESCOLAR Y BULLYING: El Liceo de Huara protege categóricamente a todo estudiante que sufra molestia, burlas, intimidación o acoso por parte de un compañero u otra persona. Ningún estudiante es culpable de sufrir acoso. Acciones inmediatas: 1) Escucha protegida y confidencial con el Profesor Jefe y la Dupla Psicosocial; 2) Medidas de resguardo de seguridad en sala y recreos; 3) Prohibición absoluta de revictimización; 4) Plan de apoyo socioemocional y citación a apoderados bajo resguardo de identidad.",
-    keywords: ["acoso", "acosa", "acosan", "acosando", "bullying", "ciberacoso", "burlas", "burlan", "molestan", "molestando", "intimidacion", "maltrato", "no estas solo", "confidencial", "dupla psicosocial", "profesor jefe"]
+    id: "RICE-PROT-N02",
+    titulo: "PROTOCOLO N°2 (RICE 2026): AGRESIONES ESCOLARES, VIOLENCIA FÍSICA O RIÑAS",
+    seccion: "PROTOCOLOS INSTITUCIONALES DE ACTUACIÓN (RICE 2026)",
+    contenido: "AGRESIONES FÍSICAS Y RIÑAS ENTRE ESTUDIANTES: Se distingue la agresión física (falta gravísima: ataque unilateral a una víctima que no responde) de la riña (falta gravísima: enfrentamiento recíproco de golpes), la incitación o el registro audiovisual de la violencia (falta grave), y la agresión o riña con armas u objetos peligrosos (máxima gravedad, con activación penal directa). Procedimiento: contención física inmediata por cualquier funcionario presente, traslado a enfermería o al CESFAM Huara si hay lesiones (activando el Seguro Escolar Ley 16.744), registro del hito en la bitácora dentro de 24 horas, separación preventiva de espacios y del transporte escolar rural, y denuncia obligatoria a Carabineros o Fiscalía dentro de 24 horas si hay lesiones constatadas o uso de armas. Filtro TEA/PIE obligatorio antes de sancionar. Sanciones: participación secundaria o incitación → falta grave (amonestación y talleres de mediación); agresión principal o riña activa → suspensión interna de 3 a 5 días hábiles y condicionalidad de matrícula, pudiendo escalar a expulsión bajo la Ley Aula Segura en agresiones de extrema gravedad o con armas.",
+    keywords: ["pelea", "peleas", "rina", "rinas", "golpes", "pegan", "agresion fisica", "violencia", "lesiones", "enfermeria", "filmar pelea"]
+  },
+  {
+    id: "RICE-PROT-N03",
+    titulo: "PROTOCOLO N°3 (RICE 2026): MALTRATO, ACOSO O AGRESIÓN DE ADULTOS A ESTUDIANTES (VULNERACIÓN DE DERECHOS)",
+    seccion: "PROTOCOLOS INSTITUCIONALES DE ACTUACIÓN (RICE 2026)",
+    contenido: "MALTRATO DE UN ADULTO DEL LICEO HACIA UN ESTUDIANTE: Cubre el maltrato verbal, psicológico o físico de cualquier adulto de la comunidad educativa (docente, asistente, directivo, auxiliar o conductor) hacia un estudiante (falta gravísima / vulneración de derechos), las prácticas pedagógicas discriminatorias o excluyentes (falta grave a gravísima según reiteración), y las conductas de connotación sexual de un adulto hacia un estudiante (máxima gravedad, con activación penal inmediata). Procedimiento: separación física inmediata del funcionario denunciado de todo contacto con el estudiante (cambio de funciones o reubicación, nunca como sanción anticipada), contención psicoemocional urgente del estudiante afectado, y citación al apoderado dentro de 24 horas. Si los hechos revisten caracteres de delito, la Directora tiene la obligación legal de denunciar ante Carabineros, la PDI o el Ministerio Público dentro de 24 horas, derivando en paralelo al SLEP Tamarugal para un eventual sumario administrativo contra el funcionario. Este protocolo NUNCA se investiga solo puertas adentro cuando hay indicios de delito: la vía penal es obligatoria y corre en paralelo a cualquier proceso interno.",
+    keywords: ["profesor maltrata", "funcionario abusa", "adulto agrede", "docente insulta", "vulneracion de derechos", "denuncia contra profesor", "maltrato de un adulto"]
+  },
+  {
+    id: "RICE-PROT-N04",
+    titulo: "PROTOCOLO N°4 (RICE 2026): ACOSO, HOSTIGAMIENTO, MALTRATO O AGRESIÓN DE ESTUDIANTES A FUNCIONARIOS (LEY KARIN Y LEY AULA SEGURA)",
+    seccion: "PROTOCOLOS INSTITUCIONALES DE ACTUACIÓN (RICE 2026)",
+    contenido: "MALTRATO DE UN ESTUDIANTE HACIA UN FUNCIONARIO: Se distingue la falta de respeto puntual (falta grave) del hostigamiento sostenido que activa la Ley Karin (falta gravísima), el ciberacoso contra un funcionario (falta gravísima), y la agresión física o amenaza de muerte contra un funcionario (máxima gravedad, activa la Ley Aula Segura). Procedimiento: reubicación del estudiante fuera del espacio del funcionario afectado, y en casos graves, suspensión preventiva cautelar de hasta 5 días hábiles mientras se tramita la resolución. Se deriva al funcionario afectado a apoyo de la ACHS o del SLEP Tamarugal. Filtro TEA/PIE obligatorio antes de sancionar (no se sanciona si la conducta se vincula a una crisis por desregulación). Denuncia penal obligatoria dentro de 24 horas si hay lesiones constatadas, porte de armas o amenazas de muerte explícitas. Sanciones: falta de respeto aislada → registro y talleres de control de impulsos; hostigamiento, ciberacoso sostenido o agresión física → suspensión de 5 a 10 días hábiles y condicionalidad extrema, pudiendo escalar a expulsión inmediata bajo la Ley Aula Segura ante violencia física grave o amenazas con armas.",
+    keywords: ["estudiante agrede profesor", "falta el respeto", "amenaza al profesor", "ley karin", "ataca a un funcionario", "insulta al profesor"]
   },
   {
     id: "RICE-PROT-004",
@@ -47,31 +61,38 @@ const RICE_DATABASE = [
     keywords: ["maltrato infantil", "vulneracion", "casa", "hogar", "familia", "padres", "opd", "tribunal", "derechos"]
   },
   {
-    id: "RICE-PROT-005",
-    titulo: "PROTOCOLO N° 5: ACTUACIÓN ANTE SITUACIONES DE CONNOTACIÓN SEXUAL O ABUSO",
-    seccion: "PROTECCIÓN Y RESGUARDO DE DERECHOS",
-    contenido: "PROTOCOLO ANTE DELITOS SEXUALES: Ante cualquier relato, sospecha o hecho de connotación sexual, tocaciones indebidas o abuso, el establecimiento activa la denuncia obligatoria ante el Ministerio Público o Carabineros dentro de las 24 horas (Art. 175 Código Procesal Penal). Se brinda acogida inmediata al estudiante, protección total, resguardo de su identidad y contención psicosocial sin interrogarlo ni revictimizarlo.",
-    keywords: ["sexual", "abuso", "tocacion", "tocaciones", "manoseo", "delito", "denuncia", "carabineros", "fiscalia", "resguardo"]
+    id: "RICE-PROT-N05",
+    titulo: "PROTOCOLO N°5 (RICE 2026): ABUSO SEXUAL INFANTIL, ACOSO SEXUAL O CONDUCTAS DE CONNOTACIÓN SEXUAL (ASI)",
+    seccion: "PROTOCOLOS INSTITUCIONALES DE ACTUACIÓN (RICE 2026)",
+    contenido: "ABUSO SEXUAL, ACOSO SEXUAL O CONNOTACIÓN SEXUAL: Cubre las conductas de connotación sexual entre estudiantes (falta gravísima: tocaciones, exhibicionismo, gestos sexuales no consentidos), el acoso sexual digital entre pares (falta gravísima: sexting forzado, grooming, extorsión con material íntimo), y la presunta vulneración sexual por parte de adultos —funcionarios, familiares o terceros— (máxima gravedad, con activación penal inmediata). El liceo NUNCA investiga la veracidad del relato ni realiza careos o interrogatorios repetidos: ante cualquier revelación o sospecha fundada, la Directora tiene la obligación legal de denunciar ante Carabineros, la PDI o el Ministerio Público dentro de 24 horas (Art. 175 Código Procesal Penal), en paralelo a una Medida de Protección ante el Tribunal de Familia. Medidas de resguardo inmediatas: separación física absoluta del presunto agresor (aplicando cambio de funciones si es adulto), contención urgente con la Dupla Psicosocial, y plan de reparación integral con terapia externa (CESFAM o Centro de Atención a Víctimas en Iquique). La vía penal corre siempre en paralelo e independiente de cualquier proceso interno del liceo.",
+    keywords: ["abuso sexual", "acoso sexual", "tocaciones", "connotacion sexual", "sexting", "denuncia abuso", "grooming", "manoseo"]
   },
   {
-    id: "RICE-PROT-006",
-    titulo: "PROTOCOLO N° 6: PREVENCIÓN Y ABORDAJE DE DROGAS Y ALCOHOL",
-    seccion: "PROTOCOLOS FORMATIVOS Y PREVENTIVOS",
-    contenido: "PROTOCOLO DE DROGAS Y ALCOHOL: Ante la sospecha o consumo de sustancias psicoactivas o alcohol en el entorno escolar, el Liceo prioriza la contención de salud y el acompañamiento formativo a través del programa SENDA Previene y la dupla psicosocial. Si se detecta porte o comercialización dentro del liceo, se aplica la normativa de denuncias en Carabineros resguardando la integridad del estudiante.",
-    keywords: ["drogas", "droga", "alcohol", "marihuana", "sustancias", "senda", "prevencion", "salud", "apoyo"]
+    id: "RICE-PROT-N06",
+    titulo: "PROTOCOLO N°6 (RICE 2026): PRESENCIA, CONSUMO O TRÁFICO DE DROGAS, ALCOHOL, TABACO Y VAPEADORES",
+    seccion: "PROTOCOLOS INSTITUCIONALES DE ACTUACIÓN (RICE 2026)",
+    contenido: "DROGAS, ALCOHOL, TABACO Y VAPEADORES (LEY 20.000): Se distingue el consumo o intoxicación por sustancias (falta gravísima), el porte o tenencia de sustancias o parafernalia (falta gravísima), el porte o consumo de cigarrillos, tabaco o vapeadores (falta grave), y la sospecha fundada de microtráfico o facilitación a terceros (falta gravísima / delito penal). Procedimiento: custodia protegida del estudiante sin interrogatorios hostiles, atención médica urgente en el CESFAM Huara si hay signos de intoxicación (pérdida de conciencia, taquicardia, vómitos), resguardo de cualquier evidencia entregada voluntariamente en bolsa sellada solo para Carabineros, y denuncia obligatoria a Carabineros o Fiscalía dentro de 24 horas. Filtro TEA/PIE obligatorio antes de sancionar. Sanciones: cigarrillos o vapeadores → falta grave (talleres de prevención); consumo o porte por primera vez → suspensión de 1 a 3 días hábiles y condicionalidad; tráfico, venta organizada o reincidencia crítica → hasta expulsión bajo la Ley Aula Segura. Para mantener la matrícula, el apoderado debe acreditar en 30 días la incorporación del estudiante a tratamiento en la red de salud (CESFAM, SENDA o COSAM).",
+    keywords: ["drogas", "droga", "marihuana", "alcohol", "fumar", "vapeador", "vape", "pito", "trafico", "consumo sustancias", "senda"]
   },
   {
-    id: "RICE-PROT-007",
-    titulo: "PROTOCOLO N° 7: PORTE DE ARMAS U OBJETOS PELIGROSOS",
-    seccion: "SEGURIDAD ESCOLAR",
-    contenido: "PROTOCOLO DE ARMAS U OBJETOS PELIGROSOS: Queda estrictamente prohibido el ingreso de armas blancas, de fuego o elementos punzocortantes. Ante la presencia de un objeto peligroso, el adulto responsable aísla la zona con calma, solicita la entrega voluntaria del objeto sin exponer al alumnado y llama a Carabineros de Huara y apoderados.",
-    keywords: ["arma", "armas", "cuchillo", "objeto peligroso", "seguridad", "carabineros", "aislamiento"]
+    id: "RICE-PROT-N07",
+    titulo: "PROTOCOLO N°7 (RICE 2026): DETECCIÓN, PORTE O TENENCIA DE ARMAS O ELEMENTOS PELIGROSOS",
+    seccion: "PROTOCOLOS INSTITUCIONALES DE ACTUACIÓN (RICE 2026)",
+    contenido: "ARMAS Y ELEMENTOS PELIGROSOS (LEY 17.798 DE CONTROL DE ARMAS): Cubre el porte de armas blancas o cortopunzantes (falta gravísima), el porte o exhibición de armas de fuego o réplicas (máxima gravedad, delito flagrante), y los elementos de ataque o defensa restringidos como manoplas, gas pimienta o electrochoques (falta gravísima). Regla crítica de seguridad: el funcionario NUNCA forcejea para quitar el arma; si hay riesgo activo se evacúa el sector y se llama de inmediato a Carabineros de Huara; si el estudiante la entrega voluntariamente, se resguarda como evidencia con cadena de custodia hasta la llegada de la fuerza pública. La Directora decreta suspensión preventiva de hasta 5 días hábiles mientras se tramita el caso, y tiene la obligación legal de denunciar a Carabineros o Fiscalía dentro de 24 horas. Filtro TEA/PIE obligatorio antes de sancionar. Sanciones: objeto cortopunzante escolar sin intención de ataque → falta grave; armas de fuego o elementos de ataque → hasta expulsión bajo la Ley Aula Segura, con reubicación coordinada por el SLEP Tamarugal.",
+    keywords: ["arma", "armas", "cuchillo", "pistola", "cortaplumas", "arma de fuego", "porte de arma", "objeto peligroso"]
+  },
+  {
+    id: "RICE-PROT-N08",
+    titulo: "PROTOCOLO N°8 (RICE 2026): ACCIDENTES ESCOLARES Y EMERGENCIAS MÉDICAS",
+    seccion: "PROTOCOLOS INSTITUCIONALES DE ACTUACIÓN (RICE 2026)",
+    contenido: "ACCIDENTES ESCOLARES Y EMERGENCIAS MÉDICAS: Se distingue el accidente escolar leve o moderado (torceduras, cortes menores, contusiones) de la emergencia médica de riesgo vital (convulsiones prolongadas, shock anafiláctico, paro cardiorrespiratorio, fractura expuesta). Ante cualquier accidente, se prohíbe mover a un estudiante con sospecha de trauma cervical o pérdida de conciencia; se activa el Seguro Escolar (Ley 16.744) y se traslada al CESFAM Huara con acompañamiento de un funcionario. Inspectoría General notifica telefónicamente al apoderado de inmediato, y se sostiene una reunión presencial dentro de 48 horas dejando constancia escrita. Si el estudiante pertenece al PIE o tiene diagnóstico Ley TEA, la Mesa Multidisciplinaria evalúa si el accidente se relaciona con dificultades motoras o una crisis de desregulación. Posteriormente se firma un Plan de Acompañamiento Escolar con adecuaciones de movilidad y flexibilidad de evaluaciones si corresponde.",
+    keywords: ["accidente escolar", "emergencia medica", "se cayo", "convulsion", "alergia", "seguro escolar", "lesion", "desmayo"]
   },
   {
     id: "RICE-PROT-008",
     titulo: "PROTOCOLO N° 8: EMBARAZO, MATERNIDAD Y PATERNIDAD ADOLESCENTE",
     seccion: "INCLUSIÓN Y PROTECCIÓN SOCIAL",
-    contenido: "PROTOCOLO DE MATERNIDAD Y PATERNIDAD: Las estudiantes embarazadas o madres, y los estudiantes padres, tienen derecho a la continuidad de estudios, calendarios de evaluación flexibles, permisos para controles de salud prenatal y lactancia materna, conforme a la Ley 20.370 y disposiciones del Mineduc.",
+    contenido: "PROTOCOLO DE MATERNIDAD Y PATERNIDAD: Las estudiantes embarazadas o madres, y los estudiantes padres, tienen derecho a la continuidad de estudios, calendarios de evaluación flexibles, permisos para controles de salud prenatal y lactancia materna, conforme a la Ley 20.370 y disposiciones del Mineduc. [NOTA INTERNA: revisar contra el nuevo Protocolo N°9 del RICE 2026 — pendiente de la próxima tanda de actualización.]",
     keywords: ["embarazo", "embarazada", "embarazado", "polola", "pololo", "maternidad", "paternidad", "controles", "lactancia", "flexibilidad", "evaluacion", "ley 20370", "gestacion", "padre", "madre", "bebe"]
   },
   {
