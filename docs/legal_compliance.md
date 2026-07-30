@@ -28,7 +28,7 @@ En conformidad con las directrices de la Circular 482 y las leyes penales chilen
 
 ## 4. Protección de Datos y Privacidad Escolar (Ley 19.628)
 *   **Aislamiento y Almacenamiento Local (Offline):** La base de datos y la persistencia de los incidentes se almacena en el `localStorage` del navegador del equipo de forma local. No se transmiten datos privados del estudiante a servidores en la nube de terceros.
-*   **Aislamiento de la API de Gemini:** Las consultas del Chatbot RAG envían a la API únicamente la pregunta y los fragmentos del reglamento. La identidad o datos personales del estudiante no forman parte del contexto enviado a la API de IA Studio, resguardando su privacidad digital.
+*   **Contexto Enviado a la API de Gemini:** Las consultas del Chatbot RAG procesadas a través del proxy seguro `api/chat.js` incluyen en el prompt del sistema el primer nombre y el rol de la persona que consulta para personalizar la orientación. Sin embargo, en ningún caso se transmiten datos de identificación sensible como RUT, correo electrónico, número telefónico ni datos de contacto.
 
 ---
 
