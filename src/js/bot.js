@@ -78,7 +78,7 @@ const RICE_Bot = {
 		// (respuesta genérica de "habla con tu profesor"), ignorando que podía
 		// tratarse de exactamente la persona que está maltratando (29-jul-2026).
 		if (/\b(profesor|profesora|docente|profe|funcionario|inspector|inspectora|director|directora|asistente|auxiliar|adulto)\b/i.test(q) &&
-			/\b(maltrat|trata\s*mal|me\s*trata|insult|humill|grit|golpe|abus|amenaz|acos|toc[oa]|discrimin)\b/i.test(q)) {
+			/\b(maltrat\w*|trata\s*mal|me\s*trata|insult\w*|humill\w*|grit\w*|golpe\w*|abus\w*|amenaz\w*|acos\w*|toc[oa]\w*|discrimin\w*)\b/i.test(q)) {
 			scores.MALTRATO_ADULTO += 22;
 		}
 		if (/\b(atraso|tarde|inasis|mandaron a la casa)\b/i.test(q)) scores.ATRASO += 12;
