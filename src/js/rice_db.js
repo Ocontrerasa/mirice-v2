@@ -89,66 +89,150 @@ const RICE_DATABASE = [
     keywords: ["accidente escolar", "emergencia medica", "se cayo", "convulsion", "alergia", "seguro escolar", "lesion", "desmayo"]
   },
   {
-    id: "RICE-PROT-008",
-    titulo: "PROTOCOLO N° 8: EMBARAZO, MATERNIDAD Y PATERNIDAD ADOLESCENTE",
-    seccion: "INCLUSIÓN Y PROTECCIÓN SOCIAL",
-    contenido: "PROTOCOLO DE MATERNIDAD Y PATERNIDAD: Las estudiantes embarazadas o madres, y los estudiantes padres, tienen derecho a la continuidad de estudios, calendarios de evaluación flexibles, permisos para controles de salud prenatal y lactancia materna, conforme a la Ley 20.370 y disposiciones del Mineduc. [NOTA INTERNA: revisar contra el nuevo Protocolo N°9 del RICE 2026 — pendiente de la próxima tanda de actualización.]",
-    keywords: ["embarazo", "embarazada", "embarazado", "polola", "pololo", "maternidad", "paternidad", "controles", "lactancia", "flexibilidad", "evaluacion", "ley 20370", "gestacion", "padre", "madre", "bebe"]
+    id: "RICE-PROT-N09",
+    titulo: "PROTOCOLO N°9 (RICE 2026): RETENCIÓN ESCOLAR PARA ESTUDIANTES EMBARAZADAS, MADRES Y PADRES",
+    seccion: "PROTOCOLOS INSTITUCIONALES DE ACTUACIÓN (RICE 2026)",
+    contenido: "EMBARAZO, MATERNIDAD Y PATERNIDAD ADOLESCENTE: Garantía absoluta de matrícula — prohibido cualquier medida que restrinja el ingreso, condicione la matrícula o sugiera el retiro por embarazo o maternidad/paternidad. Medidas de resguardo: permisos de baño sin restricción, exención del uniforme institucional (autoriza buzo u ropa holgada), espacio protegido de lactancia habilitado por Inspectoría, adecuación en Educación Física (sin ejercicios de alto impacto), asientos prioritarios en el transporte rural. Procedimiento: registro en 24 horas al informarse el estado; citación al apoderado en 48 horas para un Plan de Acompañamiento Individual (PAI) con calendario flexible de evaluaciones y justificación automática de inasistencias por controles médicos; derivación a Chile Crece Contigo (CESFAM Huara). No se aplican sanciones por esta condición; en caso de inasistencias prolongadas por el postparto, se autorizan tutorías a distancia y recalificación de promedios.",
+    keywords: ["embarazo", "embarazada", "embarazado", "maternidad", "paternidad", "controles", "lactancia", "gestacion", "padre adolescente", "madre adolescente", "bebe", "guagua"]
+  },
+  {
+    id: "RICE-PROT-N10",
+    titulo: "PROTOCOLO N°10 (RICE 2026): OPERACIÓN SEGURA EN SALIDAS PEDAGÓGICAS Y GIRAS DE ESTUDIO",
+    seccion: "PROTOCOLOS INSTITUCIONALES DE ACTUACIÓN (RICE 2026)",
+    contenido: "SALIDAS PEDAGÓGICAS, GIRAS Y TRANSPORTE INSTITUCIONAL: Ningún estudiante puede abordar un bus de salida sin la Autorización Escrita y Firmada de Puño y Letra de su apoderado — no se aceptan autorizaciones verbales ni telefónicas de última hora. Ante un incidente conductual en la salida (fumar en el bus, destrozar butacas, agredir a un tercero): registro en 24 horas, y es falta grave o gravísima según el RICE. Ante una contingencia vial (pana, bloqueo de ruta): conteo nominal de estudiantes, primeros auxilios, contacto con Carabineros/Posta más cercana, prohibido el trasbordo en vehículos particulares no autorizados. Filtro TEA/PIE obligatorio por el riesgo de sobrecarga sensorial en ciudades grandes. Sanciones por falta acreditada: suspensión de participar en futuras actividades extracurriculares el resto del semestre, con opción de conmutar por Servicio a la Comunidad Educativa.",
+    keywords: ["salida pedagogica", "gira de estudio", "excursion", "paseo de curso", "bus de la salida", "autorizacion firmada", "actividad extraprogramatica"]
+  },
+  {
+    id: "RICE-PROT-N11",
+    titulo: "PROTOCOLO N°11 (RICE 2026): INASISTENCIA CRÍTICA, AUSENTISMO Y ALERTA DE DESERCIÓN ESCOLAR",
+    seccion: "PROTOCOLOS INSTITUCIONALES DE ACTUACIÓN (RICE 2026)",
+    contenido: "INASISTENCIA CRÍTICA Y AUSENTISMO: Se activa automáticamente cada viernes si un estudiante acumula 3 inasistencias consecutivas sin justificar o baja del 85% de asistencia mensual. Garantía absoluta de permanencia: prohibido borrar registros, desvincular unilateralmente o \"cerrar por inasistencia\" el año escolar de un estudiante. Procedimiento: llamado al apoderado y notificación por Lirmi Familia en 24 horas; si no responde, citación presencial en 48 horas con Acta de Compromiso de Asistencia; si persiste con 5+ días sin justificar, Visita Domiciliaria en Terreno de la Dupla Psicosocial; si la negligencia parental persiste tras la visita, denuncia al Tribunal de Familia u OLN en 48 horas (vía paralela e independiente). No se aplican sanciones punitivas al estudiante por sus faltas de asistencia — en su lugar, un Plan de Apoyo Pedagógico de Retención (PAR) con tutorías y calendario flexible.",
+    keywords: ["inasistencia", "ausentismo", "faltar al liceo", "deserta", "abandono escolar", "no viene al liceo", "falta mucho"]
+  },
+  {
+    id: "RICE-PROT-N12",
+    titulo: "PROTOCOLO N°12 (RICE 2026): VIOLENCIA DE GÉNERO Y DISCRIMINACIÓN (LEY 21.675)",
+    seccion: "PROTOCOLOS INSTITUCIONALES DE ACTUACIÓN (RICE 2026)",
+    contenido: "VIOLENCIA DE GÉNERO Y DISCRIMINACIÓN (LEY 21.675): Distingue la violencia de género (falta gravísima: violencia física/sexual/psicológica basada en normas y prejuicios de género) de las prácticas discriminatorias por estereotipos (falta grave: comentarios o tratos diferenciados que reproducen roles tradicionales) y de la exposición a violencia intrafamiliar en el hogar (dimensión de resguardo, el estudiante es víctima por exposición). Procedimiento: registro en 24 horas, distanciamiento físico inmediato entre presunta víctima y denunciado, cambio de puesto o de sección, separación en el transporte rural, contención psicosocial urgente. Citación a los apoderados por separado en 48 horas. Filtro TEA/PIE antes de sancionar. Si el hecho es delito (lesiones, abuso sexual, amenazas): denuncia obligatoria a Carabineros/Fiscalía en 24 horas, entrega de información sobre redes de protección (Fono 1455, Centros de la Mujer, SernameG). Resolución en 10 días hábiles (+5 prórroga). Sanciones: discriminación → amonestación grave + talleres; violencia de género acreditada → suspensión de 3 a 5 días + condicionalidad extrema, pudiendo escalar a expulsión bajo la Ley Aula Segura.",
+    keywords: ["violencia de genero", "discriminacion", "estereotipos", "sexismo", "machismo", "ley 21675", "trato diferenciado por sexo"]
+  },
+  {
+    id: "RICE-PROT-N13",
+    titulo: "PROTOCOLO N°13 (RICE 2026): RESGUARDO DE DERECHOS E IDENTIDAD LGBTIQA+ (LEY JOSÉ MATÍAS)",
+    seccion: "PROTOCOLOS INSTITUCIONALES DE ACTUACIÓN (RICE 2026)",
+    contenido: "IDENTIDAD DE GÉNERO Y NO DISCRIMINACIÓN LGBTIQA+ (LEY JOSÉ MATÍAS): Es falta gravísima negar el uso del nombre social a un estudiante trans, cuestionar públicamente su identidad, o el hostigamiento/transfobia sostenida entre pares (crear grupos digitales despectivos, sobrenombres humillantes, aislamiento social organizado). Es falta grave que un funcionario se niegue de forma sistemática a usar el nombre social o pronombres solicitados. Medidas de resguardo inmediatas (24 horas): uso obligatorio del nombre social en el pase de asistencia y evaluaciones; acceso a baños/camarines según la identidad del estudiante, resguardando su privacidad sin que sea un aislamiento o castigo; se autoriza el uso de las prendas del uniforme (de damas o varones) coherentes con su identidad de género. Citación a apoderados por separado en 48 horas. Filtro TEA/PIE. Si hay amenazas o agresión física, denuncia penal obligatoria en 24 horas. Resolución en 10 días hábiles. Sanciones ante hostigamiento acreditado: amonestación escrita grave, condicionalidad de matrícula, talleres de diversidad y buen trato.",
+    keywords: ["lgbtiqa", "trans", "transgenero", "identidad de genero", "nombre social", "diversidad sexual", "ley jose matias", "pronombres"]
+  },
+  {
+    id: "RICE-PROT-N14",
+    titulo: "PROTOCOLO N°14 (RICE 2026): DESREGULACIÓN EMOCIONAL Y CONDUCTUAL (LEY TEA N°21.545)",
+    seccion: "PROTOCOLOS INSTITUCIONALES DE ACTUACIÓN (RICE 2026)",
+    contenido: "DESREGULACIÓN EMOCIONAL Y CONDUCTUAL (LEY TEA): Una crisis de un estudiante con Trastorno del Espectro Autista u otra condición neurodivergente NUNCA se tipifica como falta disciplinaria ni da lugar a sanciones, castigos, suspensiones, condicionalidad o expulsión — es una manifestación de su variabilidad neurocognitiva. Medidas inmediatas: retirar al estudiante de la fuente de sobrecarga (ruido, aglomeración) hacia la Sala de Recursos o Espacio de Calma, de forma calmada y pausada; prohibido forcejear, zamarrear o contener físicamente de forma invasiva, salvo riesgo inminente de autolesión (y solo por personal capacitado, cesando en cuanto se estabilice). Se prohíbe también exponer públicamente al estudiante o recriminarlo frente al curso (esto último es en sí mismo una falta del adulto). Contacto con el apoderado inmediato, reunión presencial en 48 horas. La Mesa Multidisciplinaria (Coordinación PIE + Dupla Psicosocial) evalúa el caso en 3 días hábiles y actualiza el Plan de Adecuaciones Curriculares Individualizadas (PACI). Si la crisis excede el alcance del liceo, derivación a CESFAM/COSAM/SENDA.",
+    keywords: ["tea", "autismo", "espectro autista", "desregulacion", "crisis sensorial", "sobrecarga sensorial", "asperger", "ley 21545", "pie", "espacio de calma", "neurodivergente"]
+  },
+  {
+    id: "RICE-PROT-N15",
+    titulo: "PROTOCOLO N°15 (RICE 2026): ROBO, HURTO O SUSTRACCIÓN DE ESPECIES",
+    seccion: "PROTOCOLOS INSTITUCIONALES DE ACTUACIÓN (RICE 2026)",
+    contenido: "ROBO, HURTO O SUSTRACCIÓN: Se distingue el hurto (apropiación sin fuerza ni violencia — se aborda formativamente) del robo por fuerza en las cosas (apertura o rotura de mochilas/casilleros — falta gravísima automática) y del robo con violencia o intimidación (rompe la esfera educativa y entra a la justicia penal, activando la Ley Aula Segura). Está estrictamente prohibido realizar registros corporales forzados, revisiones masivas de mochilas sin sospecha fundada, o careos públicos entre estudiantes. Procedimiento: registro en 24 horas, revisión de cámaras y entrevistas privadas por separado; citación a las familias en 48 horas. Si hay violencia/intimidación o rotura intencional que constituya delito: denuncia penal obligatoria en 24 horas y suspensión cautelar bajo Ley Aula Segura. En hurto/robo menor sin violencia: Acta de Reparación de Daños (devolución o compensación) y una medida formativa (Servicio a la Comunidad Educativa o suspensión de 1 a 5 días), con continuidad pedagógica garantizada por UTP.",
+    keywords: ["robo", "hurto", "me robaron", "sustraccion", "me quitaron", "desaparecio mi", "mochila robada"]
+  },
+  {
+    id: "RICE-PROT-N16",
+    titulo: "PROTOCOLO N°16 (RICE 2026): IDEACIÓN SUICIDA, INTENTOS DE SUICIDIO O AUTOLESIONES",
+    seccion: "PROTOCOLOS INSTITUCIONALES DE ACTUACIÓN (RICE 2026)",
+    contenido: "IDEACIÓN SUICIDA, AUTOLESIONES O INTENTO DE SUICIDIO (EMERGENCIA DE SALUD MENTAL): Ante una autolesión o intento en curso, el funcionario interviene de inmediato para proteger la vida, retira cualquier objeto de peligro con calma, y NUNCA deja solo al estudiante. Registro en 24 horas bajo la categoría \"Emergencia Salud Mental\". Evaluación inmediata por la Dupla Psicosocial (riesgo leve/moderado/grave). Si hay heridas físicas o ingesta, traslado inmediato al CESFAM Huara (seguro escolar). Citación de urgencia al apoderado, con extrema reserva. Se entrega una Ficha de Derivación Oficial a la red de salud mental (CESFAM, COSAM Pozo Almonte), y el apoderado firma un Compromiso de Atención de Salud Mental. El liceo NO es un centro de tratamiento psiquiátrico — la responsabilidad de tratamiento es de la red de salud externa; si el apoderado se niega a llevarlo a tratamiento, se notifica al Tribunal de Familia/OLN. Se prohíbe tajantemente aplicar sanciones disciplinarias por estas conductas, al ser hitos de salud mental, no faltas.",
+    keywords: ["suicidio", "autolesion", "cortarme", "quiero morir", "no quiero vivir", "me quiero hacer dano", "ideacion suicida", "crisis de salud mental"]
+  },
+  {
+    id: "RICE-PROT-N17",
+    titulo: "PROTOCOLO N°17 (RICE 2026): SOSPECHA DE VULNERACIÓN DE DERECHOS EN EL ENTORNO FAMILIAR",
+    seccion: "PROTOCOLOS INSTITUCIONALES DE ACTUACIÓN (RICE 2026)",
+    contenido: "NEGLIGENCIA, MALTRATO O ABANDONO EN EL HOGAR: Cubre la negligencia grave (omisión constante de alimentación, higiene, vestimenta o salud) y el maltrato físico o psicológico intrafamiliar (lesiones, hematomas, amedrentamiento severo). El adulto que detecta indicadores o recibe la confidencia acoge con empatía y sin juicios, derivando de inmediato a la Dupla Psicosocial, y registra en 24 horas bajo \"Sospecha Vulneración Familiar\". La Dupla evalúa el nivel de riesgo en un espacio protegido. Si hay riesgo inminente al término de la jornada, el liceo NO entrega al estudiante a un adulto agresor. Derivación a la Oficina Local de la Niñez (OLN) o Medida de Protección al Tribunal de Familia en 5 días hábiles; si hay delito flagrante (lesiones graves), denuncia penal obligatoria en 24 horas. Queda estrictamente prohibido que el liceo intente mediar o realizar careos entre el estudiante y los padres ante sospecha de maltrato físico.",
+    keywords: ["maltrato en la casa", "negligencia", "abandono", "maltrato familiar", "me pegan en mi casa", "violencia intrafamiliar", "vulneracion de derechos en el hogar"]
+  },
+  {
+    id: "RICE-PROT-N18",
+    titulo: "PROTOCOLO N°18 (RICE 2026): FUGA O SALIDA NO AUTORIZADA DE ESTUDIANTES",
+    seccion: "PROTOCOLOS INSTITUCIONALES DE ACTUACIÓN (RICE 2026)",
+    contenido: "FUGA O SALIDA NO AUTORIZADA (FALTA GRAVE): Egreso de un estudiante fuera del perímetro del liceo durante la jornada sin autorización escrita del apoderado. Detectada la ausencia, Inspectoría busca primero dentro del recinto; confirmada la fuga, llama de urgencia al apoderado. Si se divisa al estudiante, se le persuade verbalmente a regresar — está prohibido el forcejeo físico o la persecución que exponga a accidentes de tránsito. Si tras 2 horas no hay información de su paradero ni contacto con la familia, la Directora interpone denuncia por Presunta Desgracia ante Carabineros de Huara. Al retornar: citación obligatoria al apoderado, amonestación escrita, y derivación a la Dupla Psicosocial para indagar las causas (acoso escolar, problemas en el aula, crisis socioemocional).",
+    keywords: ["fuga", "se arranco", "salio sin permiso", "se escapo del liceo", "salida no autorizada", "cimarra"]
+  },
+  {
+    id: "RICE-PROT-N19",
+    titulo: "PROTOCOLO N°19 (RICE 2026): CATÁSTROFES NATURALES Y EVENTOS CLIMÁTICOS EN HUARA",
+    seccion: "PROTOCOLOS INSTITUCIONALES DE ACTUACIÓN (RICE 2026)",
+    contenido: "SISMOS, TORMENTAS DE ARENA Y LLUVIAS ESTIVALES: Ante un sismo, se activa el Plan PISE con autoprotección y evacuación a las Zonas de Seguridad. Ante tormentas de arena: suspensión inmediata de recreos, ingreso a salas, sellado de puertas/ventanas y uso de mascarillas. Ante lluvias/crecidas: monitoreo de techumbres y accesos. Si al término de la jornada las rutas rurales (Bajo Soga, Pisagua, Quebrada) están cortadas, los estudiantes de esas zonas son albergados dentro del liceo bajo supervisión — prohibida la salida de buses rurales sin autorización de Vialidad, Carabineros o el Comité de Emergencia Municipal. Comunicación oficial por Lirmi Familia, mensajería, y radio local si hay corte de comunicaciones. No se reanudan clases presenciales hasta certificación de infraestructura segura por el SLEP; si el aislamiento rural se prolonga, se activa modalidad remota sin sanciones por ausentismo.",
+    keywords: ["sismo", "terremoto", "tormenta de arena", "emergencia climatica", "lluvia", "temporal", "evacuacion", "pise"]
+  },
+  {
+    id: "RICE-PROT-N20",
+    titulo: "PROTOCOLO N°20 (RICE 2026): NORMAS DE SEGURIDAD Y CONVIVENCIA EN EL TRANSPORTE ESCOLAR RURAL",
+    seccion: "PROTOCOLOS INSTITUCIONALES DE ACTUACIÓN (RICE 2026)",
+    contenido: "TRANSPORTE ESCOLAR RURAL: El bus, los paraderos y los tiempos de traslado son una extensión directa del liceo — todas las faltas y sanciones del RICE aplican igual durante el trayecto. Obligaciones del estudiante: cinturón de seguridad abrochado todo el viaje, respetar la fila en el paradero, no asomarse ni lanzar objetos, sin burlas ni acoso a bordo. El apoderado es responsable de la seguridad en el paradero (el liceo no asume custodia antes de subir ni después de bajar); si no hay apoderado esperando a un estudiante de Parvularia/Básica, el auxiliar lo lleva de vuelta a Huara y se entrega en la Subcomisaría de Carabineros. Ante una falta a bordo: registro en el Formulario de Incidencias del auxiliar, ingreso a Lirmi en 24 horas, y en riñas/agresiones se fijan asientos separados para el trayecto de retorno esa misma tarde. Faltas gravísimas a bordo (agresión con lesiones, drogas, armas) activan de inmediato los protocolos específicos correspondientes (N°2, N°6, N°7). Sanción por falta grave reiterada o gravísima: suspensión del beneficio de transporte de 3 a 10 días (hasta el resto del año en casos extremos) — el traslado durante la sanción es responsabilidad del apoderado, y UTP garantiza igual la continuidad pedagógica por Lirmi.",
+    keywords: ["bus rural", "transporte escolar", "furgon", "paradero", "bajo soga", "pisagua", "quebrada", "conductor del bus", "auxiliar de ruta"]
+  },
+  {
+    id: "RICE-PROT-N21",
+    titulo: "PROTOCOLO N°21 (RICE 2026): MEDIACIÓN ESCOLAR Y GESTIÓN COLABORATIVA DE CONFLICTOS",
+    seccion: "PROTOCOLOS INSTITUCIONALES DE ACTUACIÓN (RICE 2026)",
+    contenido: "MEDIACIÓN ESCOLAR: Es un recurso voluntario, alternativo y restaurativo — cualquiera de las partes puede negarse a participar en cualquier momento, sin que eso configure una falta. NO es admisible la mediación en: acoso escolar sistemático o agresiones físicas unilaterales con lesiones, hechos que sean delito (abuso sexual, armas de fuego, microtráfico), ni conflictos de Ley Karin entre adultos (que se rigen por la Dirección del Trabajo). El mediador varía según el estamento (Profesor Jefe/Coordinador de Convivencia para estudiantes; Inspectoría o mediador externo del SLEP para funcionarios). Procedimiento en 4 fases: registro y filtro de admisibilidad en 24 horas; citación de las partes en 48 horas con medidas preventivas de separación si corresponde; audiencia de mediación con reglas de trato digno y escucha activa (con filtro TEA/PIE si aplica); Acta de Acuerdo Reparatorio ratificada por Dirección en 3 días, con monitoreo de 15 días hábiles. Si una parte incumple el acuerdo o hay hostilidad reiterada, se declara el quiebre del proceso y se reclasifica como falta Grave o Gravísima según el RICE, con el escalamiento disciplinario ordinario.",
+    keywords: ["mediacion escolar", "resolver el conflicto", "conversar el problema", "mediador", "acuerdo reparatorio", "gestion colaborativa"]
+  },
+  {
+    id: "RICE-FLAGRANCIA-001",
+    titulo: "PROTOCOLO ANTE FLAGRANCIA DE DROGAS Y ARMAS (ARTÍCULOS 62-63)",
+    seccion: "TÍTULO XVI — FLAGRANCIA PENAL",
+    contenido: "FLAGRANCIA DE DROGAS Y ARMAS (Art. 62-63, Ley 20.000, Ley 17.798, Art. 175 CPP): Ante detección en flagrancia, se ordena de forma pacífica la entrega del elemento, trasladando al estudiante a una oficina segura acompañado siempre de al menos dos adultos (nunca queda solo con un único funcionario). Se notifica de urgencia al apoderado y a Carabineros. La evidencia se resguarda en el Formulario de Cadena de Custodia (Formato H), sin manipulación excesiva. Denuncia formal en 24 horas. Excepción para Educación Parvularia (NT1 y NT2): los párvulos son penalmente inimputables — nunca se suspende, expulsa ni denuncia como infractor a un párvulo; el procedimiento se limita al resguardo físico, retiro del elemento, citación al apoderado y derivación a la Oficina Local de Niñez (OLN). En Educación Básica y Media, en paralelo a la denuncia penal se activa el debido proceso RICE (Ley Aula Segura) con suspensión preventiva cautelar; está estrictamente prohibido someter al estudiante a interrogatorios policiales informales o forzarlo a autoincriminarse.",
+    keywords: ["flagrancia", "encontraron droga", "encontraron arma", "sorprendido con", "cadena de custodia", "formato h"]
+  },
+  {
+    id: "RICE-PARVULARIA-MARCO",
+    titulo: "MARCO GENERAL DE CONVIVENCIA EN EDUCACIÓN PARVULARIA (ARTÍCULOS 64-72)",
+    seccion: "TÍTULO XVII — EDUCACIÓN PARVULARIA 2026",
+    contenido: "PRINCIPIOS Y DERECHOS DE LOS PÁRVULOS (NT1 y NT2): Los párvulos son sujetos de derecho, con enfoque preventivo, formativo y de buen trato (Circular 860, Ley 21.430, Ley TEA 21.545). Está ESTRICTAMENTE PROHIBIDO aplicar suspensión, expulsión, no renovación de matrícula, sanción disciplinaria, amonestación acumulativa o denuncia policial ordinaria a estudiantes de NT1 y NT2 — las regulaciones de faltas y sanciones del RICE NO aplican a los párvulos; su abordaje es siempre formativo y de contención emocional. El uniforme NO es obligatorio en este ciclo (se sugiere ropa cómoda/buzo), con adaptaciones sensoriales para hipersensibilidad táctil o auditiva (Ley TEA). El no tener control de esfínter desarrollado nunca es impedimento para la matrícula o asistencia. Los medicamentos solo se administran con receta médica escrita vigente, entregada por el apoderado con registro de consentimiento. Jornada: ingreso 08:30, salida 15:15 hrs.",
+    keywords: ["parvulo", "parvularia", "kinder", "prekinder", "nt1", "nt2", "jardin infantil", "educacion inicial"]
+  },
+  {
+    id: "RICE-PARVULARIA-PROTOCOLOS",
+    titulo: "PROTOCOLOS ESPECÍFICOS DE EDUCACIÓN PARVULARIA (PROTOCOLOS 22 A 26)",
+    seccion: "TÍTULO XVII — EDUCACIÓN PARVULARIA 2026",
+    contenido: "PROTOCOLOS 22-26 PARA PÁRVULOS: (22) Vulneración de derechos: contención inmediata a la altura de los ojos del menor, sin interrogatorio ni careos; registro literal de sus palabras textuales; reporte a Convivencia en 2 horas; denuncia penal en 24 horas si es delito. (23) Desregulación emocional/conductual (Ley TEA): traslado guiado al Espacio de Calma, apoyos sensoriales (orejeras, objetos táctiles); prohibida la contención física forzada o el encierro; el abrazo de contención excepcional solo ante riesgo vital inminente, por personal capacitado. (24) Conflictos entre párvulos (mordidas, empujones): separación afectiva sin gritos ni tirones, contención primero a quien fue agredido, luego al que agredió; mediación lúdica con pictogramas ARASAAC ('puedo/no puedo'); si se repite más de 3 veces al mes, Plan de Acompañamiento Individual. (25) Ausentismo temprano: llamado el mismo día de la inasistencia; tras 15 días consecutivos sin justificar, se agotan 3 llamadas + 1 carta certificada + 1 visita domiciliaria antes de evaluar la vacante — nunca como sanción, siempre buscando el reintegro. (26) Accidentes escolares: primeros auxilios in situ, prohibido mover al párvulo con sospecha de trauma cervical, traslado acompañado de un funcionario al CESFAM, Declaración Individual de Accidente Escolar (Ley 16.744) en 24 horas.",
+    keywords: ["parvulo se golpeo", "mordio a otro nino", "parvulo no asiste", "crisis del parvulo", "accidente en el jardin", "parvulo agredido"]
   },
   {
     id: "RICE-COND-001",
-    titulo: "CONDUCTO REGULAR Y CANALES OFICIALES DE ATENCIÓN E INQUIETUDES (ART. 31)",
+    titulo: "CONDUCTO REGULAR Y CANALES OFICIALES DE ATENCIÓN E INQUIETUDES (ARTS. 1-2)",
     seccion: "CANALES DE COMUNICACIÓN Y DEBIDO PROCESO",
     contenido: "CONDUCTO REGULAR DEL LICEO DE HUARA: El procedimiento jerárquico para consultas, reclamos o solicitudes de la comunidad educativa sigue los siguientes pasos: 1° Profesor/a Jefe o Docente de Asignatura (instancia inicial de aula); 2° Equipo de Convivencia Educativa / Inspectoría General / UTP (para temas socioemocionales, faltas RICE o requerimientos no resueltos en 48 hrs); 3° Dirección del Liceo de Huara (instancia superior de apelación y casos complejos); 4° Sostenedor (SLEP Tamarugal) / Superintendencia de Educación (instancia fiscalizadora externa). Todo apoderado y estudiante tiene derecho a ser atendido con respeto, escucha protegida y confidencialidad (Circular 482 Mineduc).",
     keywords: ["conducto regular", "conductos regulares", "canales de atencion", "reclamo", "reclamos", "atencion a apoderados", "profesor jefe", "convivencia educativa", "convivencia escolar", "direccion", "solicitud", "jerarquia"]
   },
   {
-    id: "RICE-PROT-011",
-    titulo: "PROTOCOLO N° 11: CIBERACOSO Y USO RESPONSABLE DE REDES SOCIALES",
-    seccion: "CONVIVENCIA DIGITAL",
-    contenido: "PROTOCOLO DE CIBERACOSO: El ciberbullying (hostigamiento en redes sociales, WhatsApp, Instagram o TikTok) que afecte la convivencia educativa del Liceo de Huara se aborda como una falta grave o gravísima. Se solicita el resguardo de evidencias digitales (capturas de pantalla) y se activan mediaciones digitales y planes de apoyo psicológico.",
-    keywords: ["ciberacoso", "ciberbullying", "redes sociales", "whatsapp", "instagram", "tiktok", "fotos", "capturas", "internet"]
-  },
-  {
-    id: "RICE-PROT-012",
-    titulo: "PROTOCOLO N° 12: DIVERSIDAD, IDENTIDAD DE GÉNERO E INCLUSIÓN (LEY 21.120)",
-    seccion: "DIVERSIDAD Y DERECHOS HUMANOS",
-    contenido: "PROTOCOLO DE IDENTIDAD DE GÉNERO Y DIVERSIDAD: Respeto absoluto al nombre social, uso de vestimenta y baños según la identidad de género manifestada por el estudiante o su familia, garantizando un trato digno y libre de discriminación arbitraria conforme a la Ley 21.120 y la Circular 815 Mineduc.",
-    keywords: ["diversidad", "identidad", "genero", "nombre social", "trans", "lgbti", "inclusion", "respeto", "ley 21120"]
-  },
-  {
-    id: "RICE-PROT-014",
-    titulo: "PROTOCOLO N° 14: ACOMPAÑAMIENTO A ESTUDIANTES CON TEA (LEY 21.545)",
-    seccion: "INCLUSIÓN Y NEURODIVERSIDAD (LEY DE AUTISMO)",
-    contenido: "PROTOCOLO LEY TEA (LEY N° 21.545): Garantiza la inclusión formativa, adaptaciones curriculares y libertad de tiempo de autorregulación en el Espacio de Calma ante desregulación emocional o sobreestimulación sensorial. Se prohíbe todo trato punitivo o sancionador ante conductas derivadas del espectro autista.",
-    keywords: ["tea", "autismo", "espectro", "sensorial", "desregulacion", "calma", "ley 21545", "pie", "adaptaciones"]
-  },
-  {
     id: "RICE-REG-001",
-    titulo: "REGULACIÓN DEL USO DE TELÉFONOS CELULARES EN AULA",
-    seccion: "CONVIVENCIA Y ATENCIÓN EN AULA",
-    contenido: "REGULACIÓN DE CELULARES: Durante el horario de clases pedagógicas (8:30 a 13:30), los dispositivos móviles deben estar guardados en la mochila y en silencio para cuidar la atención del curso. Se permite su uso en recreos (10:00-10:15 / 11:45-12:00) y horario de almuerzo. El seguimiento en la app MiRice es voluntario y formativo, orientado al bienestar digital.",
-    keywords: ["celular", "celulares", "telefono", "telefonos", "pantallas", "clases", "recreo", "almuerzo", "autorregulacion", "bienestar digital"]
+    titulo: "REGULACIÓN DEL USO DE TELÉFONOS CELULARES EN AULA (FALTAS L-03, L-04, G-08, G-13)",
+    seccion: "DEBERES Y REGLAMENTO DISCIPLINARIO FORMATIVO",
+    contenido: "REGULACIÓN DE CELULARES: Manipular o mantener a la vista el celular en clases sin indicación pedagógica es falta leve (Código L-03): advertencia verbal y retiro temporal. Usar audífonos durante la explicación también es falta leve (L-04). Acumular 3 registros de celular en el mismo mes escala automáticamente a falta grave (G-13): citación al apoderado y prohibición de ingreso del equipo al liceo por 15 días. Usar el celular durante una evaluación para buscar respuestas es falta grave (G-08): retiro del dispositivo, término de la evaluación para ese estudiante, custodia del equipo en Inspectoría con entrega exclusiva al apoderado, y reprogramación del instrumento por UTP.",
+    keywords: ["celular", "celulares", "telefono", "telefonos", "pantallas", "clases", "audifonos", "uso de celular en prueba"]
   },
   {
     id: "RICE-FALTAS-LEVES",
-    titulo: "CLASIFICACIÓN Y TIPIFICACIÓN DE FALTAS LEVES (ART. 15)",
+    titulo: "CLASIFICACIÓN DE FALTAS LEVES — CATEGORÍA L (ARTÍCULOS 39 Y 43)",
     seccion: "DEBERES Y REGLAMENTO DISCIPLINARIO FORMATIVO",
-    contenido: "FALTAS LEVES (Art. 15): Atrasos injustificados reiterados, no vestir el uniforme oficial, uso no autorizado de celular en clases. Consecuencias: Amonestación verbal privada, registro en hoja de vida y diálogo de compromiso formativo con la familia.",
-    keywords: ["faltas leves", "art 15", "atraso", "uniforme", "celular", "amonestacion", "compromiso"]
+    contenido: "FALTAS LEVES (Art. 39/43): conductas que alteran el normal desarrollo educativo sin comprometer la integridad de terceros. Ejemplos con código: atraso al ingreso (L-01) o entre bloques (L-02), celular o audífonos en clase (L-03/L-04), conversación disruptiva (L-06), lanzar objetos menores sin intención de dañar (L-07), deambular sin permiso (L-08), ruidos molestos (L-09), falta de cuadernos o útiles (L-10/L-11), ensuciar el aula o patios (L-12/L-13), descuido de higiene (L-15), asistir sin uniforme sin justificación (L-16). Medidas: diálogo reflexivo inmediato, amonestación verbal privada, registro en la Hoja de Vida Digital; acumular 5 faltas leves en un semestre escala a un Plan de Acompañamiento y Mitigación de Conducta.",
+    keywords: ["faltas leves", "art 39", "art 43", "atraso", "uniforme", "celular en clases", "amonestacion verbal", "hoja de vida"]
   },
   {
     id: "RICE-FALTAS-GRAVES",
-    titulo: "CLASIFICACIÓN Y TIPIFICACIÓN DE FALTAS GRAVES (ART. 16)",
+    titulo: "CLASIFICACIÓN DE FALTAS GRAVES — CATEGORÍA G (ARTÍCULOS 40 Y 44)",
     seccion: "DEBERES Y REGLAMENTO DISCIPLINARIO FORMATIVO",
-    contenido: "FALTAS GRAVES (Art. 16): Uso de lenguaje descalificador u ofensivo reiterado, ciberacoso moderado, daño a la infraestructura del liceo, salir de la sala sin autorización. Consecuencias: Citación al apoderado, firma de acta de compromiso y plan de trabajo socioemocional.",
-    keywords: ["faltas graves", "art 16", "insultos", "ciberacoso", "daño", "citacion apoderado", "acta"]
+    contenido: "FALTAS GRAVES (Art. 40/44): afectan directamente el bienestar de otros, dañan el entorno/patrimonio, o son reincidencia sistemática de faltas leves. Ejemplos con código: insultos entre pares (G-01), apodos humillantes (G-02), comentarios racistas/xenófobos (G-03), hurto simple sin fuerza ni violencia (G-04), esconder maliciosamente pertenencias de un compañero (G-05), copiar en una evaluación (G-06/G-07), usar el celular en una prueba (G-08), plagio con IA o de internet (G-09), salir del aula sin permiso (G-10), cimarra o fuga (G-11), desobediencia abierta a una autoridad (G-12), daño a bienes del liceo o del transporte rural (G-14/G-16). Medidas: citación formal al apoderado, Acta de Compromiso, Servicio a la Comunidad Educativa (SCE) o suspensión de 1 a 2 días hábiles.",
+    keywords: ["faltas graves", "art 40", "art 44", "insultos", "hurto", "copiar en prueba", "citacion apoderado", "acta de compromiso"]
   },
   {
     id: "RICE-FALTAS-GRAVISIMAS",
-    titulo: "CLASIFICACIÓN Y TIPIFICACIÓN DE FALTAS GRAVÍSIMAS (ART. 17)",
+    titulo: "CLASIFICACIÓN DE FALTAS GRAVÍSIMAS — CATEGORÍA GG (ARTÍCULOS 41 Y 45)",
     seccion: "DEBERES Y REGLAMENTO DISCIPLINARIO FORMATIVO",
-    contenido: "FALTAS GRAVÍSIMAS (Art. 17): Agresión física grave, acoso escolar o bullying sistemático, porte de armas u objetos peligrosos, porte o comercialización de drogas/alcohol, violencia de género o discriminación arbitraria. Consecuencias: Derivación a Dupla Psicosocial, citación urgente a apoderados, eventual suspensión preventiva (máx. 5 días) y denuncia obligatoria si reviste carácter de delito.",
-    keywords: ["faltas gravisimas", "art 17", "agresion", "acoso escolar", "bullying", "armas", "drogas", "suspension", "delito"]
+    contenido: "FALTAS GRAVÍSIMAS (Art. 41/45): atentan contra la vida, salud o integridad física/psicológica, o son delito. Ejemplos con código: agresión física entre pares (GG-01), incitar o filmar una riña (GG-02), agresión verbal grave a un docente activando Ley Karin (GG-03), amenazas a funcionarios (GG-04), agresión física a personal del liceo (GG-05, activa expulsión bajo Ley Aula Segura). También: acoso escolar sistemático, porte/consumo/distribución de drogas o alcohol, porte de armas, abuso sexual, e incendios o destrozos mayores. Sanciones: suspensión inmediata como medida cautelar (1 a 5 días), condicionalidad de matrícula, no renovación o expulsión inmediata siguiendo el debido proceso (con reubicación coordinada por el MINEDUC), y denuncia obligatoria ante Carabineros o el Ministerio Público en 24 horas si el hecho reviste delito.",
+    keywords: ["faltas gravisimas", "art 41", "art 45", "agresion", "acoso escolar sistematico", "armas", "drogas", "expulsion", "ley aula segura", "delito"]
   }
 ];

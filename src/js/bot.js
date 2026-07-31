@@ -16,20 +16,23 @@ const RICE_Bot = {
 	comprenderMensaje: function(texto, rol) {
 		let q = texto.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 
-		// MEJORA 1: Vocabulario chileno estudiantil extendido
+		// MEJORA 1: Vocabulario chileno estudiantil extendido (ampliado 30-jul-2026
+		// con jerga real de estudiantes: funar, andar curao/volao, corvo, combos,
+		// ley del hielo, tener de punto, etc. — no son formas "incorrectas" del
+		// español, son cómo efectivamente habla un estudiante chileno).
 		q = q
-			.replace(/\b(bulying|bulin|bully|buli|acosao|molestando|molestao|pelan|pelando|pelaron|cargando|cargaron|cargao|webeo|webeando|webiar)\b/g, 'acoso')
-			.replace(/\b(pofe|profe|profes|profeso|profesora|profee|pjefe)\b/g, 'docente')
-			.replace(/\b(pega|pegan|pegaron|pegaro|pegame|golpe|golpearon|peliar|agredieron|pelea|empujo|empujaron|cachetearon|cacheteo|zamparon)\b/g, 'violencia')
-			.replace(/\b(pololo|polola|polol|pololio|pareja|novio|novia|pololeo)\b/g, 'pololeo')
-			.replace(/\b(droga|drogas|mariua|marihuana|piti|pito|cigarro|vape|vapear|vapeo|falopa|pasto|faso|yesca|porro|pasta base|cocaina)\b/g, 'drogas')
-			.replace(/\b(arma|cuchio|cuchillo|navaja|pistola|punzon|cortapluma|escopeta|explosivo)\b/g, 'armas')
-			.replace(/\b(robo|robaron|hurtar|hurtaron|sacaron|sustrajeron|afanaron)\b/g, 'robo')
-			.replace(/\b(atraso|tarde|lleguetarde|llegue\s+tarde)\b/g, 'atraso')
-			.replace(/\b(celu|celular|telefono|telef|pantalla|smartphone)\b/g, 'celular')
-			.replace(/\b(sancion|anotacion|suspendio|suspendieron|expulsaron|rajaron)\b/g, 'sancion')
-			.replace(/\b(palomilla|cabros|cabras|chiquillos|chiquillas)\b/g, 'estudiante')
-			.replace(/\b(dupla|psicologo|sicolog[ao]|asistente social|orientador[ao]?)\b/g, 'dupla_psicosocial')
+			.replace(/\b(bulying|bulin|bully\w*|buli\w*|acos\w*|molestando|molestao|molesta\w*|pelan|pelando|pelaron|cargando|cargaron|cargao|webe\w*|funa\w*|hostig\w*|tienen?\s+de\s+punto|tienen?\s+mala|ley\s+del\s+hielo|hacen?\s+el\s+vacio|dejan?\s+de\s+lado|se\s+ri[ea]n?\s+de\s+mi|hazmerre[ií]r)\b/g, 'acoso')
+			.replace(/\b(pofe|profe\w*|pjefe)\b/g, 'docente')
+			.replace(/\b(peg\w*|golpe\w*|golpiza\w*|combos?|cachet\w*|pu[nñ]ete\w*|zampa\w*|zampon\w*|se\s+agarraron|se\s+fueron\s+a\s+combos|le\s+sac\w*\s+la\s+mugre|le\s+dieron?\s+una\s+paliza|empuj\w*|agred\w*|patead\w*|pate\w*|pi[nñ]a\w*|conchaz\w*|palo\w*|coscorron\w*|manota\w*|zamarre\w*)\b/g, 'violencia')
+			.replace(/\b(pololo|polola|polol\w*|pareja|novi[ao]|pololea\w*|anduvi\w*\s+con)\b/g, 'pololeo')
+			.replace(/\b(droga\w*|mariu\w*|marihuana\w*|piti\w*|pito\w*|cigarro\w*|vape\w*|vapea\w*|falopa\w*|pasto\w*|faso\w*|yesca\w*|porro\w*|pasta\s*base|cocaina\w*|volad\w*|and\w*\s+vola\w*|and\w*\s+curad\w*|curao\w*|(dando?|di[oó])\s+a\s+la\s+maria|(dando?|di[oó])\s+a\s+la\s+hierba|and\w*\s+pasad\w*|se\s+dio\s+vuelta|se\s+puso\s+la\s+raja)\b/g, 'drogas')
+			.replace(/\b(arma\w*|cuchi[oll]\w*|navaj\w*|pistol\w*|punzon\w*|cortapluma\w*|escopet\w*|explosiv\w*|corvo\w*|fierro\w*)\b/g, 'armas')
+			.replace(/\b(robo\w*|hurt\w*|sac\w*\s+(mis?|sus?)\s+cosas|sustra\w*|afan\w*|choree?\w*|se\s+arranch\w*)\b/g, 'robo')
+			.replace(/\b(atraso\w*|tarde|llegu[eé]\s+tarde)\b/g, 'atraso')
+			.replace(/\b(celu\w*|celular\w*|telefono\w*|telef\w*|pantalla\w*|smartphone)\b/g, 'celular')
+			.replace(/\b(sancion\w*|anotacion\w*|suspend\w*|expuls\w*|raj\w*)\b/g, 'sancion')
+			.replace(/\b(palomilla|cabr[oa]s?|chiquill[oa]s?|el\s+curso|los\s+companeros)\b/g, 'estudiante')
+			.replace(/\b(dupla|psicolog[ao]|sicolog[ao]|asistente\s+social|orientador[ao]?)\b/g, 'dupla_psicosocial')
 			.replace(/\b(udi|utp|inspector[ao]?|inspectoria)\b/g, 'directivo');
 
 		const perspectiva = {
@@ -47,7 +50,14 @@ const RICE_Bot = {
 		};
 
 		// MEJORA 3: CRISIS VITAL — prioridad máxima absoluta
-		const CRISIS_VITAL_RE = /\b(suicid|quitarse la vida|hacerse da[n\u00f1]o|no quiero vivir|no quiero seguir|ya no aguanto|me voy a matar|autoles|cortarse|tirarse|me quiero morir)\b/i;
+		// RIESGO VITAL — máxima prioridad de todo el sistema. Corregido el
+		// 30-jul-2026: la versión anterior exigía la palabra "suicid" exacta
+		// (con límite de palabra al final), lo que significaba que "me siento
+		// suicida", "quiero suicidarme", "pensé en el suicidio" o "quiero
+		// autolesionarme" — la forma en que alguien realmente escribe esto —
+		// NUNCA activaban esta alerta. Se probó exhaustivamente antes de
+		// subir este cambio; ver nota al final del archivo.
+		const CRISIS_VITAL_RE = /\b(suicid\w*|quitarse\s+la\s+vida|quitarme\s+la\s+vida|hacerse\s+da[n\u00f1]o|hacerme\s+da[n\u00f1]o|no\s+quiero\s+vivir|no\s+quiero\s+seguir(\s+viviendo)?|ya\s+no\s+aguanto|me\s+voy\s+a\s+matar|matarme|autoles\w*|me\s+corto|cortarme|me\s+quiero\s+cortar|cortar\w*\s+(los\s+brazos|las\s+mu[n\u00f1]ecas|la\s+piel)|tirarse|aventarse|me\s+quiero\s+morir|quiero\s+morir\w*|desaparecer\s+para\s+siempre|acabar\s+con\s+todo|no\s+quiero\s+existir|no\s+quiero\s+estar\s+aqui|mejor\s+no\s+estar)\b/i;
 		if (CRISIS_VITAL_RE.test(q)) {
 			this._ultimoTema = 'CRISIS_VITAL';
 			return { tema: 'CRISIS_VITAL', scores, perspectiva, q, tieneSeniales: true, URGENTE: true };
@@ -61,39 +71,45 @@ const RICE_Bot = {
 		if (this._ultimoTema && /\b(que\s+(debo|tengo|puedo|hago)\s+hacer|como\s+(procedo|actuo|hago)|pero\s+que|que\s+sigue|siguiente\s+paso)\b/.test(q)) scores.SEGUIMIENTO += 15;
 
 		// Conducto regular
-		if (/\b(conducto regular|canal|atencion|jerarquia|recurro|acudo|consulto|pasos para|procedimiento)\b/i.test(q)) scores.CONDUCTO_REGULAR += 18;
+		if (/\b(conducto\s+regular|canal(es)?|atencion|jerarquia|recurr\w*|acud\w*|consult\w*|pasos\s+para|procedimiento)\b/i.test(q)) scores.CONDUCTO_REGULAR += 18;
 
 		// Scores principales
-		if (/\b(armas|arma|cuchill|navaj|pisto|escopet|punzon|explosiv)\b/i.test(q)) scores.ARMAS += 12;
-		if (/\b(drogas|droga|mariu|cocain|alcohol|borrach|curad|adiccion|fuma|fumar|cigarr|vape|tabac)\b/i.test(q)) scores.DROGAS += 12;
-		if (/\b(acoso|bull|hostig|discrim|burl|ridicul|aislad|excluid|molest|insult)\b/i.test(q)) scores.ACOSO += 12;
-		if (/\b(internet|redes|whatsapp|instagram|tiktok)\b/.test(q) && /\b(acoso|amenaza|foto|viral)\b/.test(q)) scores.ACOSO += 8;
-		if (/\b(no quiere ir|no quiero ir|miedo al liceo)\b/.test(q)) scores.ACOSO += 6;
-		if (/\b(robo|robar|robado|hurt|sustrac|mochila|pertenenc)\b/i.test(q)) scores.ROBO += 12;
-		if (/\b(violencia|pelea|rina|agred|golp|puno|patad|atac)\b/i.test(q)) scores.VIOLENCIA += 12;
-		if (/\b(embaraz|bebe|guagua|maternidad|paternidad|prenatal)\b/i.test(q)) scores.EMBARAZO += 12;
-		if (/\b(profesor|profesora|docente|profe|funcionario|inspector|inspectora|director|directora|asistente|auxiliar|adulto)\b/i.test(q)) scores.DOCENTE += 6;
+		// CORREGIDO 30-jul-2026: casi todas estas raíces tenían un límite de
+		// palabra al final que exigía la forma exacta sin conjugar — así,
+		// "cuchillo", "embarazada", "me insultan", "me golpearon" o "está
+		// triste" NUNCA calzaban. Se agregó \w* donde correspondía y se
+		// probó cada categoría con frases reales antes de subir el cambio.
+		if (/\b(armas?|cuchill\w*|navaj\w*|pistol\w*|escopet\w*|punzon\w*|explosiv\w*)\b/i.test(q)) scores.ARMAS += 12;
+		if (/\b(drogas?|mariu\w*|cocain\w*|alcohol\w*|borrach\w*|curad\w*|adiccion\w*|fum\w*|cigarr\w*|vape\w*|vapea\w*|tabac\w*)\b/i.test(q)) scores.DROGAS += 12;
+		if (/\b(acoso|acosa\w*|bull\w*|hostig\w*|discrimin\w*|burl\w*|ridicul\w*|aislad\w*|exclu\w*|molest\w*|insult\w*)\b/i.test(q)) scores.ACOSO += 12;
+		if (/\b(internet|redes|whatsapp|instagram|tiktok)\b/.test(q) && /\b(acoso|acosa\w*|amenaz\w*|foto\w*|viral)\b/.test(q)) scores.ACOSO += 8;
+		if (/\b(no\s+quiere\s+ir|no\s+quiero\s+ir|miedo\s+al\s+liceo)\b/.test(q)) scores.ACOSO += 6;
+		if (/\b(robo|roba\w*|hurt\w*|sustra\w*|mochila\w*|pertenenci\w*)\b/i.test(q)) scores.ROBO += 12;
+		if (/\b(violencia|pele\w*|ri[nñ]a\w*|agred\w*|golpe\w*|pu[nñ]o\w*|patad\w*|atac\w*)\b/i.test(q)) scores.VIOLENCIA += 12;
+		if (/\b(embaraz\w*|bebe|guagua|maternidad|paternidad|prenatal\w*)\b/i.test(q)) scores.EMBARAZO += 12;
+		if (/\b(profesor\w*|docente\w*|profe\w*|funcionari\w*|inspector\w*|director\w*|asistente\w*|auxiliar\w*|adulto\w*)\b/i.test(q)) scores.DOCENTE += 6;
 		// MALTRATO_ADULTO: prioridad alta cuando la mención a un adulto del liceo
 		// viene junto a una palabra de maltrato — antes esto solo activaba DOCENTE
 		// (respuesta genérica de "habla con tu profesor"), ignorando que podía
 		// tratarse de exactamente la persona que está maltratando (29-jul-2026).
-		if (/\b(profesor|profesora|docente|profe|funcionario|inspector|inspectora|director|directora|asistente|auxiliar|adulto)\b/i.test(q) &&
-			/\b(maltrat\w*|trata\s*mal|me\s*trata|insult\w*|humill\w*|grit\w*|golpe\w*|abus\w*|amenaz\w*|acos\w*|toc[oa]\w*|discrimin\w*)\b/i.test(q)) {
+		if (/\b(profesor\w*|docente\w*|profe\w*|funcionari\w*|inspector\w*|director\w*|asistente\w*|auxiliar\w*|adulto\w*)\b/i.test(q) &&
+			(/\b(maltrat\w*|trata\s*mal|me\s*trata|insult\w*|humill\w*|grit\w*|golpe\w*|violencia|abus\w*|amenaz\w*|acos\w*|toc[oa]\w*|discrimin\w*)\b/i.test(q) ||
+			 /\b(pasa\w*\s+a\s+llevar|se\s+aprovecha\w*|abusa\w*\s+de\s+su\s+(poder|autoridad|cargo)|mal\s*trato|me\s+hace\s+sentir\s+(mal|pesim\w*)|se\s+burla\w*\s+de\s+mi|me\s+falta\w*\s+el\s+respeto)\b/i.test(q))) {
 			scores.MALTRATO_ADULTO += 22;
 		}
-		if (/\b(atraso|tarde|inasis|mandaron a la casa)\b/i.test(q)) scores.ATRASO += 12;
-		if (/\b(celu|celular|telefono|pantalla)\b/g.test(q)) scores.CELULAR += 12;
-		if (/\b(sancion|suspen|expul|anota|castig|apelar)\b/i.test(q)) scores.FALTA_SANCION += 12;
+		if (/\b(atraso\w*|tarde|inasist\w*|mandaron\s+a\s+la\s+casa)\b/i.test(q)) scores.ATRASO += 12;
+		if (/\b(celu\w*|celular\w*|telefono\w*|pantalla\w*)\b/i.test(q)) scores.CELULAR += 12;
+		if (/\b(sancion\w*|suspend\w*|suspension\w*|expuls\w*|anota\w*|castig\w*|apela\w*)\b/i.test(q)) scores.FALTA_SANCION += 12;
 
 		// MEJORA 5: Derechos y normativa mejorada
 		if (/\b(circular\s*482|ley\s*21\.?430|ley\s*20\.?536|ley\s*19\.?628|mineduc|superintendencia)\b/i.test(q)) scores.DERECHOS += 20;
-		if (/\b(derecho a|tengo derecho|mis derechos|puedo apelar|protocolo|normativa|reglamento)\b/i.test(q)) scores.DERECHOS += 14;
-		if (/\b(derecho|garanti|protec)\b/i.test(q)) scores.DERECHOS += 8;
+		if (/\b(derecho\s+a|tengo\s+derecho|mis\s+derechos|puedo\s+apelar|protocolo\w*|normativa\w*|reglamento\w*)\b/i.test(q)) scores.DERECHOS += 14;
+		if (/\b(derecho\w*|garanti\w*|protec\w*)\b/i.test(q)) scores.DERECHOS += 8;
 
-		if (/\b(trist|depres|ansied|crisi|llorand|autoles|duelo|autismo|tea)\b/i.test(q)) scores.SALUD += 12;
+		if (/\b(trist\w*|depres\w*|ansied\w*|ansios\w*|crisis|llorand\w*|llor[oó]|autoles\w*|duelo|autis\w*|\btea\b)\b/i.test(q)) scores.SALUD += 12;
 
 		// Neurodiversidad / TEA / NEE
-		if (/\b(autismo|tea|trastorno espectro|asperger|neurodiversidad|nee|necesidades educativas|discapacidad|desregulacion|sensorial)\b/i.test(q)) scores.NEURODIVERSIDAD += 25;
+		if (/\b(autis\w*|\btea\b|trastorno\s+del?\s+espectro|asperger|neurodivers\w*|\bnee\b|necesidades\s+educativas|discapacid\w*|desregula\w*|sensorial\w*)\b/i.test(q)) scores.NEURODIVERSIDAD += 25;
 
 		// MEJORA 2: Multiplicadores contextuales
 		if (perspectiva.esSiMismo) {
@@ -110,9 +126,14 @@ const RICE_Bot = {
 			if (scores.ACOSO > 0)    scores.ACOSO     += 8;
 		}
 
-		// Ambiguo
-		if (texto.trim().length < 15) scores.AMBIGUO += 20;
-		if (/^(hola|ayuda|auxilio|que hago|no se|dudas?|consulta|necesito ayuda)$/.test(q.trim())) scores.AMBIGUO += 15;
+		// Ambiguo — CORREGIDO 30-jul-2026: antes sumaba puntaje solo por ser un
+		// mensaje corto (<15 caracteres), lo que hacía perder a temas reales
+		// pero breves como "traía un corvo" o "me pegó fuerte" contra la
+		// categoría genérica de "pide más contexto". Ahora solo compite si
+		// ninguna categoría específica encontró algo.
+		const yaHayAlgoEspecifico = Object.entries(scores).some(([tema, val]) => tema !== 'AMBIGUO' && tema !== 'SEGUIMIENTO' && val > 0);
+		if (!yaHayAlgoEspecifico && texto.trim().length < 15) scores.AMBIGUO += 20;
+		if (!yaHayAlgoEspecifico && /^(hola|ayuda|auxilio|que hago|no se|dudas?|consulta|necesito ayuda)$/.test(q.trim())) scores.AMBIGUO += 15;
 
 		let maxScore = 0;
 		let temaGanador = 'NINGUNO';
@@ -220,7 +241,7 @@ El <strong>Protocolo N° 14 del RICE 2026</strong> establece apoyos para estudia
 		// DROGAS
 		case 'DROGAS':
 			if (esFueraDeColegio) return `${bannerEmpatico}Fuera del liceo, las normas disciplinarias del RICE no aplican como castigos. Nuestro enfoque es 100% de salud y apoyo.<br><br>La <strong>Dupla Psicosocial</strong> puede orientarte en privado sobre cómo apoyar a tu amigo/a (SENDA Previene / CESFAM), con protección absoluta de tu identidad (Circular 482 y Ley 21.430). ${cita('Protocolo N° 6 — Apoyo de Salud y Prevención', '')}${btn}`;
-			if (es) return `${bannerEmpatico}El liceo <strong>no busca sancionar, sino apoyar la salud del estudiante (Protocolo N° 6)</strong>.<br><br>Si el hecho ocurre dentro del establecimiento, se tipifica como Falta Gravísima (Art. 17) y activa acompañamiento psicológico y citación a apoderados para un plan de apoyo integral (SENDA Previene / CESFAM). ${cita('Protocolo N° 6 y Art. 17', '')}${btn}`;
+			if (es) return `${bannerEmpatico}El liceo <strong>no busca sancionar, sino apoyar la salud del estudiante (Protocolo N° 6)</strong>.<br><br>Si el hecho ocurre dentro del establecimiento, se tipifica como Falta Gravísima (Art. 41/45) y activa acompañamiento psicológico y citación a apoderados para un plan de apoyo integral (SENDA Previene / CESFAM). ${cita('Protocolo N° 6 y Art. 41/45', '')}${btn}`;
 			if (p.esTercero) return `${bannerEmpatico}Tu identidad queda <strong>100% protegida</strong> al avisar. El objetivo del liceo es brindar ayuda médica y psicológica, no castigar. ${cita('Protocolo N° 6', '')}${btn}`;
 			return `${bannerEmpatico}Tu salud y bienestar son lo primero. Tienes derecho a orientación privada con la Dupla Psicosocial sin ser juzgado/a. ${cita('Protocolo N° 6 — Apoyo Socioemocional', '')}${btn}`;
 
@@ -242,8 +263,8 @@ El <strong>Protocolo N° 14 del RICE 2026</strong> establece apoyos para estudia
 
 		// ROBO
 		case 'ROBO':
-			if (es) return `👨‍👩‍👧‍👦 <strong>Hola, ${nombre}.</strong><br><br>La sustracción de bienes se tipifica como <strong>Falta Grave (Art. 16) o Gravísima (Art. 17)</strong>. Inspectoría realiza un proceso de indagación reservado y exige devolución o reparación económica. ${cita('Art. 16 y 17', '')}${btn}`;
-			return `👋 <strong>Hola, ${nombre}.</strong><br><br>Informa de inmediato a tu <strong>Profesor Jefe o Inspectoría General</strong> para iniciar la búsqueda e indagación reservada. ${cita('Art. 16 — Faltas Graves', '')}${btn}`;
+			if (es) return `👨‍👩‍👧‍👦 <strong>Hola, ${nombre}.</strong><br><br>La sustracción de bienes se tipifica como <strong>Falta Grave (Art. 40/44) o Gravísima (Art. 41/45)</strong> según haya fuerza o violencia. Inspectoría realiza un proceso de indagación reservado y exige devolución o reparación económica. ${cita('Protocolo N° 15 y Art. 40/44-41/45', '')}${btn}`;
+			return `👋 <strong>Hola, ${nombre}.</strong><br><br>Informa de inmediato a tu <strong>Profesor Jefe o Inspectoría General</strong> para iniciar la búsqueda e indagación reservada. ${cita('Protocolo N° 15 — Robo y Hurto', '')}${btn}`;
 
 		// DOCENTES (consulta genérica, sin señales de maltrato)
 		case 'DOCENTE':
@@ -266,15 +287,15 @@ El <strong>Protocolo N° 14 del RICE 2026</strong> establece apoyos para estudia
 
 		// CELULAR
 		case 'CELULAR':
-			return `${es ? '👨‍👩‍👧‍👦' : '👋'} <strong>Hola, ${nombre}.</strong><br><br>• <strong>Durante clases:</strong> en silencio y guardado.<br>• <strong>En recreos:</strong> libre uso para comunicarse con la familia.<br>• <strong>Si lo confiscaron:</strong> solo puede retenerse durante la clase — devolución obligatoria al final de la jornada.<br><br><em>¿El celular fue confiscado por más de una jornada? Puedes solicitar su devolución.</em> ${cita('Art. 15 — Autorregulación Digital', '')}${btn}`;
+			return `${es ? '👨‍👩‍👧‍👦' : '👋'} <strong>Hola, ${nombre}.</strong><br><br>• <strong>Durante clases:</strong> en silencio y guardado.<br>• <strong>En recreos:</strong> libre uso para comunicarse con la familia.<br>• <strong>Si lo confiscaron:</strong> solo puede retenerse durante la clase — devolución obligatoria al final de la jornada.<br><br><em>¿El celular fue confiscado por más de una jornada? Puedes solicitar su devolución.</em> ${cita('Faltas L-03/L-04/G-08/G-13 — Uso de Celular', '')}${btn}`;
 
 		// SANCIONES
 		case 'FALTA_SANCION':
-			return `${es ? '👨‍👩‍👧‍👦' : '👋'} <strong>Hola, ${nombre}. Las sanciones tienen un proceso formal que el liceo debe respetar.</strong><br><br>${es ? '<em>¿Su pupilo/a ya fue citado/a por Inspectoría? Cuénteme para orientarle en el debido proceso.</em>' : '<em>Si estás involucrado/a, avisa a tu Profesor Jefe para buscar la mejor solución juntos.</em>'} ${cita('Protocolo N° 2 y Arts. 16-17 del RICE 2026', '')}${btn}`;
+			return `${es ? '👨‍👩‍👧‍👦' : '👋'} <strong>Hola, ${nombre}. Las sanciones tienen un proceso formal que el liceo debe respetar.</strong><br><br>${es ? '<em>¿Su pupilo/a ya fue citado/a por Inspectoría? Cuénteme para orientarle en el debido proceso.</em>' : '<em>Si estás involucrado/a, avisa a tu Profesor Jefe para buscar la mejor solución juntos.</em>'} ${cita('Artículo 51 — Plazos del Procedimiento Investigativo', '')}${btn}`;
 
 		// VIOLENCIA FÍSICA
 		case 'VIOLENCIA':
-			if (es) return `👨‍👩‍👧‍👦 <strong>Hola, ${nombre}.</strong><br><br>Participar en una pelea es <strong>Falta Grave (Art. 16) o Gravísima (Art. 17)</strong> si hubo premeditación o lesiones. El liceo cita al apoderado, activa Acta de Compromiso Restaurativo, suspensión preventiva (1-5 días) y derivación a la Dupla Psicosocial. Si hay lesiones graves, el liceo informa a Carabineros (Ley 20.536). ${cita('Protocolo N° 2 y Arts. 16-17', '')}${btn}`;
+			if (es) return `👨‍👩‍👧‍👦 <strong>Hola, ${nombre}.</strong><br><br>Participar en una pelea es <strong>Falta Grave (Art. 40/44) o Gravísima (Art. 41/45)</strong> si hubo premeditación o lesiones. El liceo cita al apoderado, activa Acta de Compromiso Restaurativo, suspensión preventiva (1-5 días) y derivación a la Dupla Psicosocial. Si hay lesiones graves, el liceo informa a Carabineros (Ley 20.536). ${cita('Protocolo N° 2 y Art. 40/44-41/45', '')}${btn}`;
 			return `👋 <strong>Hola, ${nombre}.</strong><br><br>Las peleas tienen consecuencias claras: citación a apoderados, compromiso de no agresión y eventual suspensión preventiva. El liceo busca siempre que las partes puedan dialogar y reparar la convivencia. ${cita('Protocolo N° 2 — Riñas y Violencia Física', '')}${btn}`;
 
 		// VIOLENCIA DE PAREJA
