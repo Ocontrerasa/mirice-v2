@@ -62,7 +62,7 @@ const FRASES_CONVIVENCIA_MIRICE = [
   "🤝 Si presencias acoso en grupos de WhatsApp o redes sociales, apoya a la persona afectada y reporta al establecimiento.",
   "🌈 La tolerancia es el reconocimiento de los derechos humanos universales de cada individuo.",
 
-  // --- PILAR 4: DERECHOS EDUCATIVOS Y CIRCULAR 482 MINEDUC ---
+  // --- PILAR 4: DERECHOS EDUCATIVOS Y CIRCULAR 781 MINEDUC ---
   "📖 ¿Sabías que por atraso el liceo no puede dejarte fuera de clases? El Derecho a la Educación se resguarda siempre.",
   "🛡️ Tienes derecho a ser evaluado con justicia y transparencia conforme al Reglamento de Evaluación (Decreto 67).",
   "💡 Si vives una situación de desregulación emocional o crisis, el Espacio de Calma del liceo está para tu contención.",

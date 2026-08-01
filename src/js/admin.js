@@ -320,6 +320,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <th style="padding: 12px 16px;">Registrado por</th>
                 <th style="padding: 12px 16px;">Gravedad</th>
                 <th style="padding: 12px 16px;">Alerta Legal</th>
+                <th style="padding: 12px 16px; text-align: center;">Acción</th>
               </tr>
             </thead>
             <tbody>
@@ -336,6 +337,9 @@ document.addEventListener('DOMContentLoaded', () => {
                   </td>
                   <td style="padding: 12px 16px;">${badgeGravedad(inc.gravedad)}</td>
                   <td style="padding: 12px 16px;">${badgeAlertaIncidente(inc)}</td>
+                  <td style="padding: 12px 16px; text-align: center;">
+                    <button class="btn-generate-acta-incidente" data-folio="${inc.folio}" style="margin:0; padding:6px 12px; font-size:0.78rem; width:auto; background:var(--accent); border-color:var(--accent); color:white; border:none; border-radius:6px; cursor:pointer;">Generar Acta 🖨️</button>
+                  </td>
                 </tr>
               `).join('')}
             </tbody>
@@ -450,11 +454,11 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
 
     // Vincular la lógica del formulario de API y botones de actas
-    vincularEventosAdmin(casos);
+    vincularEventosAdmin(casos, incidentes);
   }
 
   // 4. Vincular Eventos de la Consola Administrativa
-  function vincularEventosAdmin(casos) {
+  function vincularEventosAdmin(casos, incidentes) {
     const clearCasosBtn = document.getElementById('btn-clear-casos');
 
     // Botones de generación de actas
@@ -474,6 +478,14 @@ document.addEventListener('DOMContentLoaded', () => {
       btn.addEventListener('click', () => {
         const folio = btn.getAttribute('data-folio');
         generarYMostrarActa(folio, casos);
+      });
+    });
+
+    // Vincular botones de actas de incidentes
+    document.querySelectorAll('.btn-generate-acta-incidente').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const folio = btn.getAttribute('data-folio');
+        generarYMostrarActaIncidente(folio, incidentes);
       });
     });
 
@@ -519,7 +531,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <div class="acta-critical-banner">
           <span>🚨</span>
           <div>
-            <strong>ALERTA DE SEGURIDAD CIRCULAR 482 (CONNOTACIÓN/ABUSO SEXUAL):</strong>
+            <strong>ALERTA DE SEGURIDAD CIRCULAR 781 (CONNOTACIÓN/ABUSO SEXUAL):</strong>
             Caso penal de extrema gravedad. El establecimiento está obligado legalmente a realizar la denuncia ante Carabineros, PDI o Fiscalía dentro de un plazo de 24 horas hábiles. Está estrictamente prohibido realizar careos o mediaciones internas.
           </div>
         </div>
@@ -624,6 +636,116 @@ document.addEventListener('DOMContentLoaded', () => {
     actaPaperContent.innerHTML = htmlActa;
 
     // Mostrar el modal
+    actaPrintModal.style.display = 'flex';
+  }
+
+  // 5.bis Generación y Visualización del Acta para un Incidente (bitácora de funcionarios)
+  function generarYMostrarActaIncidente(folio, incidentes) {
+    const inc = (incidentes || []).find(i => i.folio === folio);
+    if (!inc) {
+      alert("Error: El incidente seleccionado no pudo ser localizado.");
+      return;
+    }
+
+    let alertaBannerHtml = "";
+    const mapaAlerta = {
+      TEA: ['Ley TEA N° 21.545', 'Este incidente se vincula a una desregulación por condición neurodivergente. Prohibido aplicar cualquier sanción disciplinaria — corresponde abordaje formativo y de contención (Espacio de Calma), nunca castigo.'],
+      SEX: ['Circular 781 (Connotación/Abuso Sexual)', 'Caso penal de extrema gravedad. El establecimiento está obligado legalmente a denunciar ante Carabineros, PDI o Fiscalía dentro de 24 horas hábiles. Prohibido realizar careos o mediaciones internas.'],
+      DRG: ['Ley de Drogas 20.000', 'Porte, consumo o distribución de sustancias. Se requiere citación urgente de apoderados y derivación a redes sanitarias/SENDA. Obligación de denuncia penal en 24h ante sospecha de microtráfico.'],
+      REM: ['Protocolo N° 9 — Embarazo/Maternidad/Paternidad', 'Este incidente involucra a una estudiante embarazada, madre o padre adolescente. Recordar: garantía absoluta de continuidad de matrícula, sin discriminación ni condicionamiento.'],
+    };
+    if (mapaAlerta[inc.alerta_tipo]) {
+      const [titulo, texto] = mapaAlerta[inc.alerta_tipo];
+      alertaBannerHtml = `
+        <div class="acta-critical-banner">
+          <span>🚨</span>
+          <div><strong>ALERTA: ${escaparHtml(titulo)}</strong><br>${escaparHtml(texto)}</div>
+        </div>
+      `;
+    }
+
+    const htmlActa = `
+      <table class="acta-header-table">
+        <tr>
+          <td style="width: 80px; padding: 0;">
+            <img src="assets/branding/Logo oficial de toda la plataforma y proyecto.png" alt="Logo Oficial MiRice" style="width: 70px; height: auto; object-fit: contain;">
+          </td>
+          <td style="padding-left: 16px; vertical-align: middle;">
+            <div style="font-size: 0.8rem; font-weight: 700; color: #1e3a8a; text-transform: uppercase;">Liceo de Huara</div>
+            <div style="font-size: 0.7rem; color: #4b5563;">Equipo de Convivencia Educativa • Circular 781</div>
+            <div style="font-size: 0.65rem; color: #475569;">Huara, Región de Tarapacá</div>
+          </td>
+          <td style="text-align: right; vertical-align: middle;">
+            <span style="border: 2px solid #1e3a8a; padding: 6px 12px; font-weight: 700; font-size: 0.85rem; color: #1e3a8a; border-radius: 4px;">FOLIO ${escaparHtml(inc.folio)}</span>
+          </td>
+        </tr>
+      </table>
+
+      <div class="acta-title">Ficha Oficial de Bitácora de Incidentes</div>
+      <div style="text-align: center; font-size: 0.72rem; color: #6b7280; margin-bottom: 24px;">En conformidad al Reglamento Interno (RICE 2026) y la Circular 781 de la Superintendencia de Educación</div>
+
+      ${alertaBannerHtml}
+
+      <div class="acta-section-title">1. Datos del Incidente</div>
+      <div class="acta-data-grid">
+        <div class="acta-data-item"><strong>Registrado por:</strong> ${escaparHtml(inc.autor_nombre)}${inc.autor_cargo ? ' — ' + escaparHtml(inc.autor_cargo) : ''}</div>
+        <div class="acta-data-item"><strong>Estamento involucrado:</strong> ${escaparHtml(inc.estamento || 'No especificado')}</div>
+        <div class="acta-data-item"><strong>Lugar:</strong> ${escaparHtml(inc.lugar || 'No especificado')}</div>
+        <div class="acta-data-item"><strong>Fecha / Hora:</strong> ${escaparHtml(inc.fecha_incidente || '')} ${escaparHtml(inc.hora_incidente || '')}</div>
+        <div class="acta-data-item"><strong>Gravedad:</strong> <span style="text-transform:capitalize; font-weight:bold;">${escaparHtml(inc.gravedad || '')}</span></div>
+        <div class="acta-data-item"><strong>Fecha de registro:</strong> ${formatearFecha(inc.creado_en)}</div>
+      </div>
+
+      <div class="acta-section-title">2. Personas Involucradas</div>
+      <div class="acta-text-box" style="min-height:auto;">
+        ${(inc.involucrados && inc.involucrados.length)
+          ? inc.involucrados.map(p => `• <strong>${escaparHtml(p.nombre)}</strong> (${escaparHtml(p.detalle || p.tipo || 'sin detalle')})`).join('<br>')
+          : 'Sin involucrados registrados por nombre.'}
+      </div>
+      ${inc.roles_situacion ? `<p style="font-size:0.82rem; color:#4b5563; margin-top:8px;"><strong>Rol de cada uno en la situación:</strong> ${escaparHtml(inc.roles_situacion)}</p>` : ''}
+
+      <div class="acta-section-title">3. Tipificación</div>
+      <div class="acta-data-grid">
+        <div class="acta-data-item" style="grid-column: 1 / -1;">${(inc.tipificacion && inc.tipificacion.length) ? inc.tipificacion.map(t => escaparHtml(t)).join(', ') : 'No especificada'}</div>
+      </div>
+
+      <div class="acta-section-title">4. Relato de los Hechos</div>
+      <div class="acta-text-box">${escaparHtml(inc.descripcion || '')}</div>
+
+      <div class="acta-section-title">5. Abordaje Aplicado</div>
+      <div class="acta-text-box" style="min-height:auto;">${(inc.abordaje && inc.abordaje.length) ? inc.abordaje.map(a => escaparHtml(a)).join(', ') : 'Sin abordaje registrado.'}</div>
+
+      <div class="acta-section-title">6. Derivación</div>
+      <div class="acta-data-grid">
+        <div class="acta-data-item"><strong>¿Requiere derivación?</strong> ${inc.requiere_derivacion ? 'Sí' : 'No'}</div>
+        <div class="acta-data-item"><strong>Unidades:</strong> ${(inc.derivacion_unidades && inc.derivacion_unidades.length) ? inc.derivacion_unidades.map(u => escaparHtml(u)).join(', ') : '—'}</div>
+      </div>
+
+      <div class="acta-section-title">7. Resguardo y Firmas de Responsabilidad</div>
+      <div style="font-size: 0.72rem; color:#4b5563; line-height: 1.4; margin-bottom: 12px;">
+        Al firmar este documento, los comparecientes toman conocimiento del hecho registrado y se comprometen a cumplir con los pasos y programas de acompañamiento indicados en el RICE.
+      </div>
+      <div class="acta-signatures">
+        <div>
+          <div style="font-size: 0.72rem; font-family: monospace; color:#4b5563; min-height:40px; display:flex; align-items:center; justify-content:center; border: 1px dashed #d1d5db; border-radius:4px; padding: 4px; margin-bottom:8px; background:#f9fafb;">Firma pendiente</div>
+          <div class="acta-sig-line">Firma ${escaparHtml(inc.autor_nombre || 'Funcionario/a')}</div>
+        </div>
+        <div>
+          <div style="font-size: 0.72rem; font-family: monospace; color:#4b5563; min-height:40px; display:flex; align-items:center; justify-content:center; border: 1px dashed #d1d5db; border-radius:4px; padding: 4px; margin-bottom:8px; background:#f9fafb;">Firma pendiente</div>
+          <div class="acta-sig-line">Firma Encargado/a de Convivencia</div>
+        </div>
+        <div>
+          <div style="font-size: 0.72rem; font-family: monospace; color:#4b5563; min-height:40px; display:flex; align-items:center; justify-content:center; border: 1px dashed #d1d5db; border-radius:4px; padding: 4px; margin-bottom:8px; background:#f9fafb;">Firma pendiente</div>
+          <div class="acta-sig-line">Firma Dirección</div>
+        </div>
+      </div>
+
+      <div style="margin-top: 48px; border-top: 1px solid #e5e7eb; padding-top: 12px; font-size: 0.65rem; color: #475569; text-align: center;">
+        Ficha Oficial MiRice • Generado el ${new Date().toLocaleDateString()} a las ${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} • Bitácora de Incidentes RICE 2026.
+      </div>
+    `;
+
+    actaPaperContent.innerHTML = htmlActa;
     actaPrintModal.style.display = 'flex';
   }
 
