@@ -20,10 +20,10 @@ const RICE_DATABASE = [
   },
   {
     id: "RICE-PROT-001",
-    titulo: "PROTOCOLO N° 1: ATRASOS E INASISTENCIAS REITERADAS",
-    seccion: "PROTOCOLOS DE CONVIVENCIA ESCOLAR",
-    contenido: "PROTOCOLO DE ATRASOS E INASISTENCIAS: Todo estudiante tiene derecho a ingresar al establecimiento y a su sala de clases independientemente de la hora de llegada o si viste uniforme incompleto. Queda estrictamente prohibido devolver alumnos a sus casas (Circular 482 Mineduc). Ante atrasos reiterados, el equipo de Convivencia Educativa indaga causas (ej: transporte escolar rural) y coordina apoyos formativos sin sanciones expulsoras.",
-    keywords: ["atrasos", "atraso", "llegar tarde", "inasistencia", "inasistencias", "ausencias", "falta", "uniforme", "porteria", "circular 482"]
+    titulo: "PROTOCOLO DE ATRASOS (ARTÍCULO 18)",
+    seccion: "TÍTULO VIII — NORMAS DE FUNCIONAMIENTO",
+    contenido: "PROTOCOLO DE ATRASOS: El Liceo Huara no utiliza el atraso como motivo de exclusión del aula — el docente no puede impedir el ingreso, pero debe registrar la incidencia. El estudiante atrasado solicita un comprobante en Inspectoría para ingresar a su sala. Escala de intervención por atrasos al inicio de la jornada: 3er atraso mensual → constancia negativa en Lirmi; 5to atraso mensual → citación al apoderado por el Profesor Jefe para firmar compromiso de puntualidad; 10mo atraso mensual/acumulado → entrevista con el Coordinador de Convivencia Educativa para indagar factores de riesgo (ej. transporte rural) y aplicar apoyo socioemocional o familiar. El atraso entre bloques o después de un recreo se considera falta leve. La jornada abre sus puertas a las 07:45 horas; el inicio de clases es a las 08:30 horas.",
+    keywords: ["atrasos", "atraso", "llegar tarde", "inasistencia", "inasistencias", "ausencias", "falta", "uniforme", "porteria", "circular 482", "lirmi", "hora de entrada"]
   },
   {
     id: "RICE-PROT-N01",
@@ -201,18 +201,25 @@ const RICE_DATABASE = [
     keywords: ["parvulo se golpeo", "mordio a otro nino", "parvulo no asiste", "crisis del parvulo", "accidente en el jardin", "parvulo agredido"]
   },
   {
+    id: "RICE-DERECHOS-001",
+    titulo: "DERECHOS Y DEBERES DE LA COMUNIDAD EDUCATIVA (ARTÍCULOS 3-14)",
+    seccion: "TÍTULO VII — DERECHOS, DEBERES Y OBLIGACIONES",
+    contenido: "DERECHOS DE LOS ESTUDIANTES (Art. 5): educación integral e inclusiva; trato digno y respetuoso; no discriminación arbitraria (identidad Aymara, orientación sexual, identidad de género, NEE); debido proceso (ser escuchado, presunción de inocencia); protección de la trayectoria (no se puede impedir el ingreso por rendimiento o vulnerabilidad); protección de la maternidad y paternidad; seguridad y Seguro Escolar; evaluación diferenciada (PIE); acceso a JUNAEB/becas; privacidad de sus datos. DEBERES DE LOS ESTUDIANTES (Art. 9): responsabilidad académica sin plagio; convivencia democrática; trato digno (prohibido maltrato, ciberacoso, discriminación); autogestión de información por canales oficiales; uso responsable de tecnología (celular solo con fin pedagógico autorizado, prohibido grabar sin consentimiento); cuidado del entorno. DERECHOS DE APODERADOS (Art. 6): información periódica; trato deferente; participación en el Centro de Padres; apelación ante Dirección/SLEP. DEBERES DE APODERADOS (Art. 10): acompañamiento en la trayectoria; informarse proactivamente del RICE; ciudadanía digital responsable en WhatsApp (prohibida la difamación de funcionarios); acatar las medidas formativas. Todo adulto del liceo tiene el deber ineludible de denunciar de inmediato cualquier sospecha de vulneración, acoso, violencia o abuso sexual contra un estudiante (Art. 14).",
+    keywords: ["derechos del estudiante", "deberes del estudiante", "derechos del apoderado", "deberes del apoderado", "derecho a la educacion", "no discriminacion", "trato digno", "privacidad de datos", "articulo 3", "articulo 5", "articulo 9"]
+  },
+  {
     id: "RICE-COND-001",
-    titulo: "CONDUCTO REGULAR Y CANALES OFICIALES DE ATENCIÓN E INQUIETUDES (ARTS. 1-2)",
-    seccion: "CANALES DE COMUNICACIÓN Y DEBIDO PROCESO",
-    contenido: "CONDUCTO REGULAR DEL LICEO DE HUARA: El procedimiento jerárquico para consultas, reclamos o solicitudes de la comunidad educativa sigue los siguientes pasos: 1° Profesor/a Jefe o Docente de Asignatura (instancia inicial de aula); 2° Equipo de Convivencia Educativa / Inspectoría General / UTP (para temas socioemocionales, faltas RICE o requerimientos no resueltos en 48 hrs); 3° Dirección del Liceo de Huara (instancia superior de apelación y casos complejos); 4° Sostenedor (SLEP Tamarugal) / Superintendencia de Educación (instancia fiscalizadora externa). Todo apoderado y estudiante tiene derecho a ser atendido con respeto, escucha protegida y confidencialidad (Circular 482 Mineduc).",
-    keywords: ["conducto regular", "conductos regulares", "canales de atencion", "reclamo", "reclamos", "atencion a apoderados", "profesor jefe", "convivencia educativa", "convivencia escolar", "direccion", "solicitud", "jerarquia"]
+    titulo: "CONDUCTO REGULAR: LOS 4 CANALES OFICIALES (ARTÍCULOS 1-2)",
+    seccion: "TÍTULO VI — DEL CONDUCTO REGULAR INSTITUCIONAL",
+    contenido: "CONDUCTO REGULAR DEL LICEO DE HUARA: Existen 4 canales distintos según la naturaleza de la situación, cada uno con su propia ruta. (a) Canal Académico-Pedagógico (notas, evaluaciones, aprendizaje): Estudiante/Apoderado → Docente de Asignatura → Profesor Jefe → UTP → Dirección. (b) Canal de Convivencia y Relacional (conflictos interpersonales leves o medianos): Estudiante/Apoderado → Profesor Jefe → Inspectoría → Convivencia Educativa → Dirección. (c) Canal Administrativo y de Servicios (infraestructura, bus rural, casino): Apoderado o Funcionario → Inspector General → Dirección → Sostenedor (SLEP Tamarugal). (d) Canal de Alta Complejidad y Legal (vulneraciones graves de derechos o delitos: armas, abuso, microtráfico): Apoderado, Estudiante o Funcionario → Convivencia Educativa → Dirección → Denuncia Obligatoria (24 horas). Todo integrante tiene derecho a ser atendido con respeto, escucha protegida y confidencialidad (Circular 482 Mineduc).",
+    keywords: ["conducto regular", "conductos regulares", "canales de atencion", "reclamo", "reclamos", "atencion a apoderados", "profesor jefe", "convivencia educativa", "convivencia escolar", "direccion", "solicitud", "jerarquia", "canal academico", "canal legal"]
   },
   {
     id: "RICE-REG-001",
-    titulo: "REGULACIÓN DEL USO DE TELÉFONOS CELULARES EN AULA (FALTAS L-03, L-04, G-08, G-13)",
-    seccion: "DEBERES Y REGLAMENTO DISCIPLINARIO FORMATIVO",
-    contenido: "REGULACIÓN DE CELULARES: Manipular o mantener a la vista el celular en clases sin indicación pedagógica es falta leve (Código L-03): advertencia verbal y retiro temporal. Usar audífonos durante la explicación también es falta leve (L-04). Acumular 3 registros de celular en el mismo mes escala automáticamente a falta grave (G-13): citación al apoderado y prohibición de ingreso del equipo al liceo por 15 días. Usar el celular durante una evaluación para buscar respuestas es falta grave (G-08): retiro del dispositivo, término de la evaluación para ese estudiante, custodia del equipo en Inspectoría con entrega exclusiva al apoderado, y reprogramación del instrumento por UTP.",
-    keywords: ["celular", "celulares", "telefono", "telefonos", "pantallas", "clases", "audifonos", "uso de celular en prueba"]
+    titulo: "REGULACIÓN DE DISPOSITIVOS MÓVILES (ARTÍCULOS 25-30, LEY N°21.801)",
+    seccion: "TÍTULO X — REGULACIÓN DE DISPOSITIVOS MÓVILES",
+    contenido: "DISPOSITIVOS MÓVILES POR NIVEL (Ley N°21.801): Educación Parvularia (NT1/NT2): prohibición absoluta de porte — no se pueden aplicar sanciones disciplinarias en este nivel, solo medidas pedagógicas. Enseñanza Básica 1° a 4°: restricción total, apagado y guardado en la mochila toda la jornada. Básica 5° y 6°: misma restricción, con excepción de uso pedagógico expreso autorizado por UTP. De 7° básico a IV° Medio: el dispositivo permanece guardado durante clases; solo se habilita en los recreos (10:00-10:15, 11:45-12:00, 13:30-14:00, 15:30-15:45) y únicamente en los espacios físicos señalizados para ello — prohibido en salas durante el recreo, casino JUNAEB y baños. Modalidad EPJA (adultos): se permite el porte, uso según normas pedagógicas. Excepción legal: dispositivo como ayuda técnica indispensable para un estudiante con Necesidades Educativas Especiales (PIE). El personal del liceo también está regulado por la Ley N°21.801. Consecuencias por incumplimiento: manipular o tener a la vista el celular sin autorización es falta leve (Código L-03): advertencia y retiro temporal; usar audífonos en clase también es falta leve (L-04); acumular 3 registros en el mes escala a falta grave (G-13): citación al apoderado y prohibición de ingreso del equipo por 15 días; usarlo durante una evaluación es falta grave (G-08): retiro del dispositivo, término de la evaluación, custodia en Inspectoría con entrega solo al apoderado.",
+    keywords: ["celular", "celulares", "telefono", "telefonos", "pantallas", "clases", "audifonos", "uso de celular en prueba", "ley 21801", "reloj inteligente", "tablet"]
   },
   {
     id: "RICE-FALTAS-LEVES",
