@@ -47,7 +47,17 @@ module.exports = async function handler(req, res) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           contents: [{ role: 'user', parts: [{ text: prompt }] }],
-          generationConfig: { temperature: 0.75, maxOutputTokens: 700 }
+          // thinkingBudget: 0 desactiva el "pensamiento" interno de los modelos
+          // Gemini 2.5+/3+ — sin esto, esos tokens de razonamiento se descuentan
+          // del mismo límite que la respuesta visible, y con maxOutputTokens
+          // bajo la respuesta se cortaba a mitad de frase (encontrado y
+          // corregido el 31-jul-2026). Para un chatbot conversacional simple
+          // como este, no hace falta ese razonamiento profundo.
+          generationConfig: {
+            temperature: 0.75,
+            maxOutputTokens: 1024,
+            thinkingConfig: { thinkingBudget: 0 },
+          }
         })
       }
     );
