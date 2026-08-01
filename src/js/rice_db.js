@@ -15,7 +15,7 @@ const RICE_DATABASE = [
     id: "RICE-PAR-002",
     titulo: "PROTOCOLO DE ACTUACIÓN EN EDUCACIÓN PARVULARIA (PRIMERA INFANCIA)",
     seccion: "EDUCACIÓN PARVULARIA — PROTOCOLOS DE ACOMPAÑAMIENTO",
-    contenido: "PROTOCOLO DE EDUCACIÓN PARVULARIA: Ante crisis de llanto, desregulación emocional o dificultades de adaptación en parvulario (NT1 y NT2), la educadora y asistente técnico aplican contención afectiva física y verbal respetuosa, ambiente seguro y aviso inmediato al apoderado. Queda estrictamente prohibida la expulsión, suspensión o retiro forzado en este nivel educacional (Circular 482 y Ley 21.430).",
+    contenido: "PROTOCOLO DE EDUCACIÓN PARVULARIA: Ante crisis de llanto, desregulación emocional o dificultades de adaptación en parvulario (NT1 y NT2), la educadora y asistente técnico aplican contención afectiva física y verbal respetuosa, ambiente seguro y aviso inmediato al apoderado. Queda estrictamente prohibida la expulsión, suspensión o retiro forzado en este nivel educacional (Circular 781 y Ley 21.430).",
     keywords: ["parvularia", "llanto", "desregulacion", "adaptacion", "educadora", "primera infancia", "resguardo"]
   },
   {
@@ -211,7 +211,7 @@ const RICE_DATABASE = [
     id: "RICE-COND-001",
     titulo: "CONDUCTO REGULAR: LOS 4 CANALES OFICIALES (ARTÍCULOS 1-2)",
     seccion: "TÍTULO VI — DEL CONDUCTO REGULAR INSTITUCIONAL",
-    contenido: "CONDUCTO REGULAR DEL LICEO DE HUARA: Existen 4 canales distintos según la naturaleza de la situación, cada uno con su propia ruta. (a) Canal Académico-Pedagógico (notas, evaluaciones, aprendizaje): Estudiante/Apoderado → Docente de Asignatura → Profesor Jefe → UTP → Dirección. (b) Canal de Convivencia y Relacional (conflictos interpersonales leves o medianos): Estudiante/Apoderado → Profesor Jefe → Inspectoría → Convivencia Educativa → Dirección. (c) Canal Administrativo y de Servicios (infraestructura, bus rural, casino): Apoderado o Funcionario → Inspector General → Dirección → Sostenedor (SLEP Tamarugal). (d) Canal de Alta Complejidad y Legal (vulneraciones graves de derechos o delitos: armas, abuso, microtráfico): Apoderado, Estudiante o Funcionario → Convivencia Educativa → Dirección → Denuncia Obligatoria (24 horas). Todo integrante tiene derecho a ser atendido con respeto, escucha protegida y confidencialidad (Circular 482 Mineduc).",
+    contenido: "CONDUCTO REGULAR DEL LICEO DE HUARA: Existen 4 canales distintos según la naturaleza de la situación, cada uno con su propia ruta. (a) Canal Académico-Pedagógico (notas, evaluaciones, aprendizaje): Estudiante/Apoderado → Docente de Asignatura → Profesor Jefe → UTP → Dirección. (b) Canal de Convivencia y Relacional (conflictos interpersonales leves o medianos): Estudiante/Apoderado → Profesor Jefe → Inspectoría → Convivencia Educativa → Dirección. (c) Canal Administrativo y de Servicios (infraestructura, bus rural, casino): Apoderado o Funcionario → Inspector General → Dirección → Sostenedor (SLEP Tamarugal). (d) Canal de Alta Complejidad y Legal (vulneraciones graves de derechos o delitos: armas, abuso, microtráfico): Apoderado, Estudiante o Funcionario → Convivencia Educativa → Dirección → Denuncia Obligatoria (24 horas). Todo integrante tiene derecho a ser atendido con respeto, escucha protegida y confidencialidad (Circular 781 Mineduc).",
     keywords: ["conducto regular", "conductos regulares", "canales de atencion", "reclamo", "reclamos", "atencion a apoderados", "profesor jefe", "convivencia educativa", "convivencia escolar", "direccion", "solicitud", "jerarquia", "canal academico", "canal legal"]
   },
   {
@@ -241,5 +241,33 @@ const RICE_DATABASE = [
     seccion: "DEBERES Y REGLAMENTO DISCIPLINARIO FORMATIVO",
     contenido: "FALTAS GRAVÍSIMAS (Art. 41/45): atentan contra la vida, salud o integridad física/psicológica, o son delito. Ejemplos con código: agresión física entre pares (GG-01), incitar o filmar una riña (GG-02), agresión verbal grave a un docente activando Ley Karin (GG-03), amenazas a funcionarios (GG-04), agresión física a personal del liceo (GG-05, activa expulsión bajo Ley Aula Segura). También: acoso escolar sistemático, porte/consumo/distribución de drogas o alcohol, porte de armas, abuso sexual, e incendios o destrozos mayores. Sanciones: suspensión inmediata como medida cautelar (1 a 5 días), condicionalidad de matrícula, no renovación o expulsión inmediata siguiendo el debido proceso (con reubicación coordinada por el MINEDUC), y denuncia obligatoria ante Carabineros o el Ministerio Público en 24 horas si el hecho reviste delito.",
     keywords: ["faltas gravisimas", "art 41", "art 45", "agresion", "acoso escolar sistematico", "armas", "drogas", "expulsion", "ley aula segura", "delito"]
+  },
+  {
+    id: "RICE-MOCHILAS-001",
+    titulo: "PROHIBICIÓN DE INSPECCIÓN DE MOCHILAS Y PERTENENCIAS (ARTÍCULO 46)",
+    seccion: "TÍTULO XII — EL JUSTO Y RACIONAL PROCEDIMIENTO",
+    contenido: "MOCHILAS Y PERTENENCIAS: Mochilas, bolsos, casilleros, prendas y dispositivos son propiedad privada e intimidad del estudiante. Ningún funcionario puede registrar, abrir o revisar de manera forzada estas pertenencias. Ante sospecha fundada de un elemento prohibido o peligroso (armas, drogas), el funcionario solo puede solicitar al estudiante que exhiba voluntariamente el contenido, en un espacio privado, en presencia de su apoderado y de Convivencia Educativa. Si el estudiante se niega y persiste la sospecha de peligro inminente, el liceo aísla preventivamente y llama a Carabineros de Chile — únicos facultados por ley para realizar registros de pertenencias.",
+    keywords: ["revisar mochila", "revision de mochilas", "registro de pertenencias", "me revisaron la mochila", "casillero"]
+  },
+  {
+    id: "RICE-SCE-001",
+    titulo: "SERVICIO A LA COMUNIDAD EDUCATIVA — SCE (ARTÍCULOS 47 Y TÍTULO XIV)",
+    seccion: "TÍTULO XII / TÍTULO XIV — MEDIDAS FORMATIVAS",
+    contenido: "SERVICIO A LA COMUNIDAD EDUCATIVA (SCE): Máxima expresión de justicia restaurativa — el estudiante repara el daño causado mediante acciones concretas en vez de ser apartado del aula. Requiere aceptación voluntaria y por escrito del estudiante y su apoderado (Acta de Acuerdo Reparatorio); si la familia rechaza el SCE, se aplica la suspensión tradicional. Ejemplos permitidos: apoyo en biblioteca, mantención de áreas verdes/huertos, tutorías de lectura a cursos menores, diseño de afiches preventivos, apoyo en el orden del casino. Prohibido: aseo pesado o de baños, o cualquier tarea que humille públicamente al estudiante. Equivalencia: 2 horas pedagógicas de SCE conmutan 1 día de suspensión, con tope de 10 horas por incidente, siempre fuera de la jornada de clases. Supervisado por Inspectoría General o un tutor designado, quien firma un acta de cumplimiento registrada en Lirmi. Entra en vigencia el 1 de agosto de 2026.",
+    keywords: ["servicio a la comunidad", "sce", "conmutar suspension", "reparar el dano", "justicia restaurativa", "acta de acuerdo reparatorio"]
+  },
+  {
+    id: "RICE-DEBIDOPROCESO-001",
+    titulo: "PRINCIPIOS DEL DEBIDO PROCESO (ARTÍCULOS 48-52)",
+    seccion: "TÍTULO XII — EL JUSTO Y RACIONAL PROCEDIMIENTO",
+    contenido: "PRINCIPIOS DEL DEBIDO PROCESO: Todo procedimiento indagatorio debe respetar: (a) Idoneidad e imparcialidad del investigador; (b) Presunción de inocencia — el estudiante no es culpable mientras no haya una resolución formal, aunque el liceo sí puede decretar medidas de resguardo inmediatas (separación de espacios) sin que eso implique responsabilidad anticipada; (c) Absoluta reserva y confidencialidad de toda declaración; (d) Derecho a ser escuchado y presentar descargos, de forma presencial o escrita. Órganos: la Unidad de Convivencia Educativa instruye el proceso; Inspectoría General o UTP resuelve faltas leves y graves; SOLO la Directora puede resolver faltas gravísimas (expulsión o cancelación de matrícula), previo informe de Convivencia Educativa. Citaciones: correo institucional, carta timbrada y firmada, o llamado telefónico registrado. Si la falta es además delito (tráfico, lesiones graves, abuso sexual, amenazas de muerte, arma de fuego), el liceo denuncia a Carabineros/PDI/Ministerio Público en 24 horas — esta vía penal es independiente y no detiene las medidas internas del liceo.",
+    keywords: ["debido proceso", "presuncion de inocencia", "investigacion", "descargos", "derecho a ser escuchado", "quien puede expulsar", "confidencialidad del proceso"]
+  },
+  {
+    id: "RICE-CONDICIONALIDAD-001",
+    titulo: "CONDICIONALIDAD Y NO RENOVACIÓN DE MATRÍCULA (ARTÍCULOS 53-59)",
+    seccion: "TÍTULO XIII — CONDICIONALIDAD Y NO RENOVACIÓN DE MATRÍCULA",
+    contenido: "CONDICIONALIDAD DE MATRÍCULA: Medida excepcional que condiciona la permanencia futura del estudiante. Solo la Dirección puede decretarla, nunca de forma discrecional. Condicionalidad Simple: por reiteración de faltas graves pese a apoyo previo. Condicionalidad Extrema: por una falta gravísima, cuando la Dirección decide no aplicar la expulsión directamente. Nunca se aplica a estudiantes recién matriculados (Ley 20.845). Procedimiento: informe técnico fundado (Inspectoría + Coordinador de Convivencia + equipo psicosocial) constatando que hubo un Plan de Acompañamiento Individual previo sin resultado; audiencia de descargos con 3 días hábiles para responder; resolución fundada de Dirección; firma de un Acuerdo y Compromiso de Convivencia. Vigencia máxima de un semestre (prorrogable a un año), con seguimiento quincenal del equipo psicosocial. Una nueva falta durante la condicionalidad NO habilita expulsión automática — exige un nuevo proceso independiente. NO RENOVACIÓN DE MATRÍCULA: solo tras agotar todo apoyo pedagógico/psicosocial; se notifica por escrito con 30 días hábiles de anticipación; el apoderado tiene 5 días hábiles para apelar por escrito ante Dirección, que debe resolver en 5 días hábiles.",
+    keywords: ["condicionalidad", "no renovacion de matricula", "cancelacion de matricula", "expulsion", "apelacion", "recurso de apelacion", "acuerdo y compromiso de convivencia"]
   }
 ];

@@ -384,7 +384,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <!-- Módulo de Casos y Denuncias en Tiempo Real -->
       <div class="admin-card" style="background: var(--bg-card); padding: 24px; border-radius: var(--radius-md); border: 1px solid var(--border-card); animation: fadeIn 0.9s ease; display: flex; flex-direction: column; gap: 16px;">
         <div style="display:flex; justify-content:space-between; align-items:center;">
-          <h4 style="color: var(--primary); font-size: 1.15rem; font-weight: 700; margin: 0;">📋 Reportes y Denuncias Recientes (Circular 482)</h4>
+          <h4 style="color: var(--primary); font-size: 1.15rem; font-weight: 700; margin: 0;">📋 Reportes y Denuncias Recientes (Circular 781)</h4>
           <button id="btn-clear-casos" style="background:none; border:none; color:var(--text-muted); cursor:pointer; font-size:0.8rem; text-decoration:underline;">Limpiar Casos</button>
         </div>
         <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; margin: 0;">
@@ -402,7 +402,7 @@ document.addEventListener('DOMContentLoaded', () => {
         ${incidentesHtml}
       </div>
 
-      <!-- Módulo: Auditoría Normativa y Legal (Circular 482 / Ley 21.430) -->
+      <!-- Módulo: Auditoría Normativa y Legal (Circular 781 / Ley 21.430) -->
       <div class="admin-card" style="background: var(--bg-card); padding: 24px; border-radius: var(--radius-md); border: 1px solid var(--border-card); animation: fadeIn 1.1s ease; display: flex; flex-direction: column; gap: 16px; margin-top: 20px;">
         <h4 style="color: var(--primary); font-size: 1.15rem; font-weight: 700; margin: 0;">🛡️ Auditoría Normativa & Cumplimiento Legal (Huara 2026)</h4>
         <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; margin: 0;">
@@ -410,10 +410,10 @@ document.addEventListener('DOMContentLoaded', () => {
         </p>
         
         <div style="display: flex; flex-direction: column; gap: 12px;">
-          <!-- Item 1: Circular 482 -->
+          <!-- Item 1: Circular 781 -->
           <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-card); padding-bottom: 8px;">
             <div>
-              <strong style="font-size: 0.88rem; color: var(--text-main);">Circular 482 (Reglamento Interno RICE)</strong>
+              <strong style="font-size: 0.88rem; color: var(--text-main);">Circular 781 (Reglamento Interno RICE)</strong>
               <div style="font-size: 0.75rem; color: var(--text-muted);">Tipificación de faltas, debido proceso y derecho a apelación.</div>
             </div>
             <span style="background: #ecfdf5; color: #047857; font-size: 0.75rem; font-weight: 700; padding: 4px 10px; border-radius: 50px; border: 1px solid #a7f3d0;">100% Conforme</span>
@@ -555,7 +555,7 @@ document.addEventListener('DOMContentLoaded', () => {
           </td>
           <td style="padding-left: 16px; vertical-align: middle;">
             <div style="font-size: 0.8rem; font-weight: 700; color: #1e3a8a; text-transform: uppercase;">Liceo de Huara</div>
-            <div style="font-size: 0.7rem; color: #4b5563;">Equipo de Convivencia Educativa • Circular 482</div>
+            <div style="font-size: 0.7rem; color: #4b5563;">Equipo de Convivencia Educativa • Circular 781</div>
             <div style="font-size: 0.65rem; color: #475569;">Huara, Región de Tarapacá</div>
           </td>
           <td style="text-align: right; vertical-align: middle;">
@@ -617,7 +617,7 @@ document.addEventListener('DOMContentLoaded', () => {
       </div>
 
       <div style="margin-top: 48px; border-top: 1px solid #e5e7eb; padding-top: 12px; font-size: 0.65rem; color: #475569; text-align: center;">
-        Ficha Oficial MiRice • Generado el ${new Date().toLocaleDateString()} a las ${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} • Enfoque de Convivencia Educativa Circular 482 Superintendencia.
+        Ficha Oficial MiRice • Generado el ${new Date().toLocaleDateString()} a las ${new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})} • Enfoque de Convivencia Educativa Circular 781 Superintendencia.
       </div>
     `;
 

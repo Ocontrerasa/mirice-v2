@@ -2,7 +2,7 @@
  * BANCO DE FRASES Y MENSAJES DE CONVIVENCIA EDUCATIVA - MIRICE 2026
  * Liceo de Huara • Cobertura de 210 Días Lectivos (1 de Marzo al 21 de Diciembre)
  * Diseñado bajo principios de Aprendizaje Socioemocional (SEL), Prácticas Restaurativas,
- * Ley 20.536 (Violencia Escolar), Ley 21.430 (Protección Niñez) y Circular 482 del Mineduc.
+ * Ley 20.536 (Violencia Escolar), Ley 21.430 (Protección Niñez) y Circular 781 del Mineduc.
  */
 
 const FRASES_CONVIVENCIA_MIRICE = [
@@ -67,7 +67,7 @@ const FRASES_CONVIVENCIA_MIRICE = [
   "🛡️ Tienes derecho a ser evaluado con justicia y transparencia conforme al Reglamento de Evaluación (Decreto 67).",
   "💡 Si vives una situación de desregulación emocional o crisis, el Espacio de Calma del liceo está para tu contención.",
   "💬 Las estudiantes embarazadas, madres o padres adolescentes tienen derecho a plan de apoyo y flexibilidad escolar.",
-  "⚖️ La Circular 482 garantiza que ningún estudiante sea sancionado con exclusión por temas de uniforme o apariencia.",
+  "⚖️ La Circular 781 garantiza que ningún estudiante sea sancionado con exclusión por temas de uniforme o apariencia.",
   "📝 Ante cualquier procedimiento disciplinario, tienes derecho a ser escuchado (Debido Proceso) y presentar tu versión.",
   "🌱 La puntualidad al ingresar a las 08:30 hrs apoya tu aprendizaje, pero los imprevistos no privan tu pase de entrada.",
   "✨ Tu información de salud y antecedentes familiares son estrictamente confidenciales (Ley N° 19.628).",

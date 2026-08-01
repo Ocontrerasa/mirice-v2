@@ -702,7 +702,7 @@ document.addEventListener('DOMContentLoaded', () => {
           tag: "📌 JUEVES DE DERECHOS Y NORMAS CLARAS",
           titulo: "Puntualidad con Resguardo del Derecho a Educar",
           frase: "💡 <strong>La puntualidad es respeto por el tiempo de todos:</strong> Recuerda ingresar a las 08:30 hrs. Si te atrasas, ingresarás a clases con pase sin exclusión pedagógica.",
-          norma: "📖 <strong>Circular 482 Mineduc:</strong> Art. 8 - Ningún estudiante puede ser devuelto a su hogar ni privado de su jornada por atrasos."
+          norma: "📖 <strong>Circular 781 Mineduc:</strong> Art. 8 - Ningún estudiante puede ser devuelto a su hogar ni privado de su jornada por atrasos."
         },
         5: {
           tag: "📌 VIERNES DE RECONOCIMIENTO Y BUEN TRATO",
@@ -809,7 +809,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div class="sabias-que-card" style="margin-top: 0;">
               <div class="sabias-que-icon">💡</div>
               <div class="sabias-que-content">
-                <h4>¿Sabías que...? (Circular 482)</h4>
+                <h4>¿Sabías que...? (Circular 781)</h4>
                 <p>El Liceo de Huara no puede suspenderte, expulsarte ni prohibirte ingresar al aula por atrasos, uniforme o rendimiento. Tus derechos educativos están plenamente resguardados por la Superintendencia de Educación.</p>
               </div>
           </div>
@@ -864,7 +864,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 </button>
                 <div class="accordion-content">
                   <div class="accordion-content-inner">
-                    El Liceo de Huara resguarda tu integridad física y emocional. Tienes derecho a estudiar en un clima de respeto mutuo, no ser discriminado, ser escuchado y recibir apoyo cuando tengas dificultades de aprendizaje o personales (Circular 482).
+                    El Liceo de Huara resguarda tu integridad física y emocional. Tienes derecho a estudiar en un clima de respeto mutuo, no ser discriminado, ser escuchado y recibir apoyo cuando tengas dificultades de aprendizaje o personales (Circular 781).
                   </div>
                 </div>
               </div>
@@ -975,7 +975,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 <div style="background:#f8fafc; border:1px solid #e2e8f0; padding:10px 12px; border-radius:6px;">
                   <span style="font-size:0.75rem; font-weight:700; color:var(--primary);">🏫 EDUCACIÓN BÁSICA Y MEDIA</span>
                   <p style="font-size:0.78rem; color:var(--text-main); margin-top:4px; line-height:1.4;">
-                    <strong>Enfoque Formativo y Restaurativo:</strong> Garantía del debido proceso (Circular 482), diálogo con apoderados, acuerdos de reparación y gradación de medidas ante faltas leves, graves o gravísimas.
+                    <strong>Enfoque Formativo y Restaurativo:</strong> Garantía del debido proceso (Circular 781), diálogo con apoderados, acuerdos de reparación y gradación de medidas ante faltas leves, graves o gravísimas.
                   </p>
                 </div>
               </div>
@@ -991,7 +991,7 @@ document.addEventListener('DOMContentLoaded', () => {
               </div>
             </div>
             <div style="background: #ecfdf5; border-radius:var(--radius-md); padding:14px; border:1px solid #a7f3d0; border-left: 4px solid #047857;">
-              <h4 style="color: #047857; font-size: 0.88rem; font-weight:600; margin-bottom:4px;">Derechos del Apoderado (Circular 482)</h4>
+              <h4 style="color: #047857; font-size: 0.88rem; font-weight:600; margin-bottom:4px;">Derechos del Apoderado (Circular 781)</h4>
               <p style="font-size:0.8rem; color:#064e3b; line-height:1.4; margin:0;">
                 Tiene derecho a ser informado oportunamente de la convivencia y desarrollo de su pupilo, así como a ser atendido con respeto y canalizar sus inquietudes por el conducto regular.
               </p>
@@ -1003,12 +1003,12 @@ document.addEventListener('DOMContentLoaded', () => {
           <div style="background: var(--bg-card); padding: 20px; border-radius: var(--radius-md); border: 1px solid var(--border-card); margin-bottom: 20px;">
             <h3 style="color: var(--primary); font-size: 1.25rem; font-weight: 700; margin-bottom: 6px;">🖋️ Recepción y Firma de Circulares Oficiales</h3>
             <p style="color: var(--text-muted); font-size: 0.85rem; line-height: 1.4; margin-bottom: 12px;">
-              De acuerdo con la <strong>Circular N° 482 de la Superintendencia de Educación</strong>, todo apoderado debe ser instruido y notificado formalmente acerca de las normas y protocolos del establecimiento, firmando su recepción y compromiso.
+              De acuerdo con la <strong>Circular N° 781 de la Superintendencia de Educación</strong>, todo apoderado debe ser instruido y notificado formalmente acerca de las normas y protocolos del establecimiento, firmando su recepción y compromiso.
             </p>
             
             <div style="background: hsl(var(--primary-hue), 60%, 96%); border-radius: var(--radius-sm); padding: 14px; border-left: 4px solid var(--primary); font-size: 0.82rem; line-height: 1.5; color: var(--primary); margin-bottom: 16px;">
               <strong>Resumen de Compromisos que Adquiere el Apoderado:</strong>
-              <div style="margin-top: 6px;">• <strong>1. Corresponsabilidad de Asistencia (Circular 482):</strong> Asegurar la asistencia y puntualidad de su pupilo al establecimiento (ingreso 08:30 hrs).</div>
+              <div style="margin-top: 6px;">• <strong>1. Corresponsabilidad de Asistencia (Circular 781):</strong> Asegurar la asistencia y puntualidad de su pupilo al establecimiento (ingreso 08:30 hrs).</div>
               <div style="margin-top: 4px;">• <strong>2. Respeto al Conducto Regular (Ley 20.536):</strong> Resolver cualquier duda o conflicto mediante los canales y personal del liceo (Profesor Jefe, Convivencia Educativa o Dirección), manteniendo un trato respetuoso.</div>
               <div style="margin-top: 4px;">• <strong>3. Convivencia Digital:</strong> Fomentar el uso ético y pacífico de las redes sociales y grupos de apoderados, evitando la difusión de información falsa o ciberacoso hacia miembros del liceo.</div>
             </div>
@@ -2775,7 +2775,7 @@ window.mostrarDetalleProtocoloModal = function(art) {
             🤝 ¿Deseas consultar o informar confidencialmente esta situación al Equipo de Convivencia?
           </strong>
           <span style="font-size: 0.82rem; color: #065f46; line-height: 1.4;">
-            Tu mensaje o reporte es <strong>100% reservado y protegido</strong> bajo la Circular 482 y Ley 21.430. El equipo investigará y te brindará apoyo sin exponer tu identidad.
+            Tu mensaje o reporte es <strong>100% reservado y protegido</strong> bajo la Circular 781 y Ley 21.430. El equipo investigará y te brindará apoyo sin exponer tu identidad.
           </span>
           <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; margin-top: 6px;">
             <button onclick="document.getElementById('rice-protocol-modal').style.display='none'; window.irAReporteConfidencial('${cleanTitle}');" style="margin: 0; background: #047857 !important; color: #ffffff !important; font-weight: 800 !important; padding: 10px 20px !important; border-radius: 50px !important; font-size: 0.84rem !important; cursor: pointer !important; border: none !important; box-shadow: 0 4px 12px rgba(4,120,87,0.25) !important; display: inline-flex !important; align-items: center !important; gap: 6px !important;">
@@ -3059,7 +3059,7 @@ window.descargarRICEConOpcionCertificado = function() {
           ¡RICE 2026 Descargado con Éxito!
         </h3>
         <p style="font-size:0.86rem; color:#334155; line-height:1.5; margin-bottom:16px;">
-          Conforme a la <strong>Circular N° 482 del Mineduc</strong>, ¿deseas generar y descargar tu <strong>Certificado Digital de Recepción y Toma de Conocimiento</strong> con folio único de verificación?
+          Conforme a la <strong>Circular N° 781 del Mineduc</strong>, ¿deseas generar y descargar tu <strong>Certificado Digital de Recepción y Toma de Conocimiento</strong> con folio único de verificación?
         </p>
         <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
           <button onclick="document.getElementById('cert-offer-modal').style.display='none'; if(typeof window.descargarCertificadoRecepcionRICE==='function') window.descargarCertificadoRecepcionRICE(currentLoggedUser ? currentLoggedUser.data : null, currentLoggedUser ? currentLoggedUser.role : 'estudiante');" style="background:#047857 !important; color:#ffffff !important; font-weight:800; padding:10px 20px; border-radius:50px; border:none; cursor:pointer; font-size:0.84rem; box-shadow:0 4px 12px rgba(4,120,87,0.25);">
@@ -3313,7 +3313,7 @@ window.mostrarModalNotificacionDiaria = function(userData) {
         </p>
       </div>
       <div style="font-size:0.8rem; color:#64748b; margin-bottom:18px;">
-        📖 Orientación humana basada en el RICE 2026 y la Circular 482 Mineduc • Liceo de Huara
+        📖 Orientación humana basada en el RICE 2026 y la Circular 781 Mineduc • Liceo de Huara
       </div>
       <button onclick="document.getElementById('notif-daily-modal').style.display='none'" style="background:#047857 !important; color:#ffffff !important; font-weight:800; padding:12px 30px; border-radius:50px; border:none; cursor:pointer; font-size:0.9rem; box-shadow:0 4px 14px rgba(4,120,87,0.3); transition:all 0.2s ease;">
         👍 ¡Entendido, Continuar al Liceo!

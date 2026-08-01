@@ -199,7 +199,7 @@
           </div>
 
           <div class="body-text">
-            El <strong>Liceo de Huara</strong> certifica que, en conformidad a lo establecido en la <strong>Circular N° 482 de la Superintendencia de Educación</strong>, la <strong>Ley N° 21.430 sobre Protección Integral de la Niñez</strong> y el Reglamento Interno del establecimiento, se ha efectuado la entrega formal y toma de conocimiento del RICE 2026 al siguiente integrante de nuestra comunidad educativa:
+            El <strong>Liceo de Huara</strong> certifica que, en conformidad a lo establecido en la <strong>Circular N° 781 de la Superintendencia de Educación</strong>, la <strong>Ley N° 21.430 sobre Protección Integral de la Niñez</strong> y el Reglamento Interno del establecimiento, se ha efectuado la entrega formal y toma de conocimiento del RICE 2026 al siguiente integrante de nuestra comunidad educativa:
           </div>
 
           <div class="box-datos">

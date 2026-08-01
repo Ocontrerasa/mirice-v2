@@ -162,7 +162,7 @@
         </ol>
 
         <div class="footer">
-          Liceo de Huara • Servicio Local de Educación Pública Tamarugal • Resguardo de Derechos Circular 482 Mineduc
+          Liceo de Huara • Servicio Local de Educación Pública Tamarugal • Resguardo de Derechos Circular 781 Mineduc
         </div>
       </body>
       </html>

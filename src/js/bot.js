@@ -185,7 +185,7 @@ const RICE_Bot = {
 		};
 		const b = BTNS[tema] || BTNS.NINGUNO;
 		const s = 'background:linear-gradient(135deg,#047857 0%,#065f46 100%); color:#fff !important; border:none; font-weight:800; font-size:0.82rem; padding:11px 22px; border-radius:50px; cursor:pointer; box-shadow:0 4px 12px rgba(4,120,87,0.28);';
-		return `<div style="background:#ecfdf5; border:1.5px solid #6ee7b7; border-radius:12px; padding:14px; margin-top:16px; text-align:center;"><span style="font-size:0.78rem; color:#065f46; display:block; margin-bottom:10px;">🔒 Tu comunicación es 100% privada — Circular 482 Mineduc y Ley N° 21.430</span><button onclick="window.irAReporteConfidencial('${q}');" style="${s}">${b.i} ${b.t}</button></div>`;
+		return `<div style="background:#ecfdf5; border:1.5px solid #6ee7b7; border-radius:12px; padding:14px; margin-top:16px; text-align:center;"><span style="font-size:0.78rem; color:#065f46; display:block; margin-bottom:10px;">🔒 Tu comunicación es 100% privada — Circular 781 Mineduc y Ley N° 21.430</span><button onclick="window.irAReporteConfidencial('${q}');" style="${s}">${b.i} ${b.t}</button></div>`;
 	},
 
 	obtenerContencionEmpatica: function(nombre, rol, tema, esFueraDeColegio = false) {
@@ -235,7 +235,7 @@ El <strong>Protocolo N° 14 del RICE 2026</strong> establece apoyos para estudia
 
 		// CONDUCTO REGULAR
 		case 'CONDUCTO_REGULAR':
-			if (es) return `${bannerEmpatico}En el <strong>Liceo de Huara</strong> el Conducto Regular es una garantía de que su voz será escuchada (<strong>RICE 2026 Art. 31 y Circular 482</strong>).<br><br>📌 <strong>1° Nivel — Profesor/a Jefe:</strong> para inquietudes pedagógicas del día a día.<br><br>📌 <strong>2° Nivel — Convivencia Educativa / Equipo de Convivencia Educativa:</strong> para temas de convivencia o apoyo emocional.<br><br>📌 <strong>3° Nivel — Dirección del Liceo:</strong> para casos de mayor complejidad.<br><br>💬 <em>¿Le gustaría coordinar una reunión?</em>${btn}`;
+			if (es) return `${bannerEmpatico}En el <strong>Liceo de Huara</strong> el Conducto Regular es una garantía de que su voz será escuchada (<strong>RICE 2026 Art. 31 y Circular 781</strong>).<br><br>📌 <strong>1° Nivel — Profesor/a Jefe:</strong> para inquietudes pedagógicas del día a día.<br><br>📌 <strong>2° Nivel — Convivencia Educativa / Equipo de Convivencia Educativa:</strong> para temas de convivencia o apoyo emocional.<br><br>📌 <strong>3° Nivel — Dirección del Liceo:</strong> para casos de mayor complejidad.<br><br>💬 <em>¿Le gustaría coordinar una reunión?</em>${btn}`;
 			return `${bannerEmpatico}El <strong>Liceo de Huara</strong> tiene un equipo dispuesto a escucharte:<br><br>📌 <strong>1. Tu Profesor/a Jefe:</strong> para orientarte en clases y convivencia diaria.<br><br>📌 <strong>2. Convivencia Educativa y Equipo de Convivencia Educativa:</strong> si necesitas desahogarte o recibir ayuda reservada.<br><br>📌 <strong>3. Dirección del Liceo:</strong> para inquietudes de mayor alcance.<br><br>💬 <em>¿Hay algún tema en el que te gustaría que te acompañemos hoy?</em>${btn}`;
 
 		// DROGAS
@@ -252,7 +252,7 @@ El <strong>Protocolo N° 14 del RICE 2026</strong> establece apoyos para estudia
 		// ARMAS
 		case 'ARMAS':
 			if (es) return `👨‍👩‍👧‍👦 <strong>Hola, ${nombre}.</strong> Esto es serio, y hace bien en avisar de inmediato — el liceo tiene un protocolo estricto para esto (Protocolo N° 7) precisamente porque no se puede esperar.<br><br>Esto es lo que pasa apenas se avisa: se llama de inmediato a <strong>Carabineros de Huara</strong>, se aísla la zona con calma, y ningún funcionario ni estudiante confronta directamente a la persona involucrada.<br><br>Si esto está pasando ahora: <strong>avise de inmediato a Inspectoría o Dirección</strong>, no espere a que termine la jornada.${btn}`;
-			if (p.esTercero) return `🤝 <strong>Hola, ${nombre}. Que hayas avisado es lo correcto — esto no se resuelve solo/a.</strong> Tu identidad queda completamente protegida (Circular 482 y Ley 21.430).<br><br>El equipo directivo actúa de inmediato al recibir el aviso: aíslan la zona y llaman a Carabineros. <strong>Tu única tarea es avisar ahora mismo a un adulto</strong> — no te acerques ni intentes intervenir tú.${btn}`;
+			if (p.esTercero) return `🤝 <strong>Hola, ${nombre}. Que hayas avisado es lo correcto — esto no se resuelve solo/a.</strong> Tu identidad queda completamente protegida (Circular 781 y Ley 21.430).<br><br>El equipo directivo actúa de inmediato al recibir el aviso: aíslan la zona y llaman a Carabineros. <strong>Tu única tarea es avisar ahora mismo a un adulto</strong> — no te acerques ni intentes intervenir tú.${btn}`;
 			return `⚠️ <strong>Hola, ${nombre}. Esto es grave, y necesita atención del liceo ahora mismo, no después.</strong><br><br>El liceo tiene un protocolo estricto para esto (Protocolo N° 7 — Falta Gravísima) que se activa apenas alguien avisa: aíslan la zona y llaman a Carabineros de inmediato.<br><br><strong>Avisa ahora a un adulto responsable</strong> (Inspectoría, Profesor Jefe, o cualquier funcionario cerca) — no confrontes tú a la persona involucrada.${btn}`;
 
 		// ACOSO
@@ -283,7 +283,7 @@ El <strong>Protocolo N° 14 del RICE 2026</strong> establece apoyos para estudia
 
 		// ATRASO
 		case 'ATRASO':
-			return `${es ? '👨‍👩‍👧‍👦' : '👋'} <strong>Hola, ${nombre}. El derecho a la educación siempre está protegido.</strong><br><br>La <strong>Circular 482 del Mineduc</strong> es clara: el liceo <strong>nunca puede devolver a un estudiante a casa</strong> por atraso u otra causa menor. Los atrasos se abordan desde el acompañamiento, no desde el castigo.<br><br>${es ? '<em>¿Su pupilo/a fue enviado/a a casa? Puede formalizar queja ante la Superintendencia de Educación.</em>' : '<em>¿Te enviaron a casa? Eso es una infracción y puedes reportarlo.</em>'} ${cita('Circular 482 Mineduc — Atrasos e Inasistencias', '')}${btn}`;
+			return `${es ? '👨‍👩‍👧‍👦' : '👋'} <strong>Hola, ${nombre}. El derecho a la educación siempre está protegido.</strong><br><br>La <strong>Circular 781 del Mineduc</strong> es clara: el liceo <strong>nunca puede devolver a un estudiante a casa</strong> por atraso u otra causa menor. Los atrasos se abordan desde el acompañamiento, no desde el castigo.<br><br>${es ? '<em>¿Su pupilo/a fue enviado/a a casa? Puede formalizar queja ante la Superintendencia de Educación.</em>' : '<em>¿Te enviaron a casa? Eso es una infracción y puedes reportarlo.</em>'} ${cita('Circular 781 Mineduc — Atrasos e Inasistencias', '')}${btn}`;
 
 		// CELULAR
 		case 'CELULAR':
@@ -303,7 +303,7 @@ El <strong>Protocolo N° 14 del RICE 2026</strong> establece apoyos para estudia
 			return `<div style="background:#fef2f2; border-left:4.5px solid #ef4444; padding:14px 16px; border-radius:12px; margin-bottom:14px; color:#991b1b; font-size:0.9rem; line-height:1.6;">
 💜 <strong>Hola, ${nombre}. Nadie tiene derecho a tratarte mal, a gritarte, ni a pegarte. La violencia nunca es normal ni es amor.</strong>
 </div>
-Estás en un espacio seguro. La <strong>Equipo de Convivencia Educativa</strong> te escucha en privado, sin juzgarte ni exponerte (Ley N° 21.430 y Circular 482). Tienes derecho a resguardo escolar y asesoría de la <strong>Ley N° 20.066</strong>.<br><br>
+Estás en un espacio seguro. La <strong>Equipo de Convivencia Educativa</strong> te escucha en privado, sin juzgarte ni exponerte (Ley N° 21.430 y Circular 781). Tienes derecho a resguardo escolar y asesoría de la <strong>Ley N° 20.066</strong>.<br><br>
 💬 <em>¿Te gustaría que el Equipo de Convivencia Educativa te atienda hoy mismo?</em> ${cita('Ley N° 21.430 y Ley N° 20.066', '')}${btn}`;
 
 		// EMBARAZO
@@ -323,7 +323,7 @@ Estás en un espacio seguro. La <strong>Equipo de Convivencia Educativa</strong>
 		default:
 			const bannerDefault = this.obtenerContencionEmpatica(nombre, rol, tema, esFueraDeColegio);
 			if (resultados && resultados.length > 0) {
-				const enc = es ? `Comprendemos su inquietud. Orientación del <strong>RICE 2026 y Circular 482 Mineduc</strong>:` : `Te escuchamos. Según el <strong>RICE 2026</strong>:`;
+				const enc = es ? `Comprendemos su inquietud. Orientación del <strong>RICE 2026 y Circular 781 Mineduc</strong>:` : `Te escuchamos. Según el <strong>RICE 2026</strong>:`;
 				const resaltarTexto = (texto, consulta) => {
 					if (!consulta || consulta.length < 3) return texto.replace(/\n/g, '<br>');
 					const palabras = consulta.toLowerCase().split(/\s+/).filter(w => w.length > 3 && !['sobre', 'como', 'para', 'este', 'esta'].includes(w));
@@ -416,7 +416,7 @@ Nombre del usuario: ${nombre}. Rol: ${rol}.`;
 			return { exito: true, mensaje: respuesta, articulosCados: resultadosLocales };
 		} catch (err) {
 			console.error("Error RICE_Bot:", err);
-			return { exito: true, mensaje: `<div style="background:#ecfdf5; border-left:4.5px solid #047857; padding:13px 16px; border-radius:12px; color:#047857;">🤗 <strong>Hola, ${nombre}. Te escuchamos con toda nuestra atención.</strong><br>En el Liceo de Huara todas las consultas se abordan con confidencialidad absoluta (Circular 482 y Ley N° 21.430).</div><div style="text-align:center; margin-top:12px;"><button onclick="window.irAReporteConfidencial('${pregunta.replace(/'/g, '')}');" style="background:#047857; color:#fff; font-weight:800; padding:10px 22px; border-radius:50px; border:none; cursor:pointer;">📩 Consultar a Convivencia Educativa</button></div>`, articulosCados: [] };
+			return { exito: true, mensaje: `<div style="background:#ecfdf5; border-left:4.5px solid #047857; padding:13px 16px; border-radius:12px; color:#047857;">🤗 <strong>Hola, ${nombre}. Te escuchamos con toda nuestra atención.</strong><br>En el Liceo de Huara todas las consultas se abordan con confidencialidad absoluta (Circular 781 y Ley N° 21.430).</div><div style="text-align:center; margin-top:12px;"><button onclick="window.irAReporteConfidencial('${pregunta.replace(/'/g, '')}');" style="background:#047857; color:#fff; font-weight:800; padding:10px 22px; border-radius:50px; border:none; cursor:pointer;">📩 Consultar a Convivencia Educativa</button></div>`, articulosCados: [] };
 		}
 	}
 };
