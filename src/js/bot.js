@@ -165,21 +165,21 @@ const RICE_Bot = {
 		const { tema, perspectiva: p } = analisis;
 		const BTNS = {
 			ARMAS: { i: '🚨', t: 'Alertar ahora al Equipo de Convivencia — es urgente' },
-			DROGAS: p.esApoderado ? { i: '🏥', t: 'Pedir entrevista confidencial con la Dupla Psicosocial' } : p.esTercero ? { i: '🤝', t: 'Notificar anónimamente la situación de mi compañero/a' } : { i: '💚', t: 'Conversar en privado con la Dupla Psicosocial' },
+			DROGAS: p.esApoderado ? { i: '🏥', t: 'Pedir entrevista confidencial con el Equipo de Convivencia Educativa' } : p.esTercero ? { i: '🤝', t: 'Notificar anónimamente la situación de mi compañero/a' } : { i: '💚', t: 'Conversar en privado con el Equipo de Convivencia Educativa' },
 			ACOSO: p.esApoderado ? { i: '🛡️', t: 'Solicitar protección formal para mi pupilo/a' } : p.esTercero ? { i: '🚨', t: 'Avisar de forma anónima por mi compañero/a' } : { i: '🛡️', t: 'Notificar mi situación de forma confidencial' },
 			ROBO: { i: '🎒', t: 'Notificar o solicitar indagación por pérdida de pertenencias' },
 			VIOLENCIA: { i: '⚖️', t: 'Reportar este hecho al Equipo de Convivencia' },
-			VIOLENCIA_PAREJA: { i: '💜', t: 'Solicitar contención confidencial con la Dupla Psicosocial' },
-			EMBARAZO: { i: '🌱', t: 'Coordinar apoyo reservado con la Dupla Psicosocial' },
+			VIOLENCIA_PAREJA: { i: '💜', t: 'Solicitar contención confidencial con el Equipo de Convivencia Educativa' },
+			EMBARAZO: { i: '🌱', t: 'Coordinar apoyo reservado con el Equipo de Convivencia Educativa' },
 			DOCENTE: p.esApoderado ? { i: '📅', t: 'Solicitar cita con el docente a través de Convivencia' } : { i: '📚', t: 'Consultar sobre mi derecho a ser atendido' },
 			ATRASO: { i: '📝', t: 'Registrar el motivo de mi atraso o inasistencia' },
 			CELULAR: { i: '📱', t: 'Consultar sobre este derecho con Convivencia' },
 			FALTA_SANCION: { i: '⚖️', t: 'Solicitar orientación sobre el proceso o apelar' },
 			DERECHOS: { i: '📋', t: 'Solicitar orientación formal sobre mis derechos' },
-			SALUD: { i: '💙', t: 'Solicitar apoyo reservado con la Dupla Psicosocial' },
+			SALUD: { i: '💙', t: 'Solicitar apoyo reservado con el Equipo de Convivencia Educativa' },
 			CONDUCTO_REGULAR: { i: '📋', t: 'Solicitar atención o cita por Conducto Regular' },
 			NEURODIVERSIDAD: { i: '🧩', t: 'Coordinar Plan de Apoyo con el equipo de Inclusión' },
-			CRISIS_VITAL: { i: '🆘', t: 'Conectar AHORA con la Dupla Psicosocial — urgente' },
+			CRISIS_VITAL: { i: '🆘', t: 'Conectar AHORA con el Equipo de Convivencia Educativa — urgente' },
 			NINGUNO: { i: '📩', t: 'Consultar o notificar a Convivencia Educativa' },
 			AMBIGUO: { i: '💬', t: 'Cuéntanos más sobre tu situación' },
 		};
@@ -215,11 +215,11 @@ No estás solo/a. Hay personas que quieren ayudarte ahora mismo:<br><br>
 📞 <strong>Línea de Crisis: 600 360 7777</strong> (MINSAL — gratuita, 24/7)<br>
 📞 <strong>Fono Infancia: 147</strong> (SENAME — gratuita para jóvenes)<br>
 📞 <strong>Teléfono de la Esperanza: 717</strong> (gratuita, 24/7)<br><br>
-En el <strong>Liceo de Huara</strong>, la Dupla Psicosocial está disponible para escucharte hoy mismo en total privacidad.
+En el <strong>Liceo de Huara</strong>, el Equipo de Convivencia Educativa está disponible para escucharte hoy mismo en total privacidad.
 </div>
 <div style="text-align:center; margin-top:12px;">
 <button onclick="window.irAReporteConfidencial('necesito ayuda urgente');" style="background:linear-gradient(135deg,#dc2626,#991b1b); color:#fff; font-weight:900; font-size:0.9rem; padding:14px 28px; border-radius:50px; border:none; cursor:pointer; box-shadow:0 4px 15px rgba(220,38,38,0.35);">
-🆘 Conectar AHORA con la Dupla Psicosocial
+🆘 Conectar AHORA con el Equipo de Convivencia Educativa
 </button>
 </div>`;
 
@@ -230,20 +230,20 @@ El <strong>Protocolo N° 14 del RICE 2026</strong> establece apoyos para estudia
 📌 <strong>Plan de Apoyo Individualizado (PAI):</strong> elaborado con la familia y especialistas.<br>
 📌 <strong>Adecuaciones Curriculares:</strong> evaluaciones y metodologías adaptadas.<br>
 📌 <strong>Espacio de Calma:</strong> zona segura ante desregulación emocional.<br>
-📌 <strong>Dupla Psicosocial:</strong> acompañamiento permanente y coordinación con CESFAM.<br><br>
+📌 <strong>Equipo de Convivencia Educativa:</strong> acompañamiento permanente y coordinación con CESFAM.<br><br>
 <em>¿Le gustaría coordinar una reunión con el equipo de inclusión?</em>${btn}`;
 
 		// CONDUCTO REGULAR
 		case 'CONDUCTO_REGULAR':
-			if (es) return `${bannerEmpatico}En el <strong>Liceo de Huara</strong> el Conducto Regular es una garantía de que su voz será escuchada (<strong>RICE 2026 Art. 31 y Circular 482</strong>).<br><br>📌 <strong>1° Nivel — Profesor/a Jefe:</strong> para inquietudes pedagógicas del día a día.<br><br>📌 <strong>2° Nivel — Convivencia Educativa / Dupla Psicosocial:</strong> para temas de convivencia o apoyo emocional.<br><br>📌 <strong>3° Nivel — Dirección del Liceo:</strong> para casos de mayor complejidad.<br><br>💬 <em>¿Le gustaría coordinar una reunión?</em>${btn}`;
-			return `${bannerEmpatico}El <strong>Liceo de Huara</strong> tiene un equipo dispuesto a escucharte:<br><br>📌 <strong>1. Tu Profesor/a Jefe:</strong> para orientarte en clases y convivencia diaria.<br><br>📌 <strong>2. Convivencia Educativa y Dupla Psicosocial:</strong> si necesitas desahogarte o recibir ayuda reservada.<br><br>📌 <strong>3. Dirección del Liceo:</strong> para inquietudes de mayor alcance.<br><br>💬 <em>¿Hay algún tema en el que te gustaría que te acompañemos hoy?</em>${btn}`;
+			if (es) return `${bannerEmpatico}En el <strong>Liceo de Huara</strong> el Conducto Regular es una garantía de que su voz será escuchada (<strong>RICE 2026 Art. 31 y Circular 482</strong>).<br><br>📌 <strong>1° Nivel — Profesor/a Jefe:</strong> para inquietudes pedagógicas del día a día.<br><br>📌 <strong>2° Nivel — Convivencia Educativa / Equipo de Convivencia Educativa:</strong> para temas de convivencia o apoyo emocional.<br><br>📌 <strong>3° Nivel — Dirección del Liceo:</strong> para casos de mayor complejidad.<br><br>💬 <em>¿Le gustaría coordinar una reunión?</em>${btn}`;
+			return `${bannerEmpatico}El <strong>Liceo de Huara</strong> tiene un equipo dispuesto a escucharte:<br><br>📌 <strong>1. Tu Profesor/a Jefe:</strong> para orientarte en clases y convivencia diaria.<br><br>📌 <strong>2. Convivencia Educativa y Equipo de Convivencia Educativa:</strong> si necesitas desahogarte o recibir ayuda reservada.<br><br>📌 <strong>3. Dirección del Liceo:</strong> para inquietudes de mayor alcance.<br><br>💬 <em>¿Hay algún tema en el que te gustaría que te acompañemos hoy?</em>${btn}`;
 
 		// DROGAS
 		case 'DROGAS':
-			if (esFueraDeColegio) return `${bannerEmpatico}Lo que cuentas es delicado, y que te preocupes por tu amigo/a ya dice mucho de ti. El liceo tiene un protocolo pensado justo para esto (Protocolo N° 6) — fuera del liceo, las normas disciplinarias del RICE no aplican como castigo, así que el enfoque acá también es 100% de salud, nunca de sancionar a tu amigo/a.<br><br>Si quieres saber cómo ayudarlo sin meterte tú solo/a en el problema: 1. <strong>Cuéntaselo a la Dupla Psicosocial</strong> (usa el botón de abajo) o a un adulto de confianza. 2. Ellos pueden orientarte en privado sobre cómo acercarlo a ayuda real (SENDA Previene, CESFAM). Tu identidad queda protegida siempre, lo cuentes ahora o más adelante. ${cita('Protocolo N° 6 — Apoyo de Salud y Prevención', '')}${btn}`;
-			if (es) return `${bannerEmpatico}Entiendo que esto preocupe — es un tema serio, y el liceo tiene un protocolo estricto para abordarlo (Protocolo N° 6), pensado primero en la salud del estudiante, no en sancionarlo de entrada.<br><br>Si solo quiere informarse de qué pasaría: se registra como Falta Gravísima si ocurrió dentro del liceo, pero eso no significa expulsión automática — si es la primera vez, se le pide acreditar tratamiento (SENDA o CESFAM) en 30 días para mantener la matrícula.<br><br>Si quiere que esto se informe formalmente al liceo, esto es lo que sigue: 1. Cuéntelo a Convivencia Educativa o a Inspectoría General. 2. Van a citarlo/a a usted dentro de los próximos días para conversar el plan de apoyo. 3. Puede solicitar que la Dupla Psicosocial atienda a su hijo/a de forma reservada. ${cita('Protocolo N° 6 y Art. 41/45', '')}${btn}`;
-			if (p.esTercero) return `${bannerEmpatico}Que te preocupes por tu compañero/a y vengas a preguntar ya es cuidar a tu comunidad — y tu identidad queda <strong>100% protegida</strong> pase lo que pase.<br><br>Si solo quieres saber qué pasaría: el liceo se va a acercar a ofrecerle ayuda, no a expulsarlo de entrada — el objetivo es de salud, no de castigo.<br><br>Si quieres que esto se sepa de verdad para que lo ayuden: 1. Cuéntaselo a tu Profesor Jefe, a Inspectoría, o usa el botón de abajo para hablar directo con la Dupla Psicosocial. ${cita('Protocolo N° 6', '')}${btn}`;
-			return `${bannerEmpatico}Lo que preguntas es un tema serio, y que hayas venido a informarte en vez de quedarte con la duda solo/a dice mucho de ti — acá no vienes a que te castiguen. El liceo tiene un protocolo específico para esto (Protocolo N° 6), pensado primero en tu salud.<br><br>Si solo quieres saber qué pasaría: nadie te va a interrogar como si fueras culpable, y si es la primera vez, lo que sigue es apoyo (SENDA Previene / CESFAM), no una expulsión.<br><br>Si es algo que te está pasando a ti o a alguien cercano y quieres que esto se sepa de verdad, esto es lo que puedes hacer: 1. <strong>Cuéntaselo a tu Profesor Jefe, a Convivencia Educativa, o usa el botón de abajo</strong> para hablar en privado con la Dupla Psicosocial ahora mismo. 2. Tu apoderado va a ser citado, porque el liceo necesita que también te acompañen en esto desde la casa.<br><br><strong>¿Quieres contarme un poco de lo que está pasando, o prefieres que quede solo como información por ahora?</strong> ${cita('Protocolo N° 6 — Apoyo Socioemocional', '')}${btn}`;
+			if (esFueraDeColegio) return `${bannerEmpatico}Lo que cuentas es delicado, y que te preocupes por tu amigo/a ya dice mucho de ti. El liceo tiene un protocolo pensado justo para esto (Protocolo N° 6) — fuera del liceo, las normas disciplinarias del RICE no aplican como castigo, así que el enfoque acá también es 100% de salud, nunca de sancionar a tu amigo/a.<br><br>Si quieres saber cómo ayudarlo sin meterte tú solo/a en el problema: 1. <strong>Cuéntaselo al Equipo de Convivencia Educativa</strong> (usa el botón de abajo) o a un adulto de confianza. 2. Ellos pueden orientarte en privado sobre cómo acercarlo a ayuda real (SENDA Previene, CESFAM). Tu identidad queda protegida siempre, lo cuentes ahora o más adelante. ${cita('Protocolo N° 6 — Apoyo de Salud y Prevención', '')}${btn}`;
+			if (es) return `${bannerEmpatico}Entiendo que esto preocupe — es un tema serio, y el liceo tiene un protocolo estricto para abordarlo (Protocolo N° 6), pensado primero en la salud del estudiante, no en sancionarlo de entrada.<br><br>Si solo quiere informarse de qué pasaría: se registra como Falta Gravísima si ocurrió dentro del liceo, pero eso no significa expulsión automática — si es la primera vez, se le pide acreditar tratamiento (SENDA o CESFAM) en 30 días para mantener la matrícula.<br><br>Si quiere que esto se informe formalmente al liceo, esto es lo que sigue: 1. Cuéntelo a Convivencia Educativa o a Inspectoría General. 2. Van a citarlo/a a usted dentro de los próximos días para conversar el plan de apoyo. 3. Puede solicitar que el Equipo de Convivencia Educativa atienda a su hijo/a de forma reservada. ${cita('Protocolo N° 6 y Art. 41/45', '')}${btn}`;
+			if (p.esTercero) return `${bannerEmpatico}Que te preocupes por tu compañero/a y vengas a preguntar ya es cuidar a tu comunidad — y tu identidad queda <strong>100% protegida</strong> pase lo que pase.<br><br>Si solo quieres saber qué pasaría: el liceo se va a acercar a ofrecerle ayuda, no a expulsarlo de entrada — el objetivo es de salud, no de castigo.<br><br>Si quieres que esto se sepa de verdad para que lo ayuden: 1. Cuéntaselo a tu Profesor Jefe, a Inspectoría, o usa el botón de abajo para hablar directo con el Equipo de Convivencia Educativa. ${cita('Protocolo N° 6', '')}${btn}`;
+			return `${bannerEmpatico}Lo que preguntas es un tema serio, y que hayas venido a informarte en vez de quedarte con la duda solo/a dice mucho de ti — acá no vienes a que te castiguen. El liceo tiene un protocolo específico para esto (Protocolo N° 6), pensado primero en tu salud.<br><br>Si solo quieres saber qué pasaría: nadie te va a interrogar como si fueras culpable, y si es la primera vez, lo que sigue es apoyo (SENDA Previene / CESFAM), no una expulsión.<br><br>Si es algo que te está pasando a ti o a alguien cercano y quieres que esto se sepa de verdad, esto es lo que puedes hacer: 1. <strong>Cuéntaselo a tu Profesor Jefe, a Convivencia Educativa, o usa el botón de abajo</strong> para hablar en privado con el Equipo de Convivencia Educativa ahora mismo. 2. Tu apoderado va a ser citado, porque el liceo necesita que también te acompañen en esto desde la casa.<br><br><strong>¿Quieres contarme un poco de lo que está pasando, o prefieres que quede solo como información por ahora?</strong> ${cita('Protocolo N° 6 — Apoyo Socioemocional', '')}${btn}`;
 
 		// AMBIGUO
 		case 'AMBIGUO':
@@ -259,7 +259,7 @@ El <strong>Protocolo N° 14 del RICE 2026</strong> establece apoyos para estudia
 		case 'ACOSO':
 			if (es) return `👨‍👩‍👧‍👦 <strong>Hola, ${nombre}. Lo que cuenta es serio, y usted hizo lo correcto al buscar orientación — el liceo tiene la obligación legal de actuar ante esto (Protocolo N° 1).</strong><br><br>Si quiere que esto se investigue formalmente: 1. <strong>Solicite entrevista urgente con el Profesor Jefe</strong> (pida fecha y hora). 2. Si no responde en 48 horas, <strong>escale a Convivencia Educativa</strong> — tienen el deber de activar el protocolo. 3. <strong>Documente los hechos</strong>: fechas, situaciones, evidencias (capturas, testigos).<br><br>El liceo resguardará a su pupilo/a en aula y recreos sin exponerlo/a jamás. ${cita('Protocolo N° 1 de Acoso Escolar', '')}${btn}`;
 			if (p.esTercero) return `🤝 <strong>Hola, ${nombre}. Es muy valioso que te preocupes por tu compañero/a — esto es exactamente lo que el liceo quiere que hagas.</strong> Tu nombre queda completamente protegido.<br><br>Avisa a tu <strong>Profesor Jefe o a cualquier adulto de confianza</strong>, o repórtalo aquí de forma anónima. El liceo activará medidas de protección de inmediato, sin que tu compañero/a sepa que fuiste tú. ${cita('Protocolo N° 1 de Acoso Escolar', '')}${btn}`;
-			return `👋 <strong>Hola, ${nombre}. Lo que cuentas es serio, y quiero que sepas algo primero: esto no es tu culpa — nadie tiene derecho a molestarte ni hacerte sentir mal.</strong> El liceo tiene un protocolo específico para esto.<br><br>Si quieres que esto se reporte de verdad: tu Profesor Jefe y la Dupla Psicosocial actúan con total reserva, sin exponerte ni obligarte a enfrentar a quien te afecta — se aplican acciones de resguardo en clases y recreos.<br><br><strong>¿Cuándo ocurrió? ¿Fue algo puntual o ha pasado más de una vez?</strong> ${cita('Protocolo N° 1 de Acoso Escolar', '')}${btn}`;
+			return `👋 <strong>Hola, ${nombre}. Lo que cuentas es serio, y quiero que sepas algo primero: esto no es tu culpa — nadie tiene derecho a molestarte ni hacerte sentir mal.</strong> El liceo tiene un protocolo específico para esto.<br><br>Si quieres que esto se reporte de verdad: tu Profesor Jefe y el Equipo de Convivencia Educativa actúan con total reserva, sin exponerte ni obligarte a enfrentar a quien te afecta — se aplican acciones de resguardo en clases y recreos.<br><br><strong>¿Cuándo ocurrió? ¿Fue algo puntual o ha pasado más de una vez?</strong> ${cita('Protocolo N° 1 de Acoso Escolar', '')}${btn}`;
 
 		// ROBO
 		case 'ROBO':
@@ -279,7 +279,7 @@ El <strong>Protocolo N° 14 del RICE 2026</strong> establece apoyos para estudia
 		case 'MALTRATO_ADULTO':
 			if (es) return `👨‍👩‍👧‍👦 <strong>Hola, ${nombre}. Gracias por contarlo — lo que describe es serio, y el liceo lo toma así de inmediato.</strong> Existe un protocolo específico para esto (Protocolo N°3), justamente porque no se puede dejar pasar.<br><br>Si quiere que esto se informe formalmente: el liceo debe separar de inmediato a esa persona de todo contacto con su pupilo/a mientras se investiga — no es un castigo anticipado, es una medida de resguardo. 1. <strong>Informe el hecho directamente a Convivencia Educativa o a Dirección</strong> (no solo al Profesor Jefe, ya que podría ser la persona involucrada). 2. Si hay indicios de un delito, el liceo tiene la obligación legal de denunciar ante Carabineros o el Ministerio Público dentro de 24 horas. ${cita('Protocolo N° 3 — Vulneración de Derechos', '')}${btn}`;
 			if (p.esTercero) return `🤝 <strong>Hola, ${nombre}. Es muy valioso que avises — lo que cuentas es serio, y tu identidad queda protegida.</strong><br><br>Si quieres que esto se sepa de verdad: avisa directamente a <strong>Convivencia Educativa o Dirección</strong> (no solo al profesor involucrado). El liceo debe separar de inmediato a la persona adulta de todo contacto con el estudiante mientras investiga. ${cita('Protocolo N° 3 — Vulneración de Derechos', '')}${btn}`;
-			return `👋 <strong>Hola, ${nombre}. Lo que cuentas es serio, y quiero que sepas algo primero: esto no es tu culpa, y mereces que te escuchen.</strong> Ningún adulto tiene derecho a maltratarte, sin importar quién sea — por eso el liceo tiene un protocolo específico para esto.<br><br>Si quieres que esto se informe de verdad: <strong>cuéntaselo directamente a Convivencia Educativa, a Dirección, o a la Dupla Psicosocial</strong> — no tienes que resolverlo solo/a hablando con esa misma persona. El liceo debe separar de inmediato a quien te está afectando mientras se investiga, y si corresponde, denunciarlo ante Carabineros dentro de 24 horas.<br><br><strong>¿Quieres contarme un poco más de lo que está pasando, o prefieres que quede solo como información por ahora?</strong> ${cita('Protocolo N° 3', '')}${btn}`;
+			return `👋 <strong>Hola, ${nombre}. Lo que cuentas es serio, y quiero que sepas algo primero: esto no es tu culpa, y mereces que te escuchen.</strong> Ningún adulto tiene derecho a maltratarte, sin importar quién sea — por eso el liceo tiene un protocolo específico para esto.<br><br>Si quieres que esto se informe de verdad: <strong>cuéntaselo directamente a Convivencia Educativa, a Dirección, o al Equipo de Convivencia Educativa</strong> — no tienes que resolverlo solo/a hablando con esa misma persona. El liceo debe separar de inmediato a quien te está afectando mientras se investiga, y si corresponde, denunciarlo ante Carabineros dentro de 24 horas.<br><br><strong>¿Quieres contarme un poco más de lo que está pasando, o prefieres que quede solo como información por ahora?</strong> ${cita('Protocolo N° 3', '')}${btn}`;
 
 		// ATRASO
 		case 'ATRASO':
@@ -295,7 +295,7 @@ El <strong>Protocolo N° 14 del RICE 2026</strong> establece apoyos para estudia
 
 		// VIOLENCIA FÍSICA
 		case 'VIOLENCIA':
-			if (es) return `👨‍👩‍👧‍👦 <strong>Hola, ${nombre}.</strong> Entiendo la preocupación — esto es serio, y el liceo tiene un protocolo claro para abordarlo (Protocolo N° 2).<br><br>Si quiere que se investigue formalmente: participar en una pelea es Falta Grave o Gravísima si hubo premeditación o lesiones. El liceo cita al apoderado, activa un Acta de Compromiso Restaurativo, suspensión preventiva (1-5 días) y derivación a la Dupla Psicosocial. Si hay lesiones graves, el liceo informa a Carabineros (Ley 20.536). ${cita('Protocolo N° 2 y Art. 40/44-41/45', '')}${btn}`;
+			if (es) return `👨‍👩‍👧‍👦 <strong>Hola, ${nombre}.</strong> Entiendo la preocupación — esto es serio, y el liceo tiene un protocolo claro para abordarlo (Protocolo N° 2).<br><br>Si quiere que se investigue formalmente: participar en una pelea es Falta Grave o Gravísima si hubo premeditación o lesiones. El liceo cita al apoderado, activa un Acta de Compromiso Restaurativo, suspensión preventiva (1-5 días) y derivación al Equipo de Convivencia Educativa. Si hay lesiones graves, el liceo informa a Carabineros (Ley 20.536). ${cita('Protocolo N° 2 y Art. 40/44-41/45', '')}${btn}`;
 			return `👋 <strong>Hola, ${nombre}.</strong> Lo que cuentas es serio, y el liceo tiene un protocolo para esto que busca resolverlo, no solo castigar.<br><br>Si quieres que esto se reporte: las peleas tienen consecuencias claras — citación a apoderados, compromiso de no agresión y eventual suspensión preventiva. El liceo siempre busca que las partes puedan dialogar y reparar la convivencia, no solo sancionar. ${cita('Protocolo N° 2 — Riñas y Violencia Física', '')}${btn}`;
 
 		// VIOLENCIA DE PAREJA
@@ -303,8 +303,8 @@ El <strong>Protocolo N° 14 del RICE 2026</strong> establece apoyos para estudia
 			return `<div style="background:#fef2f2; border-left:4.5px solid #ef4444; padding:14px 16px; border-radius:12px; margin-bottom:14px; color:#991b1b; font-size:0.9rem; line-height:1.6;">
 💜 <strong>Hola, ${nombre}. Nadie tiene derecho a tratarte mal, a gritarte, ni a pegarte. La violencia nunca es normal ni es amor.</strong>
 </div>
-Estás en un espacio seguro. La <strong>Dupla Psicosocial</strong> te escucha en privado, sin juzgarte ni exponerte (Ley N° 21.430 y Circular 482). Tienes derecho a resguardo escolar y asesoría de la <strong>Ley N° 20.066</strong>.<br><br>
-💬 <em>¿Te gustaría que la Dupla Psicosocial te atienda hoy mismo?</em> ${cita('Ley N° 21.430 y Ley N° 20.066', '')}${btn}`;
+Estás en un espacio seguro. La <strong>Equipo de Convivencia Educativa</strong> te escucha en privado, sin juzgarte ni exponerte (Ley N° 21.430 y Circular 482). Tienes derecho a resguardo escolar y asesoría de la <strong>Ley N° 20.066</strong>.<br><br>
+💬 <em>¿Te gustaría que el Equipo de Convivencia Educativa te atienda hoy mismo?</em> ${cita('Ley N° 21.430 y Ley N° 20.066', '')}${btn}`;
 
 		// EMBARAZO
 		case 'EMBARAZO':
@@ -313,7 +313,7 @@ Estás en un espacio seguro. La <strong>Dupla Psicosocial</strong> te escucha en
 
 		// SALUD MENTAL
 		case 'SALUD':
-			return `${es ? '👨‍👩‍👧‍👦' : '👋'} <strong>Hola, ${nombre}. Lo que describes merece atención y el liceo está aquí para apoyar.</strong><br><br>${p.esTercero ? 'Tu preocupación por tu compañero/a puede hacer la diferencia.' : 'No tienes que cargar esto solo/a.'}<br><br>La <strong>Dupla Psicosocial</strong> puede brindar contención emocional en total confidencialidad y derivar a redes de salud externas si es necesario.<br><br><em>¿Hay algo específico que te preocupe?</em>${btn}`;
+			return `${es ? '👨‍👩‍👧‍👦' : '👋'} <strong>Hola, ${nombre}. Lo que describes merece atención y el liceo está aquí para apoyar.</strong><br><br>${p.esTercero ? 'Tu preocupación por tu compañero/a puede hacer la diferencia.' : 'No tienes que cargar esto solo/a.'}<br><br>La <strong>Equipo de Convivencia Educativa</strong> puede brindar contención emocional en total confidencialidad y derivar a redes de salud externas si es necesario.<br><br><em>¿Hay algo específico que te preocupe?</em>${btn}`;
 
 		// DERECHOS
 		case 'DERECHOS':
@@ -371,7 +371,7 @@ Estás en un espacio seguro. La <strong>Dupla Psicosocial</strong> te escucha en
 
 		{
 			try {
-				const promptSystem = `Eres el Orientador Virtual MiRice, un asistente digital de Convivencia Educativa del Liceo de Huara (Región de Tarapacá, Chile). NO eres una persona real: no tienes oficina, no tomas té con nadie, no das abrazos. Eres un chatbot que orienta con información precisa y luego deriva a personas reales (Profesor Jefe, Convivencia Educativa, Dupla Psicosocial, Dirección) para cualquier encuentro presencial.
+				const promptSystem = `Eres el Orientador Virtual MiRice, un asistente digital de Convivencia Educativa del Liceo de Huara (Región de Tarapacá, Chile). NO eres una persona real: no tienes oficina, no tomas té con nadie, no das abrazos. Eres un chatbot que orienta con información precisa y luego deriva a personas reales (Profesor Jefe, Convivencia Educativa, Equipo de Convivencia Educativa, Dirección) para cualquier encuentro presencial.
 
 REGLAS ABSOLUTAS DE TONO (no son sugerencias, son obligatorias):
 - PROHIBIDO usar apodos o diminutivos cariñosos: nunca "mi niño/a", "cariño", "pequeño/a", ni variantes.
@@ -400,7 +400,7 @@ Nombre del usuario: ${nombre}. Rol: ${rol}.`;
 						const rawText = dataGemini.candidates[0].content.parts[0].text;
 						const btnAction = this.botonInvitacion(pregunta, analisis);
 						let formattedText = rawText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>').replace(/\n\n/g, '<br><br>').replace(/\n/g, '<br>');
-						const respuestaGeminiHtml = `<div style="background:#f0fdf4; border-left:4.5px solid #10b981; padding:16px 18px; border-radius:14px; margin-bottom:14px; color:#065f46; font-size:0.92rem; line-height:1.65; box-shadow:0 3px 12px rgba(16,185,129,0.08);">🤗 <strong>Hola, ${nombre}. Me alegra mucho que conversemos sobre esto.</strong><br><br>${formattedText}</div>${btnAction}`;
+						const respuestaGeminiHtml = `<div style="background:#f0fdf4; border-left:4.5px solid #10b981; padding:16px 18px; border-radius:14px; margin-bottom:14px; color:#065f46; font-size:0.92rem; line-height:1.65; box-shadow:0 3px 12px rgba(16,185,129,0.08);">🤗 ${formattedText}</div>${btnAction}`;
 						if (typeof window.guardarEnHistorialChat === 'function') window.guardarEnHistorialChat(pregunta, respuestaGeminiHtml);
 						return { exito: true, mensaje: respuestaGeminiHtml, articulosCados: resultadosLocales };
 					}

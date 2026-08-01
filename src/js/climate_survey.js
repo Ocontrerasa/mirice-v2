@@ -19,7 +19,7 @@
         titulo: "🌱 Termómetro de Clima Escolar: Bienestar y Seguridad",
         pregunta1: "¿Cómo te has sentido en tus espacios de recreo esta semana?",
         opciones1: ["😄 Muy seguro y bien acompañado", "🙂 Tranquilo en general", "😐 A veces incómodo", "😟 Inseguro o solo"],
-        pregunta2: "¿Sientes que tus profesores y la dupla psicosocial te escuchan cuando lo necesitas?",
+        pregunta2: "¿Sientes que tus profesores y el Equipo de Convivencia Educativa te escuchan cuando lo necesitas?",
         opciones2: ["👍 Sí, siempre", "🙂 La mayoría de las veces", "😐 Rara vez", "👎 No siento apoyo"]
       },
       {

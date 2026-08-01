@@ -689,7 +689,7 @@ document.addEventListener('DOMContentLoaded', () => {
         2: {
           tag: "📌 MARTES DE DIÁLOGO Y CONVIVENCIALIDAD",
           titulo: "Expresarse con Calma Evita Malentendidos",
-          frase: "💡 <strong>Hablar a tiempo resuelve diferencias:</strong> Si algo te molesta o sientes una injusticia, exprésalo con respeto o acércate a tu Profesor Jefe o a la Dupla Psicosocial.",
+          frase: "💡 <strong>Hablar a tiempo resuelve diferencias:</strong> Si algo te molesta o sientes una injusticia, exprésalo con respeto o acércate a tu Profesor Jefe o al Equipo de Convivencia Educativa.",
           norma: "📖 <strong>RICE 2026:</strong> Art. 31 - Conducto Regular y Mediación Escolar. El liceo promueve acuerdos pacíficos antes que sanciones."
         },
         3: {
@@ -844,7 +844,7 @@ document.addEventListener('DOMContentLoaded', () => {
             <div style="background: hsl(0, 75%, 97%); border-left: 4px solid #ef4444; padding: 12px; border-radius: var(--radius-sm); font-size: 0.85rem; line-height: 1.4;">
               <strong style="color: hsl(0, 80%, 35%); font-size: 0.9rem;">Faltas Gravísimas (Art. 17)</strong>
               <div style="margin-top: 4px;">• <strong>Acciones:</strong> Agresión física grave o acoso escolar sistemático (bullying), porte de armas u objetos peligrosos, porte, consumo o comercialización de drogas y alcohol, violencia de género o discriminación.</div>
-              <div style="margin-top: 4px; color: var(--text-muted);">👉 <strong>Consecuencia:</strong> Suspensión de actividades (máx. 5 días), derivación a Dupla Psicosocial, y denuncia obligatoria ante tribunales si reviste carácter de delito.</div>
+              <div style="margin-top: 4px; color: var(--text-muted);">👉 <strong>Consecuencia:</strong> Suspensión de actividades (máx. 5 días), derivación a Equipo de Convivencia Educativa, y denuncia obligatoria ante tribunales si reviste carácter de delito.</div>
             </div>
           </div>
 
@@ -2383,7 +2383,7 @@ function sugerirAsunto(query) {
 
   // Riesgo vital — prioridad máxima
   if (['suicid', 'matarme', 'morir', 'cortarme', 'quitarme la vida', 'no quiero vivir', 'pastillas para morir'].some(k => q.includes(k))) {
-    return 'Riesgo vital — Derivación urgente a dupla psicosocial';
+    return 'Riesgo vital — Derivación urgente a equipo de convivencia educativa';
   }
   // Protocolo 5 — Abuso sexual
   if (['abuso sexual', 'abuso', 'tocacion', 'toco', 'connotacion sexual', 'acoso sexual', 'me obligo', 'me manosearon'].some(k => q.includes(k))) {
