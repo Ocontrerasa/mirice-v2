@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mirice-pwa-v7.3.0';
+const CACHE_NAME = 'mirice-pwa-v7.3.1';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -20,8 +20,10 @@ const ASSETS_TO_CACHE = [
   './src/js/digital_wellness.js',
   './src/js/climate_survey.js',
   './src/js/certificate_generator.js',
-  './src/js/cloud_storage.js',
-  './src/js/bitacora_export.js',
+  // cloud_storage.js y bitacora_export.js retirados el 02-ago-2026 (ver
+  // index.html) — si siguieran en esta lista, cache.addAll() fallaría al
+  // intentar descargar un archivo que ya no existe y rompería el modo
+  // offline completo, no solo el de estos dos archivos.
   './src/js/parvularia_module.js',
   './assets/branding/Logo_MiRice_Tarapaca.svg',
   './assets/branding/Logo oficial de toda la plataforma y proyecto.png',

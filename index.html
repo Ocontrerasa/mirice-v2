@@ -362,8 +362,12 @@
   <script src="src/js/digital_wellness.js?v=6.0.0"></script>
   <script src="src/js/climate_survey.js?v=6.0.0"></script>
   <script src="src/js/certificate_generator.js?v=6.0.0"></script>
-  <script src="src/js/cloud_storage.js?v=6.0.0"></script>
-  <script src="src/js/bitacora_export.js?v=6.0.0"></script>
+  <!-- cloud_storage.js y bitacora_export.js retirados el 02-ago-2026: eran un
+       módulo paralelo que simulaba "sincronización en la nube" escribiendo
+       solo en localStorage, y su control de acceso al panel de Coordinación
+       se decidía enteramente en el navegador. La funcionalidad real de
+       bitácora/casos ya vive en admin.html + api/incidentes.js + api/casos.js,
+       con autenticación y datos verificados en el servidor. -->
   <script src="src/js/parvularia_module.js?v=6.0.0"></script>
   <script src="src/js/search_engine.js?v=6.0.0"></script>
   <script src="src/js/bot.js?v=6.0.0"></script>

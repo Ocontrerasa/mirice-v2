@@ -92,11 +92,13 @@ module.exports = async function handler(req, res) {
     }
 
     try {
-      await db('reportes?folio=eq.' + encodeURIComponent(folio), {
+      const filas = await db('reportes?folio=eq.' + encodeURIComponent(folio), {
         method: 'PATCH',
-        prefer: 'return=minimal',
         body: { estado: nuevoEstado },
       });
+      if (!Array.isArray(filas) || filas.length === 0) {
+        return res.status(404).json({ error: 'folio_no_encontrado' });
+      }
       return res.status(200).json({ estado: 'ok' });
     } catch (e) {
       console.error('[casos] no se pudo actualizar:', e.codigo || e.message);

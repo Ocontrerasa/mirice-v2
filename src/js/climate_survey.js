@@ -178,7 +178,11 @@
 
   // IDEA 1 APROBADA: TABLERO VISUAL DE TENDENCIAS DE CLIMA PARA LA DIRECCIÓN Y COORDINACIÓN
   window.generarHtmlTableroDireccionClima = function (userData) {
-    if (typeof window.esCoordinadorConvivenciaAutorizado === 'function' && !window.esCoordinadorConvivenciaAutorizado(userData)) {
+    // Antes esto llamaba a esCoordinadorConvivenciaAutorizado() (vivía en
+    // bitacora_export.js, retirado el 02-ago-2026 por ser una lista de RUT
+    // hardcodeada en el cliente). panel_admin ya viene verificado por el
+    // servidor contra la base de datos en cada login — ver api/login.js.
+    if (!userData || !userData.panel_admin) {
       return ''; // Oculto para usuarios normales
     }
 

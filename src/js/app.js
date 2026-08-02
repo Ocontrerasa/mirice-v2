@@ -268,7 +268,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Modal de Aceptación Legal en Primer Inicio por RUT
   function verificarEAbrirSesion(role, userData) {
-    const rutKey = userData.rut_limpio;
+    const rutKey = window.obtenerRutKeySeguro(userData);
     const termsAccepted = localStorage.getItem('mirice_terms_accepted_' + rutKey);
 
     if (termsAccepted) {
@@ -351,7 +351,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!chkUnderstand.checked) return;
 
         // Registrar la aceptación permanente para este RUT
-        localStorage.setItem('mirice_terms_accepted_' + userData.rut_limpio, new Date().toISOString());
+        localStorage.setItem('mirice_terms_accepted_' + window.obtenerRutKeySeguro(userData), new Date().toISOString());
 
         lirmiModal.style.display = 'none';
         lirmiModal.classList.remove('visible');
@@ -544,7 +544,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
       const perfil = Object.assign({}, data.perfil, {
         rut_limpio: rutLimpio,
-        rut_formato: formatearRUTChileno(rutLimpio)
+        rut_formato: formatearRUTChileno(rutLimpio),
+        // Ya lo valida el servidor contra la columna panel_admin de personas
+        // (ver api/login.js) — se usa para mostrar u ocultar paneles de
+        // Coordinación/Dirección, en vez de listas de RUT en el cliente.
+        panel_admin: !!data.panel_admin
       });
 
       currentLoggedUser = { role: currentLoginRole, data: perfil };
@@ -1189,8 +1193,11 @@ document.addEventListener('DOMContentLoaded', () => {
               📌 <strong>Registro Sostenedor:</strong> ${userData.registro_docente}
             </div>
 
-            <!-- PANEL RESTRINGIDO EXCLUSIVO DEL COORDINADOR DE CONVIVENCIA -->
-            ${(typeof window.generarHtmlExportacionCoordinador === 'function') ? window.generarHtmlExportacionCoordinador(userData) : ''}
+            <!-- El panel de exportación de bitácora para el Coordinador de
+                 Convivencia se retiró de acá el 02-ago-2026: usaba datos
+                 locales del navegador, no los reales de Supabase. La versión
+                 real (con sesión verificada en el servidor) está en
+                 admin.html, enlazado desde la pantalla de inicio. -->
 
             <!-- TABLERO VISUAL DE TENDENCIAS DE CLIMA PARA DIRECCIÓN/COORDINACIÓN -->
             ${(typeof window.generarHtmlTableroDireccionClima === 'function') ? window.generarHtmlTableroDireccionClima(userData) : ''}
@@ -2924,10 +2931,22 @@ window.addEventListener('popstate', (e) => {
   }
 });
 
+// Antes esta función solo le sacaba puntos y guion al RUT: el número seguía
+// legible tal cual dentro de localStorage (mirice_avatar_12345678, etc.) y en
+// ids del DOM. En un computador compartido (sala de computación, biblioteca)
+// eso deja acumulados los RUT de varios estudiantes en el mismo navegador.
+// No es una clave de seguridad (esa la calcula el servidor con pepper, ver
+// api/_comun.js) — es solo para que la preferencia de cada persona (avatar,
+// contacto, etc.) no quede guardada bajo su número de identidad en claro.
 window.obtenerRutKeySeguro = function(userData) {
   if (!userData) return 'default';
-  const raw = userData.rut_limpio || userData.rut || 'default';
-  return String(raw).replace(/[^a-zA-Z0-9]/g, '') || 'default';
+  const raw = String(userData.rut_limpio || userData.rut || 'default').toUpperCase();
+  let hash = 0x811c9dc5;
+  for (let i = 0; i < raw.length; i++) {
+    hash ^= raw.charCodeAt(i);
+    hash = Math.imul(hash, 0x01000193);
+  }
+  return 'u' + (hash >>> 0).toString(36);
 };
 
 // Modal de Edición de Perfil y Datos Personales (Accedido desde el Menú)

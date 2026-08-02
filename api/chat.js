@@ -10,13 +10,29 @@
  *
  * Variable de entorno que necesita (Vercel → Settings → Environment Variables):
  *   GEMINI_API_KEY   la clave de Google AI Studio — nunca en el cliente
+ *
+ * Límite de frecuencia (agregado 02-ago-2026)
+ * -------------------------------------------
+ * Es el único endpoint sin sesión que llama a un servicio pago por uso. Sin
+ * límite, cualquiera podía automatizar peticiones y agotar la cuota o subir
+ * el costo de la cuenta de Gemini sin que nada lo frenara.
  */
+
+const { excedeLimite, ipDe } = require('./_comun');
 
 module.exports = async function handler(req, res) {
   res.setHeader('Cache-Control', 'no-store');
 
   if (req.method !== 'POST') {
     res.status(405).json({ error: 'metodo_no_permitido' });
+    return;
+  }
+
+  if (excedeLimite('chat:' + ipDe(req), 20, 10 * 60 * 1000)) {
+    res.status(429).json({
+      error: 'demasiados_mensajes',
+      texto: 'Demasiados mensajes seguidos. Espera unos minutos antes de continuar.',
+    });
     return;
   }
 
@@ -47,16 +63,17 @@ module.exports = async function handler(req, res) {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           contents: [{ role: 'user', parts: [{ text: prompt }] }],
-          // thinkingBudget: 0 desactiva el "pensamiento" interno de los modelos
-          // Gemini 2.5+/3+ — sin esto, esos tokens de razonamiento se descuentan
-          // del mismo límite que la respuesta visible, y con maxOutputTokens
-          // bajo la respuesta se cortaba a mitad de frase (encontrado y
-          // corregido el 31-jul-2026). Para un chatbot conversacional simple
-          // como este, no hace falta ese razonamiento profundo.
+          // thinkingLevel: "minimal" reemplaza al thinkingBudget:0 que se usaba
+          // antes (actualizado 02-ago-2026: Google dejó thinking_budget como
+          // parámetro heredado para los modelos 3.x, ver guía de Gemini 3.5).
+          // El motivo de fondo es el mismo que el 31-jul-2026: sin acotar el
+          // razonamiento interno, esos tokens se descuentan del mismo límite
+          // que la respuesta visible y con maxOutputTokens bajo la respuesta
+          // se cortaba a mitad de frase. También se quitó `temperature`: para
+          // los modelos 3.x Google ya no recomienda fijarlo.
           generationConfig: {
-            temperature: 0.75,
             maxOutputTokens: 1024,
-            thinkingConfig: { thinkingBudget: 0 },
+            thinkingConfig: { thinkingLevel: 'minimal' },
           }
         })
       }

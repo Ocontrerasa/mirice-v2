@@ -52,8 +52,9 @@ module.exports = async function handler(req, res) {
   const q = String((req.query && req.query.q) || '').trim().slice(0, 60);
   if (q.length < 2) return res.status(400).json({ error: 'consulta_corta' });
 
-  // Escapar % y , que rompen la sintaxis de filtros de PostgREST.
-  const seguro = q.replace(/[%,]/g, '');
+  // Escapar %, , ( y ) — todos rompen o alteran la sintaxis del filtro
+  // or=(...) de PostgREST si se dejan pasar tal cual.
+  const seguro = q.replace(/[%,()]/g, '');
 
   try {
     const filas = await db(
