@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mirice-pwa-v7.4.0';
+const CACHE_NAME = 'mirice-pwa-v7.5.0';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
