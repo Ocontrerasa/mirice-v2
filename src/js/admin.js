@@ -203,11 +203,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let errorCarga = null;
     let incidentes = [];
     let errorIncidentes = null;
+    let preguntasEncuesta = [];
+    let errorEncuesta = null;
 
     try {
-      const [respCasos, respIncidentes] = await Promise.all([
+      const [respCasos, respIncidentes, respEncuesta] = await Promise.all([
         fetch('/api/casos', { headers: { Authorization: 'Bearer ' + (window.miriceSesionToken || '') } }),
         fetch('/api/incidentes?todos=1', { headers: { Authorization: 'Bearer ' + (window.miriceSesionToken || '') } }),
+        fetch('/api/encuesta-admin', { headers: { Authorization: 'Bearer ' + (window.miriceSesionToken || '') } }),
       ]);
 
       const dataCasos = await respCasos.json().catch(() => null);
@@ -223,9 +226,17 @@ document.addEventListener('DOMContentLoaded', () => {
       } else {
         errorIncidentes = (dataIncidentes && (dataIncidentes.texto || dataIncidentes.error)) || ('HTTP ' + respIncidentes.status);
       }
+
+      const dataEncuesta = await respEncuesta.json().catch(() => null);
+      if (respEncuesta.ok && dataEncuesta && dataEncuesta.estado === 'ok') {
+        preguntasEncuesta = dataEncuesta.preguntas || [];
+      } else {
+        errorEncuesta = (dataEncuesta && (dataEncuesta.texto || dataEncuesta.error)) || ('HTTP ' + respEncuesta.status);
+      }
     } catch (e) {
       errorCarga = errorCarga || 'No se pudo conectar con el servidor.';
       errorIncidentes = errorIncidentes || 'No se pudo conectar con el servidor.';
+      errorEncuesta = errorEncuesta || 'No se pudo conectar con el servidor.';
     }
 
     function badgePrioridad(caso) {
@@ -260,6 +271,38 @@ document.addEventListener('DOMContentLoaded', () => {
       if (g === 'grave') return `<span style="background:#fef3c7; color:#b45309; padding:3px 8px; border-radius:4px; font-size:0.75rem; text-transform:capitalize;">grave</span>`;
       return `<span style="background:#fee2e2; color:#b91c1c; padding:3px 8px; border-radius:4px; font-size:0.75rem; font-weight:bold; text-transform:capitalize;">gravísima</span>`;
     }
+
+    const NOMBRES_PERFIL = { estudiante: '🎓 Estudiantes', apoderado: '🏡 Apoderados', funcionario: '🏫 Funcionarios' };
+
+    function filaPregunta(p) {
+      return `
+        <div class="fila-pregunta-encuesta" data-id="${p.id}" style="border:1px solid var(--border-card); border-radius:10px; padding:12px 14px; margin-bottom:10px; ${p.activa ? '' : 'opacity:0.55; background:#f8fafc;'}">
+          <div style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px; flex-wrap:wrap;">
+            <div style="flex:1; min-width:220px;">
+              <strong style="font-size:0.88rem; color:var(--text-main);">${escaparHtml(p.texto)}</strong>
+              <div style="font-size:0.78rem; color:var(--text-muted); margin-top:4px;">
+                ${(p.opciones || []).map(o => escaparHtml(o)).join(' &nbsp;·&nbsp; ')}
+              </div>
+              ${!p.activa ? '<span style="font-size:0.72rem; color:#b45309; font-weight:700;">⏸️ Inactiva</span>' : ''}
+            </div>
+            <div style="display:flex; gap:6px; flex-wrap:wrap;">
+              <button class="btn-editar-pregunta" data-id="${p.id}" style="background:#e0f2fe; color:#0369a1; border:none; padding:6px 10px; border-radius:6px; font-size:0.75rem; cursor:pointer;">✏️ Editar</button>
+              <button class="btn-toggle-pregunta" data-id="${p.id}" data-activa="${p.activa}" style="background:${p.activa ? '#fef3c7' : '#dcfce7'}; color:${p.activa ? '#b45309' : '#15803d'}; border:none; padding:6px 10px; border-radius:6px; font-size:0.75rem; cursor:pointer;">${p.activa ? '⏸️ Desactivar' : '▶️ Activar'}</button>
+              <button class="btn-eliminar-pregunta" data-id="${p.id}" style="background:#fee2e2; color:#b91c1c; border:none; padding:6px 10px; border-radius:6px; font-size:0.75rem; cursor:pointer;">🗑️ Eliminar</button>
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    const encuestaHtml = errorEncuesta
+      ? `<div style="padding:16px; background:#fef2f2; color:#b91c1c; border-radius:10px; font-size:0.85rem;">No se pudo cargar la encuesta: ${errorEncuesta}.</div>`
+      : Object.keys(NOMBRES_PERFIL).map(perfil => `
+          <div style="margin-bottom:18px;">
+            <h5 style="font-size:0.92rem; font-weight:800; color:var(--text-main); margin-bottom:8px;">${NOMBRES_PERFIL[perfil]}</h5>
+            ${preguntasEncuesta.filter(p => p.perfil === perfil).map(filaPregunta).join('') || '<p style="font-size:0.8rem; color:var(--text-muted);">Sin preguntas todavía.</p>'}
+          </div>
+        `).join('');
 
     const casosHtml = errorCarga
       ? `<div style="padding:16px; background:#fef2f2; color:#b91c1c; border-radius:10px; font-size:0.85rem;">
@@ -406,6 +449,52 @@ document.addEventListener('DOMContentLoaded', () => {
         ${incidentesHtml}
       </div>
 
+      <!-- Módulo: Encuesta Anónima de Clima Escolar (agregado 02-ago-2026) -->
+      <div class="admin-card" style="background: var(--bg-card); padding: 24px; border-radius: var(--radius-md); border: 1px solid var(--border-card); animation: fadeIn 1.02s ease; display: flex; flex-direction: column; gap: 16px; margin-top: 20px;">
+        <h4 style="color: var(--primary); font-size: 1.15rem; font-weight: 700; margin: 0;">📊 Encuesta Anónima de Clima Escolar</h4>
+        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; margin: 0;">
+          Preguntas que ven estudiantes, apoderados y funcionarios cada semana. Las respuestas nunca llevan el RUT de quien contestó — solo se sabe que cada persona respondió una sola vez, no qué contestó.
+        </p>
+
+        <div id="lista-preguntas-encuesta">${encuestaHtml}</div>
+
+        <details style="border:1px dashed var(--border-card); border-radius:10px; padding:12px 14px;">
+          <summary style="cursor:pointer; font-weight:700; font-size:0.88rem; color:var(--primary);">➕ Agregar nueva pregunta</summary>
+          <div style="margin-top:12px; display:flex; flex-direction:column; gap:10px;">
+            <div>
+              <label style="font-size:0.8rem; font-weight:700; display:block; margin-bottom:4px;">Perfil al que se le mostrará</label>
+              <select id="nueva-pregunta-perfil" style="width:100%; padding:8px; border-radius:8px; border:1px solid var(--border-card);">
+                <option value="estudiante">🎓 Estudiantes</option>
+                <option value="apoderado">🏡 Apoderados</option>
+                <option value="funcionario">🏫 Funcionarios</option>
+              </select>
+            </div>
+            <div>
+              <label style="font-size:0.8rem; font-weight:700; display:block; margin-bottom:4px;">Texto de la pregunta</label>
+              <input type="text" id="nueva-pregunta-texto" maxlength="300" placeholder="¿Cómo...?" style="width:100%; padding:8px; border-radius:8px; border:1px solid var(--border-card);">
+            </div>
+            <div>
+              <label style="font-size:0.8rem; font-weight:700; display:block; margin-bottom:4px;">Alternativas (2 a 6, una por línea)</label>
+              <textarea id="nueva-pregunta-opciones" rows="4" placeholder="😄 Muy bien&#10;🙂 Bien&#10;😐 Regular&#10;😟 Mal" style="width:100%; padding:8px; border-radius:8px; border:1px solid var(--border-card); font-family:inherit;"></textarea>
+            </div>
+            <button id="btn-agregar-pregunta" class="btn-primary" style="margin:0; width:auto; padding:10px 18px; background:var(--accent); border-color:var(--accent);">Agregar Pregunta</button>
+            <div id="nueva-pregunta-resultado" style="display:none; font-size:0.85rem; padding:10px; border-radius:8px;"></div>
+          </div>
+        </details>
+
+        <div style="border-top:1px solid var(--border-card); padding-top:14px;">
+          <h5 style="font-size:0.92rem; font-weight:800; color:var(--text-main); margin-bottom:8px;">📈 Resultados</h5>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center; margin-bottom:12px;">
+            <label style="font-size:0.82rem;">Periodo (vacío = todos):
+              <input type="text" id="encuesta-periodo-filtro" placeholder="ej. 2026-S31" style="padding:6px 10px; border-radius:6px; border:1px solid var(--border-card); margin-left:6px;">
+            </label>
+            <button id="btn-ver-resultados-encuesta" style="background:var(--primary); color:white; border:none; padding:8px 14px; border-radius:6px; font-size:0.82rem; cursor:pointer;">Ver Resultados</button>
+            <button id="btn-exportar-encuesta" style="background:#0f172a; color:white; border:none; padding:8px 14px; border-radius:6px; font-size:0.82rem; cursor:pointer;">⬇️ Exportar CSV</button>
+          </div>
+          <div id="resultados-encuesta-render" style="font-size:0.85rem; color:var(--text-muted);"></div>
+        </div>
+      </div>
+
       <!-- Módulo: Reinicio de Clave (agregado 01-ago-2026) -->
       <div class="admin-card" style="background: var(--bg-card); padding: 24px; border-radius: var(--radius-md); border: 1px solid var(--border-card); animation: fadeIn 1.05s ease; display: flex; flex-direction: column; gap: 16px; margin-top: 20px;">
         <h4 style="color: var(--primary); font-size: 1.15rem; font-weight: 700; margin: 0;">🔑 Reiniciar Clave de una Persona</h4>
@@ -468,6 +557,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Vincular la lógica del formulario de API y botones de actas
     vincularEventosAdmin(casos, incidentes);
+    vincularEventosEncuesta(preguntasEncuesta);
   }
 
   // 4. Vincular Eventos de la Consola Administrativa
@@ -586,6 +676,248 @@ document.addEventListener('DOMContentLoaded', () => {
         }
       });
     });
+  }
+
+  // 5.b Vincular Eventos de la Encuesta de Clima (agregado 02-ago-2026)
+  function vincularEventosEncuesta(preguntas) {
+    const mapaPreguntas = new Map((preguntas || []).map((p) => [p.id, p]));
+
+    function auth() {
+      return { Authorization: 'Bearer ' + (window.miriceSesionToken || '') };
+    }
+
+    // Agregar nueva pregunta
+    const btnAgregar = document.getElementById('btn-agregar-pregunta');
+    if (btnAgregar) {
+      btnAgregar.addEventListener('click', async () => {
+        const perfil = document.getElementById('nueva-pregunta-perfil').value;
+        const texto = document.getElementById('nueva-pregunta-texto').value.trim();
+        const opciones = document.getElementById('nueva-pregunta-opciones').value
+          .split('\n').map((o) => o.trim()).filter(Boolean);
+        const resultadoDiv = document.getElementById('nueva-pregunta-resultado');
+
+        function mostrarResultado(msg, ok) {
+          if (!resultadoDiv) return;
+          resultadoDiv.style.display = 'block';
+          resultadoDiv.style.background = ok ? '#dcfce7' : '#fee2e2';
+          resultadoDiv.style.color = ok ? '#15803d' : '#b91c1c';
+          resultadoDiv.textContent = msg;
+        }
+
+        if (!texto) return mostrarResultado('Escribe el texto de la pregunta.', false);
+        if (opciones.length < 2 || opciones.length > 6) {
+          return mostrarResultado('Debes escribir entre 2 y 6 alternativas, una por línea.', false);
+        }
+
+        btnAgregar.disabled = true;
+        try {
+          const resp = await fetch('/api/encuesta-admin', {
+            method: 'POST',
+            headers: Object.assign({ 'Content-Type': 'application/json' }, auth()),
+            body: JSON.stringify({ perfil, texto, opciones }),
+          });
+          const data = await resp.json().catch(() => null);
+          if (!resp.ok || !data || data.estado !== 'ok') {
+            mostrarResultado((data && data.texto) || 'No se pudo agregar la pregunta.', false);
+            btnAgregar.disabled = false;
+            return;
+          }
+          mostrarResultado('✅ Pregunta agregada.', true);
+          setTimeout(() => cargarContenidoAdmin(), 700);
+        } catch (e) {
+          mostrarResultado('No se pudo conectar con el servidor.', false);
+          btnAgregar.disabled = false;
+        }
+      });
+    }
+
+    // Editar pregunta existente (texto y alternativas)
+    document.querySelectorAll('.btn-editar-pregunta').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const id = btn.dataset.id;
+        const actual = mapaPreguntas.get(id);
+        if (!actual) return;
+
+        const nuevoTexto = prompt('Texto de la pregunta:', actual.texto);
+        if (nuevoTexto === null) return;
+        const nuevoTextoLimpio = nuevoTexto.trim();
+        if (!nuevoTextoLimpio) return alert('El texto no puede quedar vacío.');
+
+        const opcionesTexto = prompt('Alternativas, una por línea:', (actual.opciones || []).join('\n'));
+        if (opcionesTexto === null) return;
+        const nuevasOpciones = opcionesTexto.split('\n').map((o) => o.trim()).filter(Boolean);
+        if (nuevasOpciones.length < 2 || nuevasOpciones.length > 6) {
+          return alert('Debes dejar entre 2 y 6 alternativas.');
+        }
+
+        try {
+          const resp = await fetch('/api/encuesta-admin', {
+            method: 'PATCH',
+            headers: Object.assign({ 'Content-Type': 'application/json' }, auth()),
+            body: JSON.stringify({ id, texto: nuevoTextoLimpio, opciones: nuevasOpciones }),
+          });
+          if (!resp.ok) {
+            const data = await resp.json().catch(() => null);
+            alert((data && data.texto) || 'No se pudo editar la pregunta.');
+            return;
+          }
+          cargarContenidoAdmin();
+        } catch (e) {
+          alert('No se pudo conectar con el servidor.');
+        }
+      });
+    });
+
+    // Activar / desactivar
+    document.querySelectorAll('.btn-toggle-pregunta').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const id = btn.dataset.id;
+        const activaActual = btn.dataset.activa === 'true';
+        btn.disabled = true;
+        try {
+          const resp = await fetch('/api/encuesta-admin', {
+            method: 'PATCH',
+            headers: Object.assign({ 'Content-Type': 'application/json' }, auth()),
+            body: JSON.stringify({ id, activa: !activaActual }),
+          });
+          if (!resp.ok) {
+            alert('No se pudo cambiar el estado de la pregunta.');
+            btn.disabled = false;
+            return;
+          }
+          cargarContenidoAdmin();
+        } catch (e) {
+          alert('No se pudo conectar con el servidor.');
+          btn.disabled = false;
+        }
+      });
+    });
+
+    // Eliminar (o desactivar, si ya tiene respuestas)
+    document.querySelectorAll('.btn-eliminar-pregunta').forEach((btn) => {
+      btn.addEventListener('click', async () => {
+        const id = btn.dataset.id;
+        if (!confirm('¿Eliminar esta pregunta? Si ya tiene respuestas, se desactivará en vez de eliminarse.')) return;
+        btn.disabled = true;
+        try {
+          const resp = await fetch('/api/encuesta-admin', {
+            method: 'DELETE',
+            headers: Object.assign({ 'Content-Type': 'application/json' }, auth()),
+            body: JSON.stringify({ id }),
+          });
+          const data = await resp.json().catch(() => null);
+          if (!resp.ok) {
+            alert((data && data.texto) || 'No se pudo eliminar la pregunta.');
+            btn.disabled = false;
+            return;
+          }
+          if (data && data.accion === 'desactivada') {
+            alert(data.texto || 'Esta pregunta ya tenía respuestas, se desactivó en vez de eliminarse.');
+          }
+          cargarContenidoAdmin();
+        } catch (e) {
+          alert('No se pudo conectar con el servidor.');
+          btn.disabled = false;
+        }
+      });
+    });
+
+    // Resultados y exportación
+    const btnVer = document.getElementById('btn-ver-resultados-encuesta');
+    const btnExportar = document.getElementById('btn-exportar-encuesta');
+    const render = document.getElementById('resultados-encuesta-render');
+
+    async function obtenerRespuestas() {
+      const campoPeriodo = document.getElementById('encuesta-periodo-filtro');
+      const periodo = campoPeriodo ? campoPeriodo.value.trim() : '';
+      const qs = periodo ? '&periodo=' + encodeURIComponent(periodo) : '';
+      const resp = await fetch('/api/encuesta-admin?respuestas=1' + qs, { headers: auth() });
+      const data = await resp.json().catch(() => null);
+      if (!resp.ok || !data || data.estado !== 'ok') {
+        throw new Error((data && data.texto) || 'No se pudieron cargar las respuestas.');
+      }
+      return data.respuestas || [];
+    }
+
+    if (btnVer) {
+      btnVer.addEventListener('click', async () => {
+        if (!render) return;
+        render.textContent = 'Cargando…';
+        try {
+          const respuestas = await obtenerRespuestas();
+          if (respuestas.length === 0) {
+            render.innerHTML = '<p>No hay respuestas para ese periodo todavía.</p>';
+            return;
+          }
+
+          const porPregunta = new Map();
+          respuestas.forEach((r) => {
+            if (!porPregunta.has(r.pregunta_id)) porPregunta.set(r.pregunta_id, new Map());
+            const conteos = porPregunta.get(r.pregunta_id);
+            conteos.set(r.opcion_texto, (conteos.get(r.opcion_texto) || 0) + 1);
+          });
+
+          let html = '';
+          porPregunta.forEach((conteos, preguntaId) => {
+            const pregunta = mapaPreguntas.get(preguntaId);
+            const total = Array.from(conteos.values()).reduce((a, b) => a + b, 0);
+            const titulo = pregunta ? escaparHtml(pregunta.texto) : '(pregunta ya eliminada)';
+            html += `<div style="margin-bottom:16px;">
+              <strong style="font-size:0.85rem; color:var(--text-main);">${titulo}</strong>
+              <span style="font-size:0.75rem; color:var(--text-muted);"> — ${total} respuestas</span>`;
+            conteos.forEach((n, opcion) => {
+              const pct = total > 0 ? Math.round((n / total) * 100) : 0;
+              html += `
+                <div style="margin-top:6px;">
+                  <div style="display:flex; justify-content:space-between; font-size:0.78rem; color:var(--text-muted);">
+                    <span>${escaparHtml(opcion)}</span><span>${n} (${pct}%)</span>
+                  </div>
+                  <div style="background:#f1f5f9; border-radius:6px; height:8px; overflow:hidden;">
+                    <div style="width:${pct}%; background:#10b981; height:100%;"></div>
+                  </div>
+                </div>`;
+            });
+            html += '</div>';
+          });
+          render.innerHTML = html;
+        } catch (e) {
+          render.innerHTML = '<p style="color:#b91c1c;">' + (e.message || 'Error al cargar resultados.') + '</p>';
+        }
+      });
+    }
+
+    if (btnExportar) {
+      btnExportar.addEventListener('click', async () => {
+        btnExportar.disabled = true;
+        try {
+          const respuestas = await obtenerRespuestas();
+          if (respuestas.length === 0) {
+            alert('No hay respuestas para exportar con ese filtro.');
+            return;
+          }
+          let csv = '\uFEFF' + 'perfil;periodo;pregunta;opcion_respondida;fecha\n';
+          respuestas.forEach((r) => {
+            const pregunta = mapaPreguntas.get(r.pregunta_id);
+            const textoPregunta = (pregunta ? pregunta.texto : r.pregunta_id).replace(/;/g, ',');
+            const opcion = (r.opcion_texto || '').replace(/;/g, ',');
+            csv += `${r.perfil};${r.periodo};${textoPregunta};${opcion};${r.creado_en}\n`;
+          });
+          const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+          const url = URL.createObjectURL(blob);
+          const link = document.createElement('a');
+          link.href = url;
+          link.download = `Encuesta_Clima_Liceo_Huara_${new Date().toISOString().slice(0, 10)}.csv`;
+          document.body.appendChild(link);
+          link.click();
+          document.body.removeChild(link);
+          URL.revokeObjectURL(url);
+        } catch (e) {
+          alert(e.message || 'No se pudo exportar.');
+        } finally {
+          btnExportar.disabled = false;
+        }
+      });
+    }
   }
 
   // 5. Generación y Visualización Editorial del Acta Imprimible

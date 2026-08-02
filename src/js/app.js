@@ -810,6 +810,9 @@ document.addEventListener('DOMContentLoaded', () => {
             <!-- TERMÓMETRO DE CLIMA ESCOLAR SEMANAL (ANÓNIMO) -->
             ${(typeof window.generarHtmlTermometroClima === 'function') ? window.generarHtmlTermometroClima('estudiante', userData.rut_limpio) : ''}
 
+            <!-- INVITACIÓN A ACTIVAR EL AVISO PUSH SEMANAL DE LA ENCUESTA -->
+            ${(typeof window.generarHtmlInvitacionPush === 'function') ? window.generarHtmlInvitacionPush() : ''}
+
             <div class="sabias-que-card" style="margin-top: 0;">
               <div class="sabias-que-icon">💡</div>
               <div class="sabias-que-content">
@@ -964,6 +967,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
             <!-- DESCARGA DE RICE Y CERTIFICADO DE RECEPCIÓN 2026 -->
             ${(typeof window.generarHtmlBotonCertificadoRICE === 'function') ? window.generarHtmlBotonCertificadoRICE(userData, 'apoderado') : ''}
+
+            <!-- TERMÓMETRO DE CLIMA ESCOLAR SEMANAL PARA APODERADOS (faltaba
+                 esta llamada: había preguntas para este perfil desde antes
+                 pero nunca se mostraban acá — corregido 02-ago-2026) -->
+            ${(typeof window.generarHtmlTermometroClima === 'function') ? window.generarHtmlTermometroClima('apoderado', userData.rut_limpio) : ''}
 
             <!-- COMPARATIVA NORMATIVA: RICE GENERAL vs RICE EDUCACIÓN PARVULARIA -->
             <div style="background: white; border: 1px solid var(--border-card); border-radius: var(--radius-sm); padding: 14px; margin-top:10px;">
@@ -1193,14 +1201,20 @@ document.addEventListener('DOMContentLoaded', () => {
               📌 <strong>Registro Sostenedor:</strong> ${userData.registro_docente}
             </div>
 
-            <!-- El panel de exportación de bitácora para el Coordinador de
-                 Convivencia se retiró de acá el 02-ago-2026: usaba datos
-                 locales del navegador, no los reales de Supabase. La versión
-                 real (con sesión verificada en el servidor) está en
-                 admin.html, enlazado desde la pantalla de inicio. -->
-
-            <!-- TABLERO VISUAL DE TENDENCIAS DE CLIMA PARA DIRECCIÓN/COORDINACIÓN -->
-            ${(typeof window.generarHtmlTableroDireccionClima === 'function') ? window.generarHtmlTableroDireccionClima(userData) : ''}
+            <!-- ACCESO DIRECTO AL PANEL ADMIN, PARA QUIEN TENGA panel_admin=true
+                 (ej. Omar Contreras): su perfil de funcionario ahora también
+                 ofrece la entrada al panel directivo, sin tener que salir a
+                 la pantalla de inicio a buscar el enlace. -->
+            ${userData.panel_admin ? `
+              <div style="background:#ecfdf5; border:1.5px solid #a7f3d0; border-radius:14px; padding:14px 16px; margin-top:12px; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
+                <div style="font-size:0.85rem; color:#065f46;">
+                  👑 <strong>Tienes acceso al Panel Directivo</strong> — casos, incidentes y encuesta de clima.
+                </div>
+                <a href="admin.html" style="background:#047857; color:white; font-weight:700; padding:8px 16px; border-radius:50px; text-decoration:none; font-size:0.8rem; white-space:nowrap;">
+                  Abrir Panel Admin →
+                </a>
+              </div>
+            ` : ''}
 
             <!-- BOTÓN OFICIAL DE DESCARGA CERTIFICADO DE RECEPCIÓN RICE 2026 -->
             ${(typeof window.generarHtmlBotonCertificadoRICE === 'function') ? window.generarHtmlBotonCertificadoRICE(userData, 'funcionario') : ''}

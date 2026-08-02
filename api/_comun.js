@@ -357,6 +357,21 @@ function clasificarUrgencia(texto) {
   return { prioridad: 'normal', motivo: null };
 }
 
+/* --------------------------------------------------------------
+   9. Periodo semanal (para la encuesta de clima)
+   Formato AAAA-Wss, ej. "2026-S31". Con el año adelante para que la
+   semana 1 de un año no se confunda con la semana 1 del siguiente
+   (el cálculo anterior en climate_survey.js no llevaba año).
+   -------------------------------------------------------------- */
+
+function periodoActual() {
+  const hoy = new Date();
+  const inicioAno = new Date(Date.UTC(hoy.getUTCFullYear(), 0, 1));
+  const dias = Math.floor((hoy - inicioAno) / (24 * 60 * 60 * 1000));
+  const semana = Math.ceil((dias + inicioAno.getUTCDay() + 1) / 7);
+  return hoy.getUTCFullYear() + '-S' + String(semana).padStart(2, '0');
+}
+
 module.exports = {
   normalizarRut,
   rutValido,
@@ -372,5 +387,6 @@ module.exports = {
   cuerpoDe,
   textoDerivacion,
   clasificarUrgencia,
+  periodoActual,
   VIGENCIA_HORAS,
 };

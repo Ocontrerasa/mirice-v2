@@ -156,3 +156,106 @@ create index if not exists incidentes_autor_idx on incidentes (autor_rut_hash);
 create index if not exists incidentes_creado_en_idx on incidentes (creado_en desc);
 
 alter table incidentes enable row level security;
+
+-- ------------------------------------------------------------------
+-- 5. encuesta_preguntas — banco de preguntas del Termómetro de Clima,
+--    editable desde el panel admin (agregado 02-ago-2026). Reemplaza el
+--    banco fijo que vivía hardcodeado en climate_survey.js.
+-- ------------------------------------------------------------------
+create table if not exists encuesta_preguntas (
+  id          uuid primary key default gen_random_uuid(),
+  perfil      text not null check (perfil in ('estudiante','apoderado','funcionario')),
+  texto       text not null,
+  -- Lista de alternativas, en el orden en que se muestran.
+  opciones    jsonb not null default '[]'::jsonb,
+  activa      boolean not null default true,
+  orden       int not null default 0,
+  creado_en   timestamptz not null default now(),
+  actualizado_en timestamptz not null default now()
+);
+
+create index if not exists encuesta_preguntas_perfil_idx on encuesta_preguntas (perfil, activa);
+
+alter table encuesta_preguntas enable row level security;
+
+-- ------------------------------------------------------------------
+-- 6. encuesta_respuestas — respuestas 100% anónimas: a propósito NO
+--    lleva rut_hash ni ninguna columna que permita ligarla a una persona.
+--    El control de "solo una vez por semana" vive aparte, en
+--    encuesta_marcas, precisamente para que ni el propio servidor pueda
+--    cruzar una respuesta con quién la escribió.
+-- ------------------------------------------------------------------
+create table if not exists encuesta_respuestas (
+  id            uuid primary key default gen_random_uuid(),
+  pregunta_id   uuid not null references encuesta_preguntas(id) on delete cascade,
+  perfil        text not null check (perfil in ('estudiante','apoderado','funcionario')),
+  periodo       text not null,   -- formato 'AAAA-Wss', ej. '2026-S31'
+  opcion_texto  text not null,
+  creado_en     timestamptz not null default now()
+);
+
+create index if not exists encuesta_respuestas_pregunta_idx on encuesta_respuestas (pregunta_id, periodo);
+
+alter table encuesta_respuestas enable row level security;
+
+-- ------------------------------------------------------------------
+-- 7. encuesta_marcas — SOLO existencia, sin contenido: registra que esta
+--    persona (por su rut_hash) ya respondió la encuesta de su perfil en
+--    este periodo, para impedir una segunda respuesta. No guarda qué
+--    contestó, solo que ya contestó.
+-- ------------------------------------------------------------------
+create table if not exists encuesta_marcas (
+  autor_rut_hash text not null,
+  periodo        text not null,
+  creado_en      timestamptz not null default now(),
+  primary key (autor_rut_hash, periodo)
+);
+
+alter table encuesta_marcas enable row level security;
+
+-- ------------------------------------------------------------------
+-- 8. push_suscripciones — suscripciones de notificaciones push del
+--    navegador (Web Push estándar), para el aviso semanal de la encuesta
+--    y, a futuro, otros avisos. Cada dispositivo agrega su propia fila;
+--    una persona con el celular y el computador tiene dos filas.
+-- ------------------------------------------------------------------
+create table if not exists push_suscripciones (
+  id             uuid primary key default gen_random_uuid(),
+  autor_rut_hash text not null,
+  rol            text not null check (rol in ('estudiante','apoderado','funcionario')),
+  endpoint       text not null unique,
+  p256dh         text not null,
+  auth           text not null,
+  creado_en      timestamptz not null default now()
+);
+
+create index if not exists push_suscripciones_rut_idx on push_suscripciones (autor_rut_hash);
+create index if not exists push_suscripciones_rol_idx on push_suscripciones (rol);
+
+alter table push_suscripciones enable row level security;
+
+-- ------------------------------------------------------------------
+-- 9. Siembra inicial: las preguntas que antes vivían hardcodeadas en
+--    climate_survey.js, para que la encuesta no empiece vacía. Se puede
+--    correr más de una vez sin duplicar (revisa si ya existe una
+--    pregunta con exactamente ese texto y perfil).
+-- ------------------------------------------------------------------
+insert into encuesta_preguntas (perfil, texto, opciones, orden)
+select * from (values
+  ('estudiante', '¿Cómo te has sentido en tus espacios de recreo esta semana?',
+    '["😄 Muy seguro y bien acompañado", "🙂 Tranquilo en general", "😐 A veces incómodo", "😟 Inseguro o solo"]'::jsonb, 1),
+  ('estudiante', '¿Sientes que tus profesores y el Equipo de Convivencia Educativa te escuchan cuando lo necesitas?',
+    '["👍 Sí, siempre", "🙂 La mayoría de las veces", "😐 Rara vez", "👎 No siento apoyo"]'::jsonb, 2),
+  ('apoderado', '¿Cómo califica la atención y disponibilidad del liceo para resolver dudas sobre su pupilo/a?',
+    '["⭐ Excelente y oportuna", "🙂 Buena", "😐 Regular", "🙁 Insuficiente"]'::jsonb, 1),
+  ('apoderado', '¿Siente que su hijo/a asiste al Liceo de Huara en un entorno seguro y protegido?',
+    '["🛡️ Totalmente seguro", "🙂 Seguro en general", "😐 Con algunas inquietudes", "⚠️ Inseguro"]'::jsonb, 2),
+  ('funcionario', '¿Cómo evalúa la efectividad en la aplicación de los protocolos RICE en el establecimiento?',
+    '["🟢 Altamente efectiva y clara", "🙂 Adecuada", "😐 Requiere mayor coordinación", "🔴 Deficiente"]'::jsonb, 1),
+  ('funcionario', '¿Cómo percibe el ambiente de respeto y colaboración laboral esta semana?',
+    '["🌟 Muy positivo y colaborativo", "🙂 Bueno y respetuoso", "😐 Neutro", "⚠️ Tenso"]'::jsonb, 2)
+) as nuevas(perfil, texto, opciones, orden)
+where not exists (
+  select 1 from encuesta_preguntas ep
+  where ep.perfil = nuevas.perfil and ep.texto = nuevas.texto
+);

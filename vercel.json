@@ -3,6 +3,12 @@
   "name": "mirice-liceo-huara",
   "cleanUrls": true,
   "trailingSlash": false,
+  "crons": [
+    {
+      "path": "/api/enviar-encuesta-semanal",
+      "schedule": "0 12 * * 1"
+    }
+  ],
   "headers": [
     {
       "source": "/sw.js",

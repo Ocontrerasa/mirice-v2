@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mirice-pwa-v7.3.1';
+const CACHE_NAME = 'mirice-pwa-v7.4.0';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -19,6 +19,7 @@ const ASSETS_TO_CACHE = [
   './src/js/daily_notifications.js',
   './src/js/digital_wellness.js',
   './src/js/climate_survey.js',
+  './src/js/push_subscripcion.js',
   './src/js/certificate_generator.js',
   // cloud_storage.js y bitacora_export.js retirados el 02-ago-2026 (ver
   // index.html) — si siguieran en esta lista, cache.addAll() fallaría al
