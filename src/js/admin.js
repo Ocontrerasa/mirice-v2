@@ -406,6 +406,19 @@ document.addEventListener('DOMContentLoaded', () => {
         ${incidentesHtml}
       </div>
 
+      <!-- Módulo: Reinicio de Clave (agregado 01-ago-2026) -->
+      <div class="admin-card" style="background: var(--bg-card); padding: 24px; border-radius: var(--radius-md); border: 1px solid var(--border-card); animation: fadeIn 1.05s ease; display: flex; flex-direction: column; gap: 16px; margin-top: 20px;">
+        <h4 style="color: var(--primary); font-size: 1.15rem; font-weight: 700; margin: 0;">🔑 Reiniciar Clave de una Persona</h4>
+        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; margin: 0;">
+          Para quien haya cambiado su clave y ya no la recuerde, o quedó bloqueado por algún motivo. Escribe su RUT — la clave nueva quedará como los <strong>últimos 4 caracteres de ese RUT</strong> (la k, si corresponde, en minúscula), y se le va a pedir elegir una clave nueva en su próximo ingreso.
+        </p>
+        <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+          <input type="text" id="reset-clave-rut" placeholder="RUT de la persona, ej: 12345678-9" style="flex:1; min-width:220px; padding:10px 14px; border-radius:8px; border:1px solid var(--border-card); font-size:0.9rem;">
+          <button id="btn-reset-clave" class="btn-primary" style="margin:0; padding:10px 18px; width:auto; background:var(--accent); border-color:var(--accent);">Reiniciar Clave</button>
+        </div>
+        <div id="reset-clave-resultado" style="display:none; padding:14px 16px; border-radius:10px; font-size:0.88rem; line-height:1.5;"></div>
+      </div>
+
       <!-- Módulo: Auditoría Normativa y Legal (Circular 781 / Ley 21.430) -->
       <div class="admin-card" style="background: var(--bg-card); padding: 24px; border-radius: var(--radius-md); border: 1px solid var(--border-card); animation: fadeIn 1.1s ease; display: flex; flex-direction: column; gap: 16px; margin-top: 20px;">
         <h4 style="color: var(--primary); font-size: 1.15rem; font-weight: 700; margin: 0;">🛡️ Auditoría Normativa & Cumplimiento Legal (Huara 2026)</h4>
@@ -460,6 +473,65 @@ document.addEventListener('DOMContentLoaded', () => {
   // 4. Vincular Eventos de la Consola Administrativa
   function vincularEventosAdmin(casos, incidentes) {
     const clearCasosBtn = document.getElementById('btn-clear-casos');
+
+    // Botón de reinicio de clave
+    const btnResetClave = document.getElementById('btn-reset-clave');
+    const inputResetRut = document.getElementById('reset-clave-rut');
+    const divResultadoReset = document.getElementById('reset-clave-resultado');
+    if (btnResetClave) {
+      btnResetClave.addEventListener('click', async () => {
+        const rut = (inputResetRut.value || '').trim();
+        if (!rut) {
+          inputResetRut.focus();
+          return;
+        }
+        btnResetClave.disabled = true;
+        btnResetClave.textContent = 'Reiniciando…';
+        divResultadoReset.style.display = 'none';
+
+        try {
+          const resp = await fetch('/api/resetear-clave-admin', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Authorization: 'Bearer ' + (window.miriceSesionToken || ''),
+            },
+            body: JSON.stringify({ rut }),
+          });
+          const data = await resp.json().catch(() => null);
+
+          divResultadoReset.style.display = 'block';
+          if (resp.ok && data && data.estado === 'ok') {
+            divResultadoReset.style.background = '#f0fdf4';
+            divResultadoReset.style.color = '#065f46';
+            divResultadoReset.innerHTML =
+              '✅ Clave reiniciada' + (data.nombre ? ' para <strong>' + escaparHtml(data.nombre) + '</strong>' : '') +
+              '. La nueva clave es: <strong style="font-family:monospace; font-size:1.05rem;">' + escaparHtml(data.clave_nueva) + '</strong>' +
+              '. Se le pedirá elegir una clave propia en su próximo ingreso.';
+            inputResetRut.value = '';
+          } else {
+            const mensajes = {
+              rut_invalido: 'El RUT ingresado no tiene un formato válido.',
+              persona_no_encontrada: 'No se encontró a nadie con ese RUT en el sistema.',
+              sin_permiso: 'Tu sesión no tiene permisos de administrador.',
+              cambio_requerido: 'Debes cambiar tu propia clave inicial antes de usar esta función.',
+              sesion_invalida: 'Tu sesión expiró — vuelve a iniciar sesión.',
+            };
+            divResultadoReset.style.background = '#fef2f2';
+            divResultadoReset.style.color = '#b91c1c';
+            divResultadoReset.textContent = (data && mensajes[data.error]) || 'No se pudo reiniciar la clave. Intenta de nuevo.';
+          }
+        } catch (e) {
+          divResultadoReset.style.display = 'block';
+          divResultadoReset.style.background = '#fef2f2';
+          divResultadoReset.style.color = '#b91c1c';
+          divResultadoReset.textContent = 'No se pudo conectar con el servidor.';
+        } finally {
+          btnResetClave.disabled = false;
+          btnResetClave.textContent = 'Reiniciar Clave';
+        }
+      });
+    }
 
     // Botones de generación de actas
     const generateActaBtns = document.querySelectorAll('.btn-generate-acta');

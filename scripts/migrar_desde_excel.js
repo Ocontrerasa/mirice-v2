@@ -121,10 +121,57 @@ function celda(row, nombre) {
 function claveInicialDesdeFecha(fechaTexto, documentoLimpio) {
   const m = /^(\d{2})-(\d{2})-\d{4}$/.exec(String(fechaTexto || '').trim());
   if (m) return m[1] + m[2]; // DDMM
-  return documentoLimpio.slice(-4);
+  // La K del dígito verificador se guarda en mayúscula (normalizarRut la
+  // sube a mayúscula para el hash del RUT), pero como CLAVE debe quedar en
+  // minúscula: es lo que la persona naturalmente escribe al iniciar sesión.
+  return documentoLimpio.slice(-4).replace(/K/g, 'k');
 }
 
-async function upsertPersona(base, clave, fila) {
+/**
+ * Antes de subir nada, se pregunta a Supabase quiénes YA cambiaron su clave
+ * inicial (debe_cambiar_clave = false). A esas personas, el upsert de más
+ * abajo les va a quitar clave_hash y debe_cambiar_clave del cuerpo de la
+ * petición — así PostgREST no toca esas columnas y la clave que la persona
+ * ya eligió queda intacta. Sin esto, cada vez que se vuelve a correr este
+ * script (por ejemplo, para corregir un dato como el nombre) se resetea la
+ * clave de todo el mundo de vuelta a la inicial, y quien ya había cambiado
+ * su clave queda bloqueado sin saberlo — esto fue lo que le pasó a Omar
+ * el 01-ago-2026 tras una migración de corrección de nombres.
+ */
+async function obtenerRutHashesConClaveYaCambiada(base, clave) {
+  const yaCambiaron = new Set();
+  let desde = 0;
+  const tamanoPagina = 1000;
+  for (;;) {
+    const r = await fetch(
+      base.replace(/\/+$/, '') + '/rest/v1/personas?select=rut_hash&debe_cambiar_clave=eq.false',
+      {
+        headers: {
+          apikey: clave,
+          Authorization: 'Bearer ' + clave,
+          Range: desde + '-' + (desde + tamanoPagina - 1),
+        },
+      }
+    );
+    if (!r.ok) {
+      console.warn('No se pudo consultar quiénes ya cambiaron su clave (se asumirá que nadie, por seguridad no se sobreescribirá ninguna). HTTP ' + r.status);
+      return yaCambiaron;
+    }
+    const datos = await r.json();
+    for (const fila of datos) yaCambiaron.add(fila.rut_hash);
+    if (datos.length < tamanoPagina) break;
+    desde += tamanoPagina;
+  }
+  return yaCambiaron;
+}
+
+async function upsertPersona(base, clave, filaOriginal, yaCambiaronClave) {
+  const fila = Object.assign({}, filaOriginal);
+  if (yaCambiaronClave && yaCambiaronClave.has(fila.rut_hash)) {
+    delete fila.clave_hash;
+    delete fila.clave_sal;
+    delete fila.debe_cambiar_clave;
+  }
   const r = await fetch(base.replace(/\/+$/, '') + '/rest/v1/personas?on_conflict=rut_hash', {
     method: 'POST',
     headers: {
@@ -161,6 +208,10 @@ async function main() {
   let saltados = 0;
   const apoderadosVistos = new Map(); // rut_limpio -> datos (evita subir al mismo apoderado varias veces)
 
+  console.log('Consultando quiénes ya cambiaron su clave, para no pisarla...');
+  const yaCambiaronClave = await obtenerRutHashesConClaveYaCambiada(SUPABASE_URL, SUPABASE_SERVICE_KEY);
+  console.log(yaCambiaronClave.size + ' personas ya habían cambiado su clave — no se les va a tocar.');
+
   // ------------------------------------------------------------------
   // 1. Estudiantes y apoderados (misma planilla, una fila por estudiante)
   // ------------------------------------------------------------------
@@ -169,6 +220,9 @@ async function main() {
   const filasEst = XLSX.utils.sheet_to_json(hoja1, { defval: '' });
 
   for (const [i, row] of filasEst.entries()) {
+    if ((i + 1) % 25 === 0 || i === 0) {
+      console.log('Procesando estudiantes... fila ' + (i + 1) + ' de ' + filasEst.length);
+    }
     const filaExcel = i + 2; // +2 porque la fila 1 es encabezado y el índice empieza en 0
     const rutEst = celda(row, 'DNI Estudiante');
 
@@ -199,7 +253,7 @@ async function main() {
           clave_hash: hash,
           debe_cambiar_clave: true,
           activo: true,
-        });
+        }, yaCambiaronClave);
         ok++;
       } catch (e) {
         console.error('Error con un estudiante (fila omitida):', e.message);
@@ -234,7 +288,13 @@ async function main() {
   //    si tiene más de un hijo en la planilla; solo se vincula al primero
   //    que aparece. Si necesitas vincular a varios hijos, avísame.)
   // ------------------------------------------------------------------
+  console.log('Procesando ' + apoderadosVistos.size + ' apoderados únicos...');
+  let _contadorApo = 0;
   for (const [rutLimpio, datos] of apoderadosVistos) {
+    _contadorApo++;
+    if (_contadorApo % 25 === 0) {
+      console.log('Procesando apoderados... ' + _contadorApo + ' de ' + apoderadosVistos.size);
+    }
     const { sal, hash } = hashClave(claveInicialDesdeFecha(datos.fechaNacimiento, rutLimpio));
     try {
       await upsertPersona(SUPABASE_URL, SUPABASE_SERVICE_KEY, {
@@ -249,7 +309,7 @@ async function main() {
         clave_hash: hash,
         debe_cambiar_clave: true,
         activo: true,
-      });
+      }, yaCambiaronClave);
       ok++;
     } catch (e) {
       console.error('Error con un apoderado (fila omitida):', e.message);
@@ -267,9 +327,27 @@ async function main() {
   const hoja2 = wb2.Sheets[wb2.SheetNames[0]];
   const filasPersonal = XLSX.utils.sheet_to_json(hoja2, { defval: '', range: 4 });
 
+  console.log('Procesando personal...');
   for (const [i, row] of filasPersonal.entries()) {
+    if ((i + 1) % 20 === 0) {
+      console.log('Procesando personal... fila ' + (i + 1) + ' de ' + filasPersonal.length);
+    }
     const filaExcel = i + 6; // fila 5 es encabezado, los datos parten en la 6, +1 por índice 0
-    const nombre = celda(row, 'NOMBRE COMPLETO');
+    // La nómina trae el nombre como "Apellido Apellido Nombre" (orden
+    // administrativo chileno típico). La app saluda por el primer nombre
+    // (primera palabra), así que hay que reordenarlo. Se aplica solo el
+    // caso más común y confiable: exactamente 3 palabras -> el último es
+    // el nombre de pila, los dos primeros son los apellidos. Si viene con
+    // un número distinto de palabras, se deja tal cual y se avisa para
+    // revisión manual (mejor no adivinar que ordenar mal un nombre).
+    const nombreCrudo = celda(row, 'NOMBRE COMPLETO');
+    const palabrasNombre = nombreCrudo.trim().split(/\s+/).filter(Boolean);
+    let nombre = nombreCrudo;
+    if (palabrasNombre.length === 3) {
+      nombre = palabrasNombre[2] + ' ' + palabrasNombre[0] + ' ' + palabrasNombre[1];
+    } else if (palabrasNombre.length > 0) {
+      console.warn('Fila ' + (i + 6) + ' de la nómina: nombre con ' + palabrasNombre.length + ' palabras (no 3) — se dejó tal cual el orden original. Revísalo manualmente en Supabase si corresponde.');
+    }
     const valores = Object.values(row);
     const rut = String(valores[2] || '').trim(); // columna C, sin encabezado
 
@@ -282,7 +360,7 @@ async function main() {
     }
 
     const rutLimpio = normalizarRut(rut);
-    const { sal, hash } = hashClave(rutLimpio.slice(-4));
+    const { sal, hash } = hashClave(rutLimpio.slice(-4).replace(/K/g, 'k'));
     const esAdmin = esPanelAdmin(nombre);
 
     try {
@@ -298,7 +376,7 @@ async function main() {
         clave_hash: hash,
         debe_cambiar_clave: true,
         activo: true,
-      });
+      }, yaCambiaronClave);
       ok++;
       if (esAdmin) {
         console.log('→ Acceso a panel admin otorgado a un funcionario coincidente con la lista configurada.');
