@@ -34,14 +34,28 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   // --- RESTAURACIÓN AUTOMÁTICA DE SESIÓN SI YA ESTÁ LOGUEADO COMO FUNCIONARIO O DIRECTIVO ---
+  // Corregido 02-ago-2026: admin.js y app.js guardaban la sesión en el mismo
+  // localStorage pero con dos formas distintas (admin.js esperaba
+  // sessionObj.panelAdmin y el token solo en sessionStorage; app.js guarda
+  // sessionObj.userData.panel_admin y el token dentro del propio objeto).
+  // Por eso el botón "Abrir Panel Admin" del perfil de funcionario pedía
+  // loguearse de nuevo en vez de entrar directo. Ahora se reconocen ambos.
   try {
-    const tokenGuardado = sessionStorage.getItem('mirice_token');
     const sessionGuardada = localStorage.getItem('mirice_active_session');
-    if (tokenGuardado && sessionGuardada) {
+    if (sessionGuardada) {
       const sessionObj = JSON.parse(sessionGuardada);
-      if (sessionObj && sessionObj.role === 'funcionario' && sessionObj.panelAdmin) {
-        window.miriceSesionToken = tokenGuardado;
-        ingresarAlDashboardAdmin();
+      const esAdmin = !!(sessionObj && sessionObj.role === 'funcionario' &&
+        (sessionObj.panelAdmin || (sessionObj.userData && sessionObj.userData.panel_admin)));
+
+      if (esAdmin) {
+        let token = sessionObj.token || null;
+        if (!token) {
+          try { token = sessionStorage.getItem('mirice_token') || null; } catch (e) { token = null; }
+        }
+        if (token) {
+          window.miriceSesionToken = token;
+          ingresarAlDashboardAdmin();
+        }
       }
     }
   } catch (e) {
@@ -95,8 +109,12 @@ document.addEventListener('DOMContentLoaded', () => {
         window.miriceSesionToken = data.token;
         try {
           sessionStorage.setItem('mirice_token', data.token);
+          // El token va dentro del objeto (no solo en sessionStorage) por la
+          // misma razón que en app.js: sessionStorage se borra al cerrar la
+          // pestaña o al reabrir como PWA, y la sesión quedaba "logueada"
+          // visualmente pero sin token real (corregido 02-ago-2026).
           localStorage.setItem('mirice_active_session', JSON.stringify({
-            role: 'funcionario', panelAdmin: true, loginTime: Date.now()
+            role: 'funcionario', panelAdmin: true, token: data.token, loginTime: Date.now()
           }));
         } catch (err) {}
 

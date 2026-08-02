@@ -161,7 +161,12 @@ document.addEventListener('DOMContentLoaded', () => {
         currentLoginRole = sessionObj.role;
         currentLoggedUser = { role: sessionObj.role, data: sessionObj.userData };
 
-        try { window.miriceSesionToken = sessionStorage.getItem('mirice_token') || null; } catch (e) { window.miriceSesionToken = null; }
+        // El token ahora vive dentro del propio objeto de sesión (ver
+        // ingresarAlRol). Si es una sesión vieja de antes de este arreglo
+        // (sin campo token), se intenta el respaldo en sessionStorage.
+        window.miriceSesionToken = sessionObj.token || (function () {
+          try { return sessionStorage.getItem('mirice_token') || null; } catch (e) { return null; }
+        })();
 
         if (splashScreen) splashScreen.style.display = 'none';
         if (roleSelectionScreen) roleSelectionScreen.style.display = 'none';
@@ -646,16 +651,21 @@ document.addEventListener('DOMContentLoaded', () => {
     currentLoggedUser = { role: role, data: userData };
     window.currentLoggedUser = currentLoggedUser;
 
-    // Guardar sesión activa permanentemente en el navegador/dispositivo
+    // Guardar sesión activa permanentemente en el navegador/dispositivo.
+    // El token va DENTRO del mismo objeto (antes vivía solo en sessionStorage,
+    // que se borra al cerrar la pestaña o al abrir la PWA en una ventana
+    // nueva — la persona quedaba con la pantalla de "logueado" pero sin
+    // token real, y cualquier llamada a /api/encuesta, /api/reporte, etc.
+    // fallaba en silencio. Corregido 02-ago-2026).
     localStorage.setItem('mirice_active_session', JSON.stringify({
       role: role,
       userData: userData,
+      token: window.miriceSesionToken || null,
       loginTime: Date.now()
     }));
 
-    // El token de servidor se guarda aparte, en sessionStorage (se borra al
-    // cerrar la pestaña) — es lo que autoriza las llamadas a /api/reporte,
-    // /api/cambiar-clave, etc. a nombre de esta persona.
+    // Se mantiene también en sessionStorage por compatibilidad, pero ya no
+    // es la fuente de verdad — ver la restauración de sesión más arriba.
     if (window.miriceSesionToken) {
       try { sessionStorage.setItem('mirice_token', window.miriceSesionToken); } catch (e) {}
     }
