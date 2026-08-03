@@ -480,19 +480,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Cuentas de demostración (no son personas reales; se mantienen para
     // poder mostrar la app sin depender del backend).
+    // "111111112" (Estudiante de Prueba) se retiró de acá el 02-ago-2026:
+    // ahora es una persona real en la base de datos (ver api/personas-crear.js),
+    // así que pasa por el login real como cualquier estudiante de verdad.
     let usuarioEncontrado = null;
-    if (rutLimpio === "111111112") {
-      usuarioEncontrado = {
-        rut_limpio: "111111112",
-        rut_formato: "11.111.111-2",
-        nombre: "Estudiante de Prueba",
-        curso: "1er Año Medio A",
-        email: "estudiante.prueba@liceodehuara.cl",
-        telefono: "911111111",
-        estado: "Regular",
-        matricula: "2026-DEMO01"
-      };
-    } else if (rutLimpio === "222222222") {
+    if (rutLimpio === "222222222") {
       usuarioEncontrado = {
         rut_limpio: "222222222",
         rut_formato: "22.222.222-2",
