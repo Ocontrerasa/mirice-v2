@@ -480,31 +480,11 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Cuentas de demostración (no son personas reales; se mantienen para
     // poder mostrar la app sin depender del backend).
-    // "111111112" (Estudiante de Prueba) se retiró de acá el 02-ago-2026:
-    // ahora es una persona real en la base de datos (ver api/personas-crear.js),
-    // así que pasa por el login real como cualquier estudiante de verdad.
+    // "111111112" (Estudiante de Prueba), "222222222" (Apoderado de Prueba) y
+    // "333333333" (Funcionario de Prueba) se retiraron de acá el 02-ago-2026:
+    // ahora son personas reales en la base de datos (ver api/personas-crear.js),
+    // así que pasan por el login real como cualquier persona de verdad.
     let usuarioEncontrado = null;
-    if (rutLimpio === "222222222") {
-      usuarioEncontrado = {
-        rut_limpio: "222222222",
-        rut_formato: "22.222.222-2",
-        nombre: "Apoderado de Prueba",
-        pupilo: "Estudiante de Prueba (1er Año Medio A)",
-        email: "apoderado.prueba@liceodehuara.cl",
-        telefono: "922222222",
-        asistencia_reuniones: "100%"
-      };
-    } else if (rutLimpio === "333333333") {
-      usuarioEncontrado = {
-        rut_limpio: "333333333",
-        rut_formato: "33.333.333-3",
-        nombre: "Funcionario de Prueba",
-        cargo: "Coordinador de Convivencia Educativa",
-        departamento: "Equipo Directivo / Convivencia",
-        email: "funcionario.prueba@liceodehuara.cl",
-        registro_docente: "REG-2026-99"
-      };
-    }
 
     if (usuarioEncontrado) {
       const claveEsperada = rutLimpio.substring(rutLimpio.length - 4);
