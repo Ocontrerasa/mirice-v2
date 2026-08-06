@@ -2217,6 +2217,47 @@ div[style*="background: #065f46"],
 }
 
 /* 7. Tablas de Bitácora y Reportes */
+
+/* 6b. Chat: fondo y contraste obligatorio (corrige texto claro sobre fondo
+   claro en dispositivos con modo oscuro, 02-ago-2026).
+   El chat-wrapper y sus hijos no estaban cubiertos por las reglas anteriores
+   porque su clase no coincide con div[class*="-card"]. */
+.chat-wrapper,
+div[id*="chat-messages"] {
+  background-color: #ffffff !important;
+  color: #0f172a !important;
+}
+
+#chat-typing-indicator,
+#apo-chat-typing,
+#fun-chat-typing {
+  background: #f1f5f9 !important;
+  color: #334155 !important;
+}
+
+.chat-bubble.bot-bubble, div.bot-bubble {
+  background: #047857 !important;
+  color: #ffffff !important;
+}
+.chat-bubble.bot-bubble *, div.bot-bubble * {
+  color: #ffffff !important;
+}
+
+.chat-bubble.user-bubble, div.user-bubble {
+  background: #e2e8f0 !important;
+  color: #0f172a !important;
+  border: 1px solid #cbd5e1 !important;
+}
+.chat-bubble.user-bubble *, div.user-bubble * {
+  color: #0f172a !important;
+}
+
+.chat-bubble.error-bubble {
+  background: #fef2f2 !important;
+  color: #991b1b !important;
+  border: 1px solid #fecaca !important;
+}
+
 table {
   width: 100% !important;
   border-collapse: collapse !important;
@@ -2321,6 +2362,12 @@ tr:nth-child(even) td {
     padding: 10px 14px !important;
     border: 1.5px solid #cbd5e1 !important;
     border-radius: 25px !important;
+    background: #ffffff !important;
+    color: #0f172a !important;
+  }
+
+  #chat-form input::placeholder, #apo-chat-form input::placeholder, #fun-chat-form input::placeholder {
+    color: #64748b !important;
   }
 
   #chat-form button, #apo-chat-form button, #fun-chat-form button {

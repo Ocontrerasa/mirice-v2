@@ -526,6 +526,55 @@ document.addEventListener('DOMContentLoaded', () => {
         <div id="reset-clave-resultado" style="display:none; padding:14px 16px; border-radius:10px; font-size:0.88rem; line-height:1.5;"></div>
       </div>
 
+      <!-- Módulo: Alta de Personas (agregado 02-ago-2026) -->
+      <div class="admin-card" style="background: var(--bg-card); padding: 24px; border-radius: var(--radius-md); border: 1px solid var(--border-card); animation: fadeIn 1.06s ease; display: flex; flex-direction: column; gap: 16px; margin-top: 20px;">
+        <h4 style="color: var(--primary); font-size: 1.15rem; font-weight: 700; margin: 0;">➕ Agregar Persona al Sistema</h4>
+        <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; margin: 0;">
+          Crea una cuenta nueva para estudiantes, apoderados o funcionarios. La clave inicial la eliges tú (sugerencia: los últimos 4 dígitos del RUT).
+        </p>
+        <div style="display:flex; flex-direction:column; gap:10px;">
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <div style="flex:1; min-width:200px;">
+              <label style="font-size:0.8rem; font-weight:700; display:block; margin-bottom:4px;">RUT</label>
+              <input type="text" id="nueva-persona-rut" placeholder="12.345.678-9" style="width:100%; padding:8px 12px; border-radius:8px; border:1px solid var(--border-card); font-size:0.88rem;">
+            </div>
+            <div style="flex:1; min-width:200px;">
+              <label style="font-size:0.8rem; font-weight:700; display:block; margin-bottom:4px;">Nombre completo</label>
+              <input type="text" id="nueva-persona-nombre" placeholder="Nombre Apellido Apellido" style="width:100%; padding:8px 12px; border-radius:8px; border:1px solid var(--border-card); font-size:0.88rem;">
+            </div>
+          </div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <div style="flex:1; min-width:150px;">
+              <label style="font-size:0.8rem; font-weight:700; display:block; margin-bottom:4px;">Rol / Perfil</label>
+              <select id="nueva-persona-rol" style="width:100%; padding:8px 12px; border-radius:8px; border:1px solid var(--border-card); font-size:0.88rem;">
+                <option value="estudiante">🎓 Estudiante</option>
+                <option value="apoderado">🏡 Apoderado</option>
+                <option value="funcionario">🏫 Funcionario</option>
+              </select>
+            </div>
+            <div style="flex:1; min-width:150px;">
+              <label style="font-size:0.8rem; font-weight:700; display:block; margin-bottom:4px;">Clave inicial</label>
+              <input type="text" id="nueva-persona-clave" placeholder="ej: 6789" style="width:100%; padding:8px 12px; border-radius:8px; border:1px solid var(--border-card); font-size:0.88rem;">
+            </div>
+          </div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <div style="flex:1; min-width:200px;">
+              <label style="font-size:0.8rem; font-weight:700; display:block; margin-bottom:4px;">Curso <span style="color:var(--text-muted); font-weight:400;">(solo estudiantes)</span></label>
+              <input type="text" id="nueva-persona-curso" placeholder="ej: 1er Año Medio A" style="width:100%; padding:8px 12px; border-radius:8px; border:1px solid var(--border-card); font-size:0.88rem;">
+            </div>
+            <div style="flex:1; min-width:200px;">
+              <label style="font-size:0.8rem; font-weight:700; display:block; margin-bottom:4px;">Cargo <span style="color:var(--text-muted); font-weight:400;">(solo funcionarios)</span></label>
+              <input type="text" id="nueva-persona-cargo" placeholder="ej: Docente Lenguaje" style="width:100%; padding:8px 12px; border-radius:8px; border:1px solid var(--border-card); font-size:0.88rem;">
+            </div>
+          </div>
+          <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
+            <label style="font-size:0.82rem; cursor:pointer;"><input type="checkbox" id="nueva-persona-admin"> Acceso al Panel Admin</label>
+          </div>
+          <button id="btn-crear-persona" class="btn-primary" style="margin:0; padding:10px 18px; width:auto; background:var(--accent); border-color:var(--accent);">Crear Persona</button>
+          <div id="crear-persona-resultado" style="display:none; padding:14px 16px; border-radius:10px; font-size:0.88rem; line-height:1.5;"></div>
+        </div>
+      </div>
+
       <!-- Módulo: Auditoría Normativa y Legal (Circular 781 / Ley 21.430) -->
       <div class="admin-card" style="background: var(--bg-card); padding: 24px; border-radius: var(--radius-md); border: 1px solid var(--border-card); animation: fadeIn 1.1s ease; display: flex; flex-direction: column; gap: 16px; margin-top: 20px;">
         <h4 style="color: var(--primary); font-size: 1.15rem; font-weight: 700; margin: 0;">🛡️ Auditoría Normativa & Cumplimiento Legal (Huara 2026)</h4>
@@ -933,6 +982,63 @@ document.addEventListener('DOMContentLoaded', () => {
           alert(e.message || 'No se pudo exportar.');
         } finally {
           btnExportar.disabled = false;
+        }
+      });
+    }
+    // --- Alta de personas ---
+    const btnCrear = document.getElementById('btn-crear-persona');
+    if (btnCrear) {
+      btnCrear.addEventListener('click', async () => {
+        const rut = (document.getElementById('nueva-persona-rut').value || '').trim();
+        const nombre = (document.getElementById('nueva-persona-nombre').value || '').trim();
+        const rol = document.getElementById('nueva-persona-rol').value;
+        const clave = (document.getElementById('nueva-persona-clave').value || '').trim();
+        const curso = (document.getElementById('nueva-persona-curso').value || '').trim();
+        const cargo = (document.getElementById('nueva-persona-cargo').value || '').trim();
+        const panelAdmin = document.getElementById('nueva-persona-admin').checked;
+        const divRes = document.getElementById('crear-persona-resultado');
+
+        function mostrar(msg, ok) {
+          if (!divRes) return;
+          divRes.style.display = 'block';
+          divRes.style.background = ok ? '#dcfce7' : '#fee2e2';
+          divRes.style.color = ok ? '#15803d' : '#b91c1c';
+          divRes.textContent = msg;
+        }
+
+        if (!rut) return mostrar('Escribe el RUT.', false);
+        if (!nombre) return mostrar('Escribe el nombre completo.', false);
+        if (!clave || clave.length < 4) return mostrar('La clave debe tener al menos 4 caracteres.', false);
+
+        btnCrear.disabled = true;
+        try {
+          const body = { rut, nombre, rol, clave, debe_cambiar_clave: false, panel_admin: panelAdmin };
+          if (curso) body.curso = curso;
+          if (cargo) body.cargo = cargo;
+
+          const resp = await fetch('/api/personas-crear', {
+            method: 'POST',
+            headers: Object.assign({ 'Content-Type': 'application/json' }, auth()),
+            body: JSON.stringify(body),
+          });
+          const data = await resp.json().catch(() => null);
+          if (resp.ok && data && data.estado === 'ok') {
+            mostrar('✅ Persona creada. Ya puede entrar con RUT ' + rut + ' y clave ' + clave + '.', true);
+            document.getElementById('nueva-persona-rut').value = '';
+            document.getElementById('nueva-persona-nombre').value = '';
+            document.getElementById('nueva-persona-clave').value = '';
+            document.getElementById('nueva-persona-curso').value = '';
+            document.getElementById('nueva-persona-cargo').value = '';
+            document.getElementById('nueva-persona-admin').checked = false;
+          } else if (data && data.error === 'ya_existe') {
+            mostrar('⚠️ Ya existe una persona con ese RUT. Si necesitas cambiarle la clave, usa el módulo de reinicio de clave de arriba.', false);
+          } else {
+            mostrar((data && data.texto) || 'No se pudo crear la persona.', false);
+          }
+        } catch (e) {
+          mostrar('No se pudo conectar con el servidor.', false);
+        } finally {
+          btnCrear.disabled = false;
         }
       });
     }
