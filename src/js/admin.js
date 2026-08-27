@@ -136,14 +136,20 @@ document.addEventListener('DOMContentLoaded', () => {
     const overlay = document.createElement('div');
     overlay.style.cssText = 'position:fixed; inset:0; background:rgba(15,23,42,0.6); display:flex; align-items:center; justify-content:center; z-index:9999; padding:16px;';
     overlay.innerHTML = `
-      <div style="background:#fff; border-radius:16px; padding:28px; max-width:420px; width:100%;">
+      <div style="background:#fff; border-radius:16px; padding:28px; max-width:440px; width:100%; box-shadow:0 20px 50px rgba(0,0,0,0.25); max-height:92vh; overflow-y:auto;">
         <h3 style="margin:0 0 8px; color:#047857;">🔒 Elige tu contraseña</h3>
-        <p style="font-size:0.88rem; color:#475569; margin-bottom:16px;">Antes de entrar al panel, cambia la contraseña inicial por una propia (mínimo 6 caracteres).</p>
+        <p style="font-size:0.88rem; color:#475569; line-height:1.5; margin-bottom:16px;">
+          Antes de entrar al panel, cambia la contraseña inicial por una propia (mínimo 6 caracteres). Si lo prefieres, también puedes mantener la clave por defecto.
+        </p>
         <div id="admin-cc-error" style="display:none; background:#fef2f2; color:#b91c1c; padding:8px 12px; border-radius:8px; font-size:0.82rem; margin-bottom:12px;"></div>
-        <input id="admin-cc-actual" type="password" placeholder="Contraseña actual" class="form-control" style="width:100%; margin-bottom:10px; padding:10px; border-radius:8px; border:1px solid #cbd5e1;">
-        <input id="admin-cc-nueva" type="password" placeholder="Contraseña nueva" class="form-control" style="width:100%; margin-bottom:10px; padding:10px; border-radius:8px; border:1px solid #cbd5e1;">
+        <input id="admin-cc-actual" type="password" placeholder="Contraseña actual (los primeros 4 dígitos de tu RUT)" class="form-control" style="width:100%; margin-bottom:10px; padding:10px; border-radius:8px; border:1px solid #cbd5e1;">
+        <input id="admin-cc-nueva" type="password" placeholder="Contraseña nueva (mínimo 6 caracteres)" class="form-control" style="width:100%; margin-bottom:10px; padding:10px; border-radius:8px; border:1px solid #cbd5e1;">
         <input id="admin-cc-repetir" type="password" placeholder="Repite la contraseña nueva" class="form-control" style="width:100%; margin-bottom:16px; padding:10px; border-radius:8px; border:1px solid #cbd5e1;">
-        <button id="admin-cc-confirmar" style="width:100%; background:#047857; color:#fff; font-weight:700; padding:12px; border:none; border-radius:50px; cursor:pointer;">Confirmar y entrar</button>
+        <button id="admin-cc-confirmar" style="width:100%; background:#047857; color:#fff; font-weight:700; padding:12px; border:none; border-radius:50px; cursor:pointer;">✅ Cambiar y continuar (recomendado)</button>
+        <button id="admin-cc-mantener" style="width:100%; background:#f1f5f9; color:#334155; font-weight:700; padding:12px; border:1px solid #cbd5e1; border-radius:50px; cursor:pointer; margin-top:10px;">Mantener mi clave por defecto</button>
+        <p style="font-size:0.74rem; color:#94a3b8; line-height:1.4; margin-top:10px; margin-bottom:0;">
+          ⚠️ Si mantienes la clave por defecto, cualquier persona que conozca tu RUT podría deducirla. Puedes cambiarla más adelante cuando quieras.
+        </p>
       </div>`;
     document.body.appendChild(overlay);
 
@@ -166,6 +172,33 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = await resp.json().catch(() => null);
         if (!resp.ok || !data || data.estado !== 'ok') {
           errBox.textContent = (data && data.texto) || 'No se pudo cambiar. Verifica la actual.';
+          errBox.style.display = 'block';
+          return;
+        }
+        window.miriceSesionToken = data.token;
+        try { sessionStorage.setItem('mirice_token', data.token); } catch (e) {}
+        document.body.removeChild(overlay);
+        ingresarAlDashboardAdmin();
+      } catch (e) {
+        errBox.textContent = 'No se pudo conectar. Intenta de nuevo.';
+        errBox.style.display = 'block';
+      }
+    });
+
+    overlay.querySelector('#admin-cc-mantener').addEventListener('click', async () => {
+      const actual = overlay.querySelector('#admin-cc-actual').value.trim();
+      errBox.style.display = 'none';
+      if (!actual) { errBox.textContent = 'Escribe tu contraseña actual en el primer campo.'; errBox.style.display = 'block'; return; }
+      if (!confirm('¿Mantener la clave por defecto en una cuenta con acceso al panel de Convivencia?\n\nNo es recomendable: es deducible desde tu RUT.')) return;
+      try {
+        const resp = await fetch('/api/cambiar-clave', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + window.miriceSesionToken },
+          body: JSON.stringify({ clave_actual: actual, mantener: true })
+        });
+        const data = await resp.json().catch(() => null);
+        if (!resp.ok || !data || data.estado !== 'ok') {
+          errBox.textContent = (data && data.texto) || 'No se pudo completar. Verifica la contraseña actual.';
           errBox.style.display = 'block';
           return;
         }
