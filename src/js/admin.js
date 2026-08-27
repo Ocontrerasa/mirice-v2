@@ -550,7 +550,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="admin-card" style="background: var(--bg-card); padding: 24px; border-radius: var(--radius-md); border: 1px solid var(--border-card); animation: fadeIn 1.05s ease; display: flex; flex-direction: column; gap: 16px; margin-top: 20px;">
         <h4 style="color: var(--primary); font-size: 1.15rem; font-weight: 700; margin: 0;">🔑 Reiniciar Clave de una Persona</h4>
         <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; margin: 0;">
-          Para quien haya cambiado su clave y ya no la recuerde, o quedó bloqueado por algún motivo. Escribe su RUT — la clave nueva quedará como los <strong>últimos 4 caracteres de ese RUT</strong> (la k, si corresponde, en minúscula), y se le va a pedir elegir una clave nueva en su próximo ingreso.
+          Para quien haya cambiado su clave y ya no la recuerde, o quedó bloqueado por algún motivo. Escribe su RUT — la clave nueva quedará como los <strong>primeros 4 caracteres de ese RUT</strong>, y se le va a pedir elegir una clave nueva en su próximo ingreso.
         </p>
         <div style="display:flex; gap:10px; flex-wrap:wrap; align-items:center;">
           <input type="text" id="reset-clave-rut" placeholder="RUT de la persona, ej: 12345678-9" style="flex:1; min-width:220px; padding:10px 14px; border-radius:8px; border:1px solid var(--border-card); font-size:0.9rem;">
@@ -563,7 +563,7 @@ document.addEventListener('DOMContentLoaded', () => {
       <div class="admin-card" style="background: var(--bg-card); padding: 24px; border-radius: var(--radius-md); border: 1px solid var(--border-card); animation: fadeIn 1.06s ease; display: flex; flex-direction: column; gap: 16px; margin-top: 20px;">
         <h4 style="color: var(--primary); font-size: 1.15rem; font-weight: 700; margin: 0;">➕ Agregar Persona al Sistema</h4>
         <p style="font-size: 0.85rem; color: var(--text-muted); line-height: 1.4; margin: 0;">
-          Crea una cuenta nueva para estudiantes, apoderados o funcionarios. La clave inicial la eliges tú (sugerencia: los últimos 4 dígitos del RUT).
+          Crea una cuenta nueva para estudiantes, apoderados o funcionarios. La clave inicial la eliges tú (sugerencia: los primeros 4 dígitos del RUT).
         </p>
         <div style="display:flex; flex-direction:column; gap:10px;">
           <div style="display:flex; gap:10px; flex-wrap:wrap;">

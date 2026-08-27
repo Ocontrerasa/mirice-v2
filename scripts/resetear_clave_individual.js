@@ -5,9 +5,8 @@
  * Para cuando alguien queda bloqueado y ya no tienes o no quieres volver a
  * abrir los Excel completos. Solo pide el RUT de esa persona.
  *
- * La clave nueva queda como los últimos 4 caracteres de ese RUT (la K, si
- * corresponde, en minúscula), y se le pedirá elegir una clave propia en su
- * próximo ingreso.
+ * La clave nueva queda como los primeros 4 caracteres de ese RUT, y se le
+ * pedirá elegir una clave propia en su próximo ingreso.
  *
  * Uso:
  *   node scripts/resetear_clave_individual.js "12345678-9"
@@ -62,7 +61,7 @@ async function main() {
   }
 
   const rutLimpio = normalizarRut(rutBruto);
-  const claveNueva = rutLimpio.slice(-4).replace(/K/g, 'k');
+  const claveNueva = rutLimpio.slice(0, 4);
   const rutHash = hashRut(rutLimpio, MIRICE_PEPPER);
   const { sal, hash } = hashClave(claveNueva);
 

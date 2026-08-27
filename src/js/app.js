@@ -401,15 +401,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (role === 'estudiante') {
       loginRoleTitle.innerHTML = 'Acceso <span>Estudiantes</span>';
-      loginRoleSubtitle.textContent = 'Ingresa tu RUT y contraseña inicial (últimos 4 dígitos del RUT)';
+      loginRoleSubtitle.textContent = 'Ingresa tu RUT y contraseña inicial (primeros 4 dígitos del RUT)';
       loginRutLabel.textContent = 'RUT del Estudiante';
     } else if (role === 'apoderado') {
       loginRoleTitle.innerHTML = 'Acceso <span>Apoderados</span>';
-      loginRoleSubtitle.textContent = 'Ingresa tu RUT y contraseña inicial (últimos 4 dígitos del RUT)';
+      loginRoleSubtitle.textContent = 'Ingresa tu RUT y contraseña inicial (primeros 4 dígitos del RUT)';
       loginRutLabel.textContent = 'RUT del Apoderado';
     } else if (role === 'funcionario') {
       loginRoleTitle.innerHTML = 'Acceso <span>Funcionarios</span>';
-      loginRoleSubtitle.textContent = 'Ingresa tu RUT y contraseña inicial (últimos 4 dígitos del RUT)';
+      loginRoleSubtitle.textContent = 'Ingresa tu RUT y contraseña inicial (primeros 4 dígitos del RUT)';
       loginRutLabel.textContent = 'RUT del Funcionario';
     }
 
