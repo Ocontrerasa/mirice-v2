@@ -1142,52 +1142,6 @@ document.addEventListener('DOMContentLoaded', () => {
       userSubtitle.textContent = `Apoderado • Liceo de Huara`;
 
     } else if (role === 'funcionario' && userData) {
-      const esCoordinadorODirectora = (userData.cargo.toLowerCase().includes('convivencia') || userData.cargo.toLowerCase().includes('directora'));
-      
-      let bandejaDenunciasHtml = "";
-      if (esCoordinadorODirectora) {
-        const denuncias = JSON.parse(localStorage.getItem("mirice_denuncias_estudiantes")) || [];
-        let filasDenuncia = "";
-        if (denuncias.length === 0) {
-          filasDenuncia = `<tr><td colspan="4" style="padding:12px; text-align:center; color:var(--text-muted); font-size:0.8rem;">No hay reportes de vulneración ingresados por estudiantes.</td></tr>`;
-        } else {
-          denuncias.forEach(d => {
-            filasDenuncia += `
-              <tr style="border-bottom:1px solid var(--border-card);">
-                <td style="padding:10px 12px; font-weight:500;">${d.fecha}</td>
-                <td style="padding:10px 12px;">${d.informante_nombre}</td>
-                <td style="padding:10px 12px; color:var(--accent); font-weight:600;">${d.asunto}</td>
-                <td style="padding:10px 12px;"><button class="btn-primary" style="margin-top:0; padding:4px 8px; font-size:0.75rem; width:auto; display:inline-block;" onclick="alert('Relato Confidencial Estudiante:\\n\\n${d.descripcion.replace(/'/g, "\\'").replace(/"/g, '\\"')}\\n\\nRed de Apoyo: ${d.red_apoyo}')">Ver Detalles</button></td>
-              </tr>
-            `;
-          });
-        }
-        
-        bandejaDenunciasHtml = `
-          <div class="welcome-card" style="background: hsl(0, 75%, 98%); border: 1px solid hsl(0, 80%, 90%); padding: 20px; border-radius: var(--radius-md); margin-top:20px;">
-            <h4 style="color: hsl(0, 80%, 30%); font-size: 0.95rem; font-weight: 600; margin-bottom: 8px;">📩 Bandeja de Informaciones Confidenciales (Estudiantes)</h4>
-            <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 12px; line-height: 1.4;">
-              Esta sección es estrictamente confidencial y visible únicamente para el Coordinador de Convivencia Educativa y Dirección.
-            </p>
-            <div style="background:white; border-radius:var(--radius-sm); border:1px solid var(--border-card); overflow:hidden;">
-              <table style="width:100%; border-collapse:collapse; font-size:0.8rem; text-align:left;">
-                <thead>
-                  <tr style="background:hsl(0, 75%, 95%); color:hsl(0, 80%, 25%); font-weight:600; border-bottom:1px solid var(--border-card);">
-                    <th style="padding:8px 12px;">Fecha</th>
-                    <th style="padding:8px 12px;">Estudiante</th>
-                    <th style="padding:8px 12px;">Asunto</th>
-                    <th style="padding:8px 12px;">Acciones</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  ${filasDenuncia}
-                </tbody>
-              </table>
-            </div>
-          </div>
-        `;
-      }
-
       navigationHtml = `
         <div class="role-tabs">
           <button class="tab-btn active" data-tab="fun-inicio"><span class="tab-icon">🏠</span>Inicio</button>
@@ -1257,8 +1211,6 @@ document.addEventListener('DOMContentLoaded', () => {
               </p>
             </div>
           </div>
-
-          ${bandejaDenunciasHtml}
         </div>
 
         <div id="fun-reporte" class="role-view-section">
