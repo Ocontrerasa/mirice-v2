@@ -632,7 +632,7 @@
               document.getElementById('folio-numero').textContent = datos.folio;
               document.getElementById('folio-container').style.display = 'block';
             }
-            localStorage.removeItem('mirice_report_draft');
+            try { sessionStorage.removeItem('mirice_report_draft'); } catch (e) {}
             formContent.style.display = 'none';
             successPanel.style.display = 'flex';
             return;
@@ -663,8 +663,9 @@
       const contactoInput = document.getElementById('den-contacto');
       const camposAutoguardado = [descInput, selectAsunto, customAsuntoInput, contactoInput];
 
+      try { localStorage.removeItem('mirice_report_draft'); } catch (e) {} // limpiar borradores antiguos que quedaron persistidos
       try {
-        const borradorGuardado = localStorage.getItem('mirice_report_draft');
+        const borradorGuardado = sessionStorage.getItem('mirice_report_draft');
         if (borradorGuardado) {
           const borrador = JSON.parse(borradorGuardado);
           if (borrador.descripcion && descInput && !descPrevia) descInput.value = borrador.descripcion;
@@ -683,12 +684,14 @@
       camposAutoguardado.forEach(el => {
         if (!el) return;
         el.addEventListener('input', () => {
-          localStorage.setItem('mirice_report_draft', JSON.stringify({
-            descripcion: descInput.value,
-            contacto: contactoInput.value,
-            asunto: selectAsunto.value,
-            asunto_otro: customAsuntoInput.value,
-          }));
+          try {
+            sessionStorage.setItem('mirice_report_draft', JSON.stringify({
+              descripcion: descInput.value,
+              contacto: contactoInput.value,
+              asunto: selectAsunto.value,
+              asunto_otro: customAsuntoInput.value,
+            }));
+          } catch (e) {}
         });
       });
     });
