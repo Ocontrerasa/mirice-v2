@@ -389,7 +389,10 @@ Estás en un espacio seguro. La <strong>Equipo de Convivencia Educativa</strong>
 					if (dataGemini.candidates && dataGemini.candidates[0] && dataGemini.candidates[0].content) {
 						const rawText = dataGemini.candidates[0].content.parts[0].text;
 						const btnAction = this.botonInvitacion(pregunta, analisis);
-						let formattedText = rawText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>').replace(/\n\n/g, '<br><br>').replace(/\n/g, '<br>');
+						// La salida del modelo se escapa antes de insertarse con innerHTML:
+						// nunca debe poder inyectar etiquetas HTML en la conversación.
+						const textoSeguro = rawText.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+						let formattedText = textoSeguro.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>').replace(/\n\n/g, '<br><br>').replace(/\n/g, '<br>');
 						const respuestaGeminiHtml = `<div style="background:#f0fdf4; border-left:4.5px solid #10b981; padding:16px 18px; border-radius:14px; margin-bottom:14px; color:#065f46; font-size:0.92rem; line-height:1.65; box-shadow:0 3px 12px rgba(16,185,129,0.08);">🤗 ${formattedText}</div>${btnAction}`;
 						if (typeof window.guardarEnHistorialChat === 'function') window.guardarEnHistorialChat(pregunta, respuestaGeminiHtml);
 						return { exito: true, mensaje: respuestaGeminiHtml, articulosCados: resultadosLocales };
