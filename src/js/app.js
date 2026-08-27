@@ -544,7 +544,10 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
-  // Cambio de clave obligatorio (cuenta recién migrada / primer inicio de sesión)
+  // Primer ingreso: elegir clave propia O mantener la clave por defecto
+  // (los primeros 4 dígitos del RUT). Ambos caminos exigen escribir la
+  // clave actual: es la prueba de que quien está frente a la pantalla es
+  // el dueño de la cuenta (importante sobre todo en el modo "mantener").
   function abrirModalCambioClave(role, userData) {
     roleLoginScreen.classList.remove('active');
     setTimeout(() => { roleLoginScreen.style.display = 'none'; }, 300);
@@ -552,60 +555,87 @@ document.addEventListener('DOMContentLoaded', () => {
     const overlay = document.createElement('div');
     overlay.style.cssText = 'position:fixed; inset:0; background:rgba(15,23,42,0.55); display:flex; align-items:center; justify-content:center; z-index:9999; padding:16px;';
     overlay.innerHTML = `
-      <div style="background:#fff; border-radius:16px; padding:28px; max-width:420px; width:100%; box-shadow:0 20px 50px rgba(0,0,0,0.25);">
-        <h3 style="margin:0 0 8px; color:#047857;">🔒 Elige tu contraseña</h3>
+      <div style="background:#fff; border-radius:16px; padding:28px; max-width:440px; width:100%; box-shadow:0 20px 50px rgba(0,0,0,0.25); max-height:92vh; overflow-y:auto;">
+        <h3 style="margin:0 0 8px; color:#047857;">🔒 Tu contraseña</h3>
         <p style="font-size:0.88rem; color:#475569; line-height:1.5; margin-bottom:16px;">
-          Por seguridad, antes de continuar debes cambiar la contraseña inicial (los últimos 4 dígitos de tu RUT) por una propia de al menos 6 caracteres.
+          Tu contraseña inicial son los <strong>primeros 4 dígitos de tu RUT</strong>. Te recomendamos cambiarla por una propia (mínimo 6 caracteres), pero también puedes mantenerla.
         </p>
         <div id="cambio-clave-error" style="display:none; background:#fef2f2; color:#b91c1c; padding:8px 12px; border-radius:8px; font-size:0.82rem; margin-bottom:12px;"></div>
-        <input id="cc-actual" type="password" placeholder="Contraseña actual (los 4 últimos dígitos de tu RUT)" class="form-control" style="width:100%; margin-bottom:10px; padding:10px; border-radius:8px; border:1px solid #cbd5e1;">
+        <input id="cc-actual" type="password" placeholder="Contraseña actual (primeros 4 dígitos de tu RUT)" class="form-control" style="width:100%; margin-bottom:10px; padding:10px; border-radius:8px; border:1px solid #cbd5e1;">
         <input id="cc-nueva" type="password" placeholder="Contraseña nueva (mínimo 6 caracteres)" class="form-control" style="width:100%; margin-bottom:10px; padding:10px; border-radius:8px; border:1px solid #cbd5e1;">
         <input id="cc-repetir" type="password" placeholder="Repite la contraseña nueva" class="form-control" style="width:100%; margin-bottom:16px; padding:10px; border-radius:8px; border:1px solid #cbd5e1;">
-        <button id="cc-confirmar" style="width:100%; background:#047857; color:#fff; font-weight:700; padding:12px; border:none; border-radius:50px; cursor:pointer;">Confirmar y continuar</button>
+        <button id="cc-confirmar" style="width:100%; background:#047857; color:#fff; font-weight:700; padding:12px; border:none; border-radius:50px; cursor:pointer;">✅ Cambiar y continuar (recomendado)</button>
+        <button id="cc-mantener" style="width:100%; background:#f1f5f9; color:#334155; font-weight:700; padding:12px; border:1px solid #cbd5e1; border-radius:50px; cursor:pointer; margin-top:10px;">Mantener mi clave por defecto</button>
+        <p style="font-size:0.74rem; color:#94a3b8; line-height:1.4; margin-top:10px; margin-bottom:0;">
+          ⚠️ Si mantienes la clave por defecto, cualquier persona que conozca tu RUT podría deducirla. Puedes cambiarla más adelante cuando quieras.
+        </p>
       </div>
     `;
     document.body.appendChild(overlay);
 
     const errBox = overlay.querySelector('#cambio-clave-error');
+
+    function mostrarErrorCC(msg) {
+      errBox.textContent = msg;
+      errBox.style.display = 'block';
+    }
+
+    async function llamarCambio(cuerpo) {
+      const resp = await fetch('/api/cambiar-clave', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: 'Bearer ' + window.miriceSesionToken
+        },
+        body: JSON.stringify(cuerpo)
+      });
+      const data = await resp.json().catch(() => null);
+      if (!resp.ok || !data || data.estado !== 'ok') {
+        const codigos = {
+          clave_actual_incorrecta: 'La contraseña actual no es correcta.',
+          clave_nueva_corta: 'La contraseña nueva debe tener al menos 6 caracteres.',
+          clave_igual: 'La contraseña nueva debe ser distinta de la actual.',
+        };
+        throw new Error((data && (codigos[data.error] || data.texto)) || 'No se pudo completar la operación. Intenta de nuevo.');
+      }
+      return data;
+    }
+
     overlay.querySelector('#cc-confirmar').addEventListener('click', async () => {
       const actual = overlay.querySelector('#cc-actual').value.trim();
       const nueva = overlay.querySelector('#cc-nueva').value.trim();
       const repetir = overlay.querySelector('#cc-repetir').value.trim();
-
       errBox.style.display = 'none';
-      if (nueva.length < 6) {
-        errBox.textContent = 'La contraseña nueva debe tener al menos 6 caracteres.';
-        errBox.style.display = 'block';
-        return;
-      }
-      if (nueva !== repetir) {
-        errBox.textContent = 'Las dos contraseñas nuevas no coinciden.';
-        errBox.style.display = 'block';
-        return;
-      }
+
+      if (nueva.length < 6) { mostrarErrorCC('La contraseña nueva debe tener al menos 6 caracteres.'); return; }
+      if (nueva !== repetir) { mostrarErrorCC('Las dos contraseñas nuevas no coinciden.'); return; }
 
       try {
-        const resp = await fetch('/api/cambiar-clave', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: 'Bearer ' + window.miriceSesionToken
-          },
-          body: JSON.stringify({ clave_actual: actual, clave_nueva: nueva })
-        });
-        const data = await resp.json().catch(() => null);
-        if (!resp.ok || !data || data.estado !== 'ok') {
-          errBox.textContent = (data && data.texto) || 'No se pudo cambiar la contraseña. Verifica la actual.';
-          errBox.style.display = 'block';
-          return;
-        }
+        const data = await llamarCambio({ clave_actual: actual, clave_nueva: nueva });
         window.miriceSesionToken = data.token;
         window.miriceDebeCambiarClave = false;
         document.body.removeChild(overlay);
         verificarEAbrirSesion(role, userData);
       } catch (e) {
-        errBox.textContent = 'No se pudo conectar. Intenta de nuevo.';
-        errBox.style.display = 'block';
+        mostrarErrorCC(e.message || 'No se pudo conectar. Intenta de nuevo.');
+      }
+    });
+
+    overlay.querySelector('#cc-mantener').addEventListener('click', async () => {
+      const actual = overlay.querySelector('#cc-actual').value.trim();
+      errBox.style.display = 'none';
+
+      if (!actual) { mostrarErrorCC('Para mantener tu clave por defecto, primero escribe tu contraseña actual en el primer campo.'); return; }
+      if (!confirm('¿Seguro que quieres mantener la clave por defecto (los primeros 4 dígitos de tu RUT)?\n\nCualquiera que conozca tu RUT podría deducirla. Podrás cambiarla más adelante.')) return;
+
+      try {
+        const data = await llamarCambio({ clave_actual: actual, mantener: true });
+        window.miriceSesionToken = data.token;
+        window.miriceDebeCambiarClave = false;
+        document.body.removeChild(overlay);
+        verificarEAbrirSesion(role, userData);
+      } catch (e) {
+        mostrarErrorCC(e.message || 'No se pudo conectar. Intenta de nuevo.');
       }
     });
   }

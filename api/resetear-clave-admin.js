@@ -5,24 +5,22 @@
  * Por qué existe
  * ---------------
  * El 01-ago-2026 un administrador quedó bloqueado tras un cambio de clave
- * que luego una migración reseteó sin querer. Antes de este endpoint, la
- * única forma de arreglarlo era pedir un script nuevo cada vez. Ahora
- * cualquier funcionario con panel_admin puede reiniciar la clave de una
- * persona directamente desde el panel, sin tocar código.
+ * que luego una migración reseteó sin querer. Cualquier funcionario con
+ * panel_admin puede reiniciar la clave de una persona directamente desde el
+ * panel, sin tocar código.
+ *
+ * Regla nueva de clave por defecto (ago-2026)
+ * -------------------------------------------
+ * La clave reiniciada queda como los PRIMEROS 4 caracteres del RUT/documento
+ * normalizado (antes eran los últimos 4). Ej: 12.345.678-9 → "1234".
+ * Misma fórmula que usa scripts/resetear_claves_todos.js en el reinicio
+ * masivo, para que la regla sea una sola en todo el sistema.
  *
  * Por qué se pide el RUT y no solo el nombre
  * -------------------------------------------
  * El servidor NUNCA guarda el RUT de nadie, solo su hash irreversible
- * (rut_hash). Por diseño no hay forma de "recuperar" el RUT desde ahí, así
- * que quien reinicia la clave debe volver a escribir el RUT de la persona
- * (el mismo con el que ella inicia sesión) para poder calcular el hash y
- * encontrar su registro.
- *
- * Por qué la clave nueva es "últimos 4 del RUT" y no DDMM
- * ---------------------------------------------------------
- * La fecha de nacimiento tampoco se guarda en Supabase (mismo principio de
- * privacidad), así que no hay forma de reconstruir el DDMM desde acá. Se
- * usa siempre el RUT como respaldo universal, igual para todos los roles.
+ * (rut_hash). Quien reinicia la clave debe volver a escribir el RUT de la
+ * persona para poder calcular el hash y encontrar su registro.
  *
  * Contrato
  * --------
@@ -30,7 +28,7 @@
  *   Authorization: Bearer <token>   (debe tener panel_admin=true y clave ya cambiada)
  *   { "rut": "12345678-9" }
  *
- *     200 { estado:"ok", clave_nueva:"5678", nombre:"..." }
+ *     200 { estado:"ok", clave_nueva:"1234", nombre:"...", rol:"..." }
  *     400 { error: "rut_invalido" }
  *     401 { error: "sesion_invalida" }
  *     403 { error: "sin_permiso" | "cambio_requerido" }
@@ -79,10 +77,10 @@ module.exports = async function handler(req, res) {
   }
 
   const rutLimpio = normalizarRut(rutBruto);
-  // La K del dígito verificador va en minúscula en la clave — es lo que la
-  // persona naturalmente escribe, aunque el RUT normalizado la use en
-  // mayúscula para el hash.
-  const claveNueva = rutLimpio.slice(-4).replace(/K/g, 'k');
+  // PRIMEROS 4 caracteres del documento normalizado. Para RUT chilenos son
+  // siempre dígitos; para documentos extranjeros pueden incluir letras, que
+  // quedan en MAYÚSCULA (tal como aparecen en el documento).
+  const claveNueva = rutLimpio.slice(0, 4);
   const rutHash = hashRut(rutLimpio);
   const { sal, hash } = hashClave(claveNueva);
 
