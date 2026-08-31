@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mirice-pwa-v7.5.0';
+const CACHE_NAME = 'mirice-pwa-v8.0.0';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -142,7 +142,7 @@ self.addEventListener('fetch', (event) => {
         return networkResponse;
       })
       .catch(() => {
-        return caches.match(event.request);
+        return caches.match(event.request, { ignoreSearch: true }); // los HTML piden app.js?v=X pero el precache guarda sin query; sin esto el precache jamas se usaba
       })
   );
 });

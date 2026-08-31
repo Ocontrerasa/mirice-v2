@@ -3,13 +3,14 @@
 
 :root {
   /* Paleta Oficial Liceo de Huara - Alto Contraste Institucional */
+  color-scheme: only light; /* desactiva el auto-oscurecido de Chrome/Edge que dejaba el chatbot ilegible, 31-ago-2026 */
   --primary-hue: 160;
   --accent-hue: 28;
   
   --primary: #047857;
   --primary-light: #065f46;
-  --accent: #d97706;
-  --accent-hover: #b45309;
+  --accent: #b45309; /* antes #d97706: blanco encima daba contraste 3.19, falla WCAG AA; ahora 5.02 */
+  --accent-hover: #92400e;
   
   --bg-app: #f1f5f9;
   --bg-card: #ffffff;

@@ -566,7 +566,7 @@ document.addEventListener('DOMContentLoaded', () => {
         <input id="cc-repetir" type="password" placeholder="Repite la contraseña nueva" class="form-control" style="width:100%; margin-bottom:16px; padding:10px; border-radius:8px; border:1px solid #cbd5e1;">
         <button id="cc-confirmar" style="width:100%; background:#047857; color:#fff; font-weight:700; padding:12px; border:none; border-radius:50px; cursor:pointer;">✅ Cambiar y continuar (recomendado)</button>
         <button id="cc-mantener" style="width:100%; background:#f1f5f9; color:#334155; font-weight:700; padding:12px; border:1px solid #cbd5e1; border-radius:50px; cursor:pointer; margin-top:10px;">Mantener mi clave por defecto</button>
-        <p style="font-size:0.74rem; color:#94a3b8; line-height:1.4; margin-top:10px; margin-bottom:0;">
+        <p style="font-size:0.74rem; color:#64748b; line-height:1.4; margin-top:10px; margin-bottom:0;">
           ⚠️ Si mantienes la clave por defecto, cualquier persona que conozca tu RUT podría deducirla. Puedes cambiarla más adelante cuando quieras.
         </p>
       </div>
