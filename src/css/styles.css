@@ -2530,8 +2530,10 @@ div.chat-bubble.user-bubble * {
    ========================================================================== */
 @media (min-width: 900px) {
   .role-view-section.chat-fullscreen {
-    height: calc(100vh - 200px) !important;
-    min-height: 480px !important;
-    max-height: 900px !important;
+    /* 260px cubre encabezado + pestanas + el pie de pagina, que con 200px
+       quedaba cortado por el borde inferior de la ventana. 02-sep-2026 */
+    height: calc(100vh - 260px) !important;
+    min-height: 460px !important;
+    max-height: 880px !important;
   }
 }
