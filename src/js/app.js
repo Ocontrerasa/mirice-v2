@@ -3335,3 +3335,45 @@ styleSheet.textContent = `
   }
 `;
 document.head.appendChild(styleSheet);
+
+/* ==========================================================================
+   AVISO DE SESION EXPIRADA — 02-sep-2026
+   Los tokens duran 8 horas. Al vencer, /api/chat devolvia 401 y bot.js caia
+   en silencio a su motor local de regex, mientras la encuesta simplemente no
+   cargaba: el usuario creia que la plataforma funcionaba mal. Ahora cualquier
+   respuesta 401 de la API avisa y lleva al inicio de sesion.
+   Se excluye /api/login, donde un 401 significa "clave incorrecta" y ya tiene
+   su propio mensaje.
+   ========================================================================== */
+(function () {
+  var fetchOriginal = window.fetch;
+  var yaAvisado = false;
+
+  window.fetch = async function (recurso, opciones) {
+    var respuesta = await fetchOriginal.apply(this, arguments);
+    try {
+      var url = typeof recurso === 'string' ? recurso : (recurso && recurso.url) || '';
+      var esApi = url.indexOf('/api/') !== -1;
+      var esLogin = url.indexOf('/api/login') !== -1;
+
+      if (esApi && !esLogin && respuesta.status === 401 && !yaAvisado) {
+        yaAvisado = true;
+        try { localStorage.removeItem('mirice_active_session'); } catch (e) {}
+        window.miriceSesionToken = null;
+
+        var capa = document.createElement('div');
+        capa.style.cssText = 'position:fixed; inset:0; background:rgba(15,23,42,.6); display:flex; align-items:center; justify-content:center; z-index:100000; padding:16px;';
+        capa.innerHTML = '<div style="background:#fff; border-radius:16px; padding:28px; max-width:400px; text-align:center; box-shadow:0 20px 50px rgba(0,0,0,.25);">' +
+          '<div style="font-size:44px; margin-bottom:10px;">&#128274;</div>' +
+          '<h3 style="color:#047857; margin:0 0 10px;">Tu sesion expiro</h3>' +
+          '<p style="color:#475569; font-size:.9rem; line-height:1.5; margin-bottom:18px;">Por seguridad, la sesion se cierra despues de un tiempo. Vuelve a ingresar con tu RUT y tu clave para continuar.</p>' +
+          '<button id="mirice-reingresar" style="width:100%; background:#047857; color:#fff; font-weight:700; padding:12px; border:none; border-radius:50px; cursor:pointer;">Volver a ingresar</button></div>';
+        document.body.appendChild(capa);
+        capa.querySelector('#mirice-reingresar').addEventListener('click', function () {
+          window.location.reload();
+        });
+      }
+    } catch (e) { /* nunca romper la peticion original por culpa del aviso */ }
+    return respuesta;
+  };
+})();
