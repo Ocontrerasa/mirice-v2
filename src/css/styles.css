@@ -2451,3 +2451,24 @@ div.chat-bubble.user-bubble * {
 }
 .chat-bubble { opacity: 1 !important; }
 @media (prefers-reduced-motion: reduce) { .chat-bubble { animation: none !important; } }
+
+/* ==========================================================================
+   ALTURA DEL CHAT EN ESCRITORIO — 01-sep-2026
+   El .chat-wrapper tenia height:550px fijo: en monitores grandes quedaba una
+   franja blanca enorme bajo el chat mientras las respuestas largas del bot se
+   leian por una ventanita con scroll. Desde 1024px de ancho, la caja crece
+   con la ventana. En celular no cambia nada.
+   ========================================================================== */
+@media (min-width: 1024px) {
+  .chat-wrapper {
+    height: calc(100vh - 300px) !important;
+    min-height: 520px !important;
+    max-height: 900px !important;
+    max-width: 1100px !important;
+  }
+}
+
+/* Monitores muy altos: tope un poco mayor para no desperdiciar espacio */
+@media (min-width: 1024px) and (min-height: 950px) {
+  .chat-wrapper { max-height: 1050px !important; }
+}
