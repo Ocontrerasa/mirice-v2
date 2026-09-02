@@ -2519,3 +2519,19 @@ div.chat-bubble.user-bubble * {
     max-height: none !important;
   }
 }
+
+/* ==========================================================================
+   ALTURA DEL CHAT — CAUSA REAL, 02-sep-2026
+   Diagnostico con getComputedStyle: el .chat-wrapper no impone altura propia
+   (min:0, max:none, flex:1 1 auto) — solo se estira para llenar a su padre.
+   Quien fijaba el techo era .role-view-section.chat-fullscreen, con 549.6px.
+   Por eso los intentos anteriores sobre el wrapper no cambiaban nada.
+   Se corrige el padre; el wrapper crece solo con su flex.
+   ========================================================================== */
+@media (min-width: 900px) {
+  .role-view-section.chat-fullscreen {
+    height: calc(100vh - 200px) !important;
+    min-height: 480px !important;
+    max-height: 900px !important;
+  }
+}
