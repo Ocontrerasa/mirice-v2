@@ -2472,3 +2472,25 @@ div.chat-bubble.user-bubble * {
 @media (min-width: 1024px) and (min-height: 950px) {
   .chat-wrapper { max-height: 1050px !important; }
 }
+
+/* ==========================================================================
+   ALTO REAL DEL CHAT — 01-sep-2026
+   calc(100vh - 260px) se quedaba corto porque el encabezado, las pestanas y
+   el titulo de la seccion ocupan ~280px que 100vh no descuenta. Se resuelve
+   dejando que el contenedor de la vista mande y que el chat ocupe todo lo
+   que sobra, sin numeros magicos.
+   ========================================================================== */
+@media (min-width: 900px) {
+  .role-view-section.active:has(.chat-wrapper) {
+    display: flex !important;
+    flex-direction: column !important;
+    min-height: calc(100vh - 210px) !important;
+  }
+  .chat-wrapper {
+    flex: 1 1 auto !important;
+    height: auto !important;
+    min-height: 460px !important;
+    max-height: none !important;
+    max-width: 1100px !important;
+  }
+}
