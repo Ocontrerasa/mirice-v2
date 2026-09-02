@@ -2393,3 +2393,61 @@ tr:nth-child(even) td {
 }
 
 
+
+/* ==========================================================================
+   BLINDAJE FINAL DEL CHAT — 01-sep-2026
+   El chatbot debe verse SIEMPRE igual: verde institucional con texto blanco,
+   sin importar el modo oscuro del sistema, el equipo o cualquier regla previa.
+   Se fuerza fondo transparente en TODOS los descendientes para que ningun
+   elemento interno (parrafos, negritas, listas que inyecta el bot) pinte
+   encima del verde y deje el texto blanco ilegible.
+   ========================================================================== */
+div.chat-bubble.bot-bubble {
+  background: #047857 !important;
+  background-color: #047857 !important;
+  color: #ffffff !important;
+  opacity: 1 !important;
+}
+div.chat-bubble.bot-bubble *,
+div.chat-bubble.bot-bubble p,
+div.chat-bubble.bot-bubble span,
+div.chat-bubble.bot-bubble strong,
+div.chat-bubble.bot-bubble b,
+div.chat-bubble.bot-bubble em,
+div.chat-bubble.bot-bubble li,
+div.chat-bubble.bot-bubble ul,
+div.chat-bubble.bot-bubble ol,
+div.chat-bubble.bot-bubble div,
+div.chat-bubble.bot-bubble h1,
+div.chat-bubble.bot-bubble h2,
+div.chat-bubble.bot-bubble h3,
+div.chat-bubble.bot-bubble h4 {
+  background: transparent !important;
+  background-color: transparent !important;
+  color: #ffffff !important;
+  opacity: 1 !important;
+}
+div.chat-bubble.bot-bubble a { color: #d1fae5 !important; text-decoration: underline !important; }
+
+div.chat-bubble.user-bubble {
+  background: #e2e8f0 !important;
+  background-color: #e2e8f0 !important;
+  color: #0f172a !important;
+  border: 1px solid #cbd5e1 !important;
+  opacity: 1 !important;
+}
+div.chat-bubble.user-bubble * {
+  background: transparent !important;
+  color: #0f172a !important;
+  opacity: 1 !important;
+}
+
+/* La animacion ya no toca la opacidad: si no alcanzaba a completarse
+   (equipos lentos, pestana en segundo plano), la burbuja quedaba
+   translucida y el texto blanco resultaba ilegible. */
+@keyframes chatBubbleFadeIn {
+  from { transform: translateY(8px); }
+  to { transform: translateY(0); }
+}
+.chat-bubble { opacity: 1 !important; }
+@media (prefers-reduced-motion: reduce) { .chat-bubble { animation: none !important; } }
