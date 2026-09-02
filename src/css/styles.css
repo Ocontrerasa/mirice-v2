@@ -1396,8 +1396,19 @@ body {
 }
 
 @keyframes chatBubbleFadeIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to { opacity: 1; transform: translateY(0); }
+  /* Ya no se anima la opacidad: si la animacion no alcanzaba a completarse
+     (equipos lentos, pestana en segundo plano, 'reducir animaciones' del
+     sistema), la burbuja quedaba translucida y el texto blanco resultaba
+     ilegible sobre el verde diluido. 01-sep-2026 */
+  from { transform: translateY(8px); }
+  to { transform: translateY(0); }
+}
+
+/* Refuerzo: la burbuja siempre opaca, pase lo que pase con la animacion */
+.chat-bubble { opacity: 1 !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  .chat-bubble { animation: none !important; }
 }
 
 @keyframes chatTypingPulse {
