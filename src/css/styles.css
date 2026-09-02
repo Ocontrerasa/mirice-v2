@@ -2494,3 +2494,28 @@ div.chat-bubble.user-bubble * {
     max-width: 1100px !important;
   }
 }
+
+/* ==========================================================================
+   ALTURA DEL CHAT — CORRECCION DEFINITIVA 02-sep-2026
+   Los intentos anteriores fallaron: uno usaba :has() sobre una estructura que
+   no existe, otro dependia del contenedor padre. Aqui se fuerza la altura
+   sobre el propio .chat-wrapper con la maxima especificidad posible, y sobre
+   el area scrolleable de mensajes, que es la que realmente crece.
+   La resta de 240px cubre encabezado + pestanas + titulo + caja de escritura.
+   ========================================================================== */
+@media (min-width: 900px) {
+  div.chat-wrapper,
+  .role-view-section div.chat-wrapper,
+  .dashboard-content div.chat-wrapper {
+    height: calc(100vh - 240px) !important;
+    min-height: 420px !important;
+    max-height: 880px !important;
+    max-width: 1100px !important;
+  }
+  div.chat-wrapper > div[id$="chat-messages"],
+  #chat-messages, #apo-chat-messages, #fun-chat-messages {
+    flex: 1 1 auto !important;
+    min-height: 0 !important;
+    max-height: none !important;
+  }
+}
