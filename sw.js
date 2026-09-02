@@ -1,4 +1,4 @@
-const CACHE_NAME = 'mirice-pwa-v8.0.0';
+const CACHE_NAME = 'mirice-pwa-v8.1.0';
 const ASSETS_TO_CACHE = [
   './',
   './index.html',
@@ -123,6 +123,11 @@ self.addEventListener('notificationclick', (event) => {
 
 // Estrategia de Caché: Network First con Cache Fallback
 self.addEventListener('fetch', (event) => {
+  // Solo se interceptan peticiones del propio dominio. Las externas (Google
+  // Fonts) se dejan al navegador: al interceptarlas, el fetch del SW chocaba
+  // con la CSP y el manejador reventaba con "Failed to convert value to
+  // 'Response'", dejando el Service Worker en estado inestable. 01-sep-2026
+  if (new URL(event.request.url).origin !== self.location.origin) return;
   if (event.request.url.includes('generativelanguage.googleapis.com')) {
     return;
   }
