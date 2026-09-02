@@ -910,8 +910,8 @@ body {
   max-width: 960px !important;
   margin: 8px auto !important;
   min-height: 420px !important;
-  height: 550px !important;
-  max-height: calc(100vh - 180px) !important;
+  height: calc(100vh - 260px) !important;
+  max-height: 900px !important;
   background: var(--bg-card);
   border-radius: var(--radius-md);
   border: 1px solid var(--border-card);
