@@ -2560,3 +2560,19 @@ div.chat-bubble.user-bubble * {
     max-height: 820px !important;
   }
 }
+
+/* ==========================================================================
+   ALTURA DEL CHAT — CAUSA DEFINITIVA, 02-sep-2026
+   Diagnostico en consola: existe .role-view-section.active.chat-fullscreen
+   con height:100%. Esa regla tiene TRES clases; todos los intentos previos
+   usaban dos, asi que perdian por especificidad sin importar el !important.
+   Aqui se iguala el selector exacto y se agrega .active, que es la pieza
+   que faltaba. El 100% ademas heredaba el limite del contenedor padre.
+   ========================================================================== */
+@media (min-width: 900px) {
+  .role-view-section.active.chat-fullscreen {
+    height: 68vh !important;
+    min-height: 430px !important;
+    max-height: 820px !important;
+  }
+}
