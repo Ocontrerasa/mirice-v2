@@ -2549,3 +2549,14 @@ div.chat-bubble.user-bubble * {
     max-height: 860px !important;
   }
 }
+
+/* Ajuste final 02-sep-2026: restar un numero fijo a 100vh servia en ventanas
+   chicas pero dejaba el pie cortado en pantalla completa. Un porcentaje del
+   alto de ventana deja siempre aire para el pie, en cualquier resolucion. */
+@media (min-width: 900px) {
+  .role-view-section.chat-fullscreen {
+    height: 68vh !important;
+    min-height: 430px !important;
+    max-height: 820px !important;
+  }
+}
