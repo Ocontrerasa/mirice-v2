@@ -2537,3 +2537,15 @@ div.chat-bubble.user-bubble * {
     max-height: 880px !important;
   }
 }
+
+/* Ajuste final 02-sep-2026: en vez de restar un numero fijo a 100vh (que
+   dejaba el pie cortado), la seccion toma un porcentaje del alto de ventana.
+   72vh deja siempre aire suficiente para el pie de pagina, en cualquier
+   resolucion, sin numeros magicos que fallen en pantallas distintas. */
+@media (min-width: 900px) {
+  .role-view-section.chat-fullscreen {
+    height: 72vh !important;
+    min-height: 440px !important;
+    max-height: 860px !important;
+  }
+}
