@@ -960,9 +960,14 @@ document.addEventListener('DOMContentLoaded', () => {
               <h3 style="font-size: 1.15rem; font-weight: 700; margin-top:4px; margin-bottom:2px;">Panel Oficial del Apoderado — Liceo de Huara</h3>
               <p style="font-size: 0.8rem; opacity:0.9; margin:0;">Reglamento RICE General y Orientaciones de Educación Parvularia 2026</p>
             </div>
-            <a href="fuentes/RICE%20LICEO%20DE%20HUARA%202026.pdf" target="_blank" style="background:white; color:#047857; text-decoration:none; padding:8px 14px; font-size:0.8rem; font-weight:700; border-radius:var(--radius-sm); display:inline-flex; align-items:center; gap:6px;">
-              📥 RICE Oficial (PDF)
-            </a>
+            <div style="display:flex; gap:8px; flex-wrap:wrap;">
+              <a href="fuentes/RICE%20LICEO%20DE%20HUARA%202026.pdf" target="_blank" style="background:white; color:#047857; text-decoration:none; padding:8px 14px; font-size:0.8rem; font-weight:700; border-radius:var(--radius-sm); display:inline-flex; align-items:center; gap:6px;">
+                📥 RICE Oficial (PDF)
+              </a>
+              <a href="docs/REGLAMENTO_INTERNO_RICE_HUARA_2026_COMPLETO.md" target="_blank" style="background:rgba(255,255,255,0.2); color:white; border:1px solid rgba(255,255,255,0.4); text-decoration:none; padding:8px 12px; font-size:0.8rem; font-weight:700; border-radius:var(--radius-sm); display:inline-flex; align-items:center; gap:6px;">
+                📄 Texto (.md)
+              </a>
+            </div>
           </div>
 
           <div class="welcome-card" style="background: var(--bg-card); padding: 18px 20px; border-radius: var(--radius-md); border: 1px solid var(--border-card); border-top: 4px solid #047857;">
@@ -1188,9 +1193,12 @@ document.addEventListener('DOMContentLoaded', () => {
             <!-- TERMÓMETRO DE CLIMA ESCOLAR SEMANAL PARA FUNCIONARIOS -->
             ${(typeof window.generarHtmlTermometroClima === 'function') ? window.generarHtmlTermometroClima('funcionario', userData.rut_limpio) : ''}
 
-            <div>
-              <a href="fuentes/RICE%20LICEO%20DE%20HUARA%202026.pdf" download class="btn-primary" style="display:inline-flex; align-items:center; gap:8px; text-decoration:none; padding:8px 14px; font-size:0.8rem; font-weight:bold; border-radius:var(--radius-sm); width:auto; margin-top:10px;">
+            <div style="display:flex; gap:10px; flex-wrap:wrap; margin-top:10px;">
+              <a href="fuentes/RICE%20LICEO%20DE%20HUARA%202026.pdf" download class="btn-primary" style="display:inline-flex; align-items:center; gap:8px; text-decoration:none; padding:8px 14px; font-size:0.8rem; font-weight:bold; border-radius:var(--radius-sm); width:auto; margin-top:0;">
                 📥 Descargar RICE Completo (PDF)
+              </a>
+              <a href="docs/REGLAMENTO_INTERNO_RICE_HUARA_2026_COMPLETO.md" download="RICE_2026_Liceo_Huara.md" style="display:inline-flex; align-items:center; gap:6px; background:#f1f5f9; color:#334155; border:1px solid #cbd5e1; text-decoration:none; padding:8px 14px; font-size:0.8rem; font-weight:bold; border-radius:var(--radius-sm); font-family:inherit;">
+                📄 Descargar Texto (Markdown)
               </a>
             </div>
           </div>
